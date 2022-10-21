@@ -3,8 +3,6 @@
 export { useCmfx, createCmfx } from './cmfx';
 export type { Cmfx } from './cmfx';
 
-export { writeToken } from './token';
-
 export type { Options } from './options';
 
 export type { MenuItem } from './menu';

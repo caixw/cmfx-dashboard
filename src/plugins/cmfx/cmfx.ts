@@ -2,6 +2,7 @@
 
 import { InjectionKey, inject, App } from 'vue';
 import { MenuOption } from 'naive-ui';
+import { Router } from 'vue-router';
 
 import { Return, f } from './api';
 import { buildMenus } from './menu';
@@ -14,10 +15,10 @@ const key = Symbol('cmfx') as InjectionKey<Cmfx>;
  * cmfx 项目相关的插件
  */
 export class Cmfx {
-    readonly options: Required<Options>;
+    readonly #options: Required<Options>;
 
     constructor(o: Options) {
-        this.options = Object.assign(o, defaultOptions);
+        this.#options = Object.assign(o, defaultOptions);
     }
 
     /**
@@ -25,10 +26,10 @@ export class Cmfx {
      * @returns 菜单列表
      */
     buildMenus(): Array<MenuOption> {
-        if (!this.options.menus) {
+        if (!this.#options.menus) {
             return [];
         }
-        return buildMenus(this.options.menus);
+        return buildMenus(this.#options.menus);
     }
 
     /**
@@ -38,31 +39,23 @@ export class Cmfx {
      * @returns
      */
     post(url: string, body: unknown): Promise<Return> {
-        return f(this.options, 'POST', url, body);
+        return f(this.#options, 'POST', url, body);
     }
 
     patch(url: string, body: unknown): Promise<Return> {
-        return f(this.options, 'PATCH', url, body);
+        return f(this.#options, 'PATCH', url, body);
     }
 
     put(url: string, body: unknown): Promise<Return> {
-        return f(this.options, 'PUT', url, body);
+        return f(this.#options, 'PUT', url, body);
     }
 
     del(url: string): Promise<Return> {
-        return f(this.options, 'DELETE', url);
+        return f(this.#options, 'DELETE', url);
     }
 
     get(url: string): Promise<Return> {
-        return f(this.options, 'GET', url);
-    }
-
-    /**
-     * 检测当前是否已经登录
-     * @returns 登录状态
-     */
-    isLogin(): boolean {
-        return getToken(this.options) ? true : false;
+        return f(this.#options, 'GET', url);
     }
 
     /**
@@ -75,7 +68,18 @@ export class Cmfx {
     upload(url: string, field: string, blob: Blob): Promise<Return> {
         const data = new FormData();
         data.append(field, blob);
-        return f(this.options, 'POST', url, data, true);
+        return f(this.#options, 'POST', url, data, true);
+    }
+
+    /**
+     * 根据状态自动跳转到指定的页面
+     */
+    selectPage(r: Router) {
+        let name = this.#options.loginPage;
+        if (getToken(this.#options)) {
+            name = this.#options.presetPage;
+        }
+        r.push({name: name});
     }
 
     install(app: App) {

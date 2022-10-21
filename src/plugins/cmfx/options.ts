@@ -17,6 +17,7 @@ export interface Options {
     // api 相关
     urlPrefix: string
     loginPage: string // 登录页的路由名称
+    presetPage: string // 登录后的默认页
     contentType?: string
     acceptType?: string
     pageSize?: number

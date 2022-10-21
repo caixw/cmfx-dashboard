@@ -14,14 +14,14 @@ const router = createRouter({
     history: createWebHashHistory(),
     routes: [
         {
-            path: '/app',
-            name: 'app',
-            component: () => import('@/packages/app/Demo.vue')
+            path: '/login',
+            name: 'login',
+            component: () => import('@/pages/login.vue')
         },
         {
-            path: '/layout',
-            name: 'layout',
-            component: () => import('@/packages/layout/Demo.vue')
+            path: '/logout',
+            name: 'logout',
+            component: () => import('@/pages/logout.vue')
         },
         {
             path: '/page',
@@ -40,9 +40,9 @@ const cmfx = createCmfx({
     name: 'cmfx',
     logo: logo,
 
-    apiBase: 'http://localhost',
-    adminBase: 'http://localhost/admin',
+    urlPrefix: 'http://localhost/admin',
     loginPage: 'login',
+    presetPage: 'logout',
 
     menus: [
         {

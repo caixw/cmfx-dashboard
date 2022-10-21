@@ -36,7 +36,7 @@ export interface Return {
  * @returns
  */
 export async function f(o: Required<Options>, method: Method, url: string, obj?: FormData | unknown, upload?: boolean): Promise<Return> {
-    url = buildURL(o, url);
+    url = buildURL(o.urlPrefix, url);
 
     const t = getToken(o);
     if (!t) {
@@ -113,12 +113,18 @@ async function request(o: Required<Options>, req: RequestInit, url: string): Pro
     };
 }
 
-export function buildURL(o: Required<Options>, url: string): string {
-    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-        if (url.charAt(0) !== '/') {
-            url = '/' + url;
-        }
-        url = o.urlPrefix + url;
+export function buildURL(prefix: string, url: string): string {
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+        return url;
     }
-    return url;
+
+    if (url.charAt(0) !== '/' && prefix.substring(prefix.length-1) !=='/') {
+        url = '/' + url;
+    }
+
+    if (url.charAt(0) === '/' && prefix.substring(prefix.length-1) ==='/') {
+        url = url.substring(1);
+    }
+
+    return prefix + url;
 }
