@@ -6,8 +6,8 @@ import { Router } from 'vue-router';
 
 import { Return, f } from './api';
 import { buildMenus } from './menu';
-import { Options, defaultOptions } from './options';
-import { getToken } from './token';
+import { Options, presetOptions } from './options';
+import { getToken, delToken, writeToken, Token } from './token';
 
 const key = Symbol('cmfx') as InjectionKey<Cmfx>;
 
@@ -18,8 +18,13 @@ export class Cmfx {
     readonly #options: Required<Options>;
 
     constructor(o: Options) {
-        this.#options = Object.assign(o, defaultOptions);
+        this.#options = Object.assign(presetOptions, o);
     }
+
+    /**
+     * 返回选项值
+     */
+    get options(): Required<Options> { return this.#options; }
 
     /**
      * 生成 n-layout-side 中的菜单项
@@ -30,6 +35,14 @@ export class Cmfx {
             return [];
         }
         return buildMenus(this.#options.menus);
+    }
+
+    /**
+     * 修改本地化语言
+     * @param id 语言 ID
+     */
+    setAcceptLanguage(id: string) {
+        this.#options.locale = id;
     }
 
     /**
@@ -82,6 +95,33 @@ export class Cmfx {
         r.push({name: name});
     }
 
+    /**
+     * 退出登录
+     * @param r 路由
+     */
+    async logout(r: Router) {
+        const ret = await this.del('/login');
+        if (!ret.ok) {
+            console.error(ret.problem);
+        }
+
+        delToken(this.#options);
+        r.push({name: this.#options.loginPage});
+    }
+
+    /**
+     * 执行登录操作
+     * @param account 账号信息
+     */
+    async login(account: unknown) {
+        const r = await this.post('/login', account);
+        if (!r.ok) {
+            console.log(r.problem);
+        }
+
+        writeToken(this.#options, r.body as Token);
+    }
+
     install(app: App) {
         app.provide(key, this);
     }
@@ -90,6 +130,7 @@ export class Cmfx {
 /**
  * 创建 cmfx 插件
  * @param o 选项
+ * @param v 本地化对象
  * @returns
  */
 export function createCmfx(o: Options): Cmfx {

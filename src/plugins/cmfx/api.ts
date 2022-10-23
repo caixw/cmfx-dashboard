@@ -48,7 +48,8 @@ export async function f(o: Required<Options>, method: Method, url: string, obj?:
 
     const headers: HeadersInit = {
         'Authorization': t.access_token,
-        'Content-Type': o.contentType
+        'Content-Type': o.contentType,
+        'Accept-Language': o.locale
     };
 
     let body: FormData | string | undefined = undefined;

@@ -4,9 +4,14 @@ import { createApp } from 'vue';
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { HomeRound } from '@vicons/material';
 
-import App from '@/pages/App.vue';
+import App from '@/pages/app/App.vue';
 import { createCmfx } from './plugins/cmfx';
 import logo from '@/assets/logo.png';
+
+import { createI18n } from 'vue-i18n';
+import zhCN from '@/locales/zhCN';
+import zhTW from '@/locales/zhTW';
+
 
 // createWebHistory 路径不带 #，不能直接访问项目，需要 nginx 转发
 // createWebHashHistory 路径带 #
@@ -36,9 +41,15 @@ const router = createRouter({
     ],
 });
 
+const i18n = createI18n({
+    legacy: false,
+    messages: Object.assign(zhCN, zhTW),
+});
+
 const cmfx = createCmfx({
     name: 'cmfx',
     logo: logo,
+    locale: 'zh-CN',
 
     urlPrefix: 'http://localhost/admin',
     loginPage: 'login',
@@ -80,4 +91,4 @@ const cmfx = createCmfx({
     ]
 });
 
-createApp(App).use(router).use(cmfx).mount('#app');
+createApp(App).use(router).use(i18n).use(cmfx).mount('#app');

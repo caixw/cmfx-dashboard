@@ -50,7 +50,7 @@ export function delToken(o: Required<Options>) {
     cfg.storage.removeItem(cfg.name);
 }
 
-interface Token {
+export interface Token {
     access_token: string
     refresh_token: string
     expires: number

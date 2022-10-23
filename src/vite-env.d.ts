@@ -8,3 +8,7 @@ declare module '*.vue' {
 
     export default component;
 }
+
+declare namespace Intl {
+    function getCanonicalLocales(locales: string | string[]): string[];
+}
