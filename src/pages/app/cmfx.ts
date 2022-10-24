@@ -1,49 +1,51 @@
 // SPDX-License-Identifier: MIT
 
-import { InjectionKey, inject, App } from 'vue';
-import { MenuOption } from 'naive-ui';
+import { InjectionKey, inject, provide } from 'vue';
 import { Router } from 'vue-router';
 
 import { Return, f } from './api';
-import { buildMenus } from './menu';
-import { Options, presetOptions } from './options';
+import { Options, Theme, ThemeMode, optionsKey } from '@/plugins/options';
 import { getToken, delToken, writeToken, Token } from './token';
+import { getCanonicalLocale } from './locale';
 
 const key = Symbol('cmfx') as InjectionKey<Cmfx>;
 
-/**
- * cmfx 项目相关的插件
- */
+interface LocaleSetter {
+    (t: string): void
+}
+
+interface ThemeSetter {
+    (t: Theme | null): void
+}
+
+interface ThemeModeSetter {
+    (t: ThemeMode): void
+}
+
 export class Cmfx {
     readonly #options: Required<Options>;
+    readonly #setLocale: LocaleSetter;
+    readonly #setTheme: ThemeSetter;
+    readonly #setThemeMode: ThemeModeSetter;
 
-    constructor(o: Options) {
-        this.#options = Object.assign(presetOptions, o);
+    constructor(ls: LocaleSetter, ts: ThemeSetter, ms: ThemeModeSetter) {
+        const o = inject(optionsKey);
+        if (!o) {
+            throw ('用户未安装 plugins/options 插件');
+        }
+        this.#options = o;
+
+        this.#setLocale = ls;
+        this.#setTheme = ts;
+        this.#setThemeMode = ms;
+
+        provide(key, this);
     }
 
     /**
      * 返回选项值
      */
     get options(): Required<Options> { return this.#options; }
-
-    /**
-     * 生成 n-layout-side 中的菜单项
-     * @returns 菜单列表
-     */
-    buildMenus(): Array<MenuOption> {
-        if (!this.#options.menus) {
-            return [];
-        }
-        return buildMenus(this.#options.menus);
-    }
-
-    /**
-     * 修改本地化语言
-     * @param id 语言 ID
-     */
-    setAcceptLanguage(id: string) {
-        this.#options.locale = id;
-    }
 
     /**
      * 发起 POST 请求
@@ -85,6 +87,55 @@ export class Cmfx {
     }
 
     /**
+     * 设置子标题
+     *
+     * 设置 document.title 的子标题
+     * @param title 子标题，如果为空，则只显示 name 属性值。
+     */
+    setTitle(title: string) {
+        if (title) { title += this.options.titleSeparator; }
+        document.title = title + this.options.name;
+    }
+
+    /**
+     * 设置新的主题
+     *
+     * 会根据 setThemeMode 的设置自动选择是 light 还是 dark。
+     * @param t 主题的 ID，如果为 null，表示采用默认的主题。
+     */
+    setTheme(t: string | null) {
+        if (t === null) {
+            this.#setTheme(null);
+            return;
+        }
+
+        const theme = this.options.themes.find((theme: Theme):boolean=>{return theme.id == t;});
+        if (!theme) {
+            throw `${t} 主题并不存在`;
+        }
+        this.#setTheme(theme);
+    }
+
+    /**
+     * 设置新的主题
+     * @param mode 主题名称，可以是 os, dark 和 light
+     */
+    setThemeMode(m: ThemeMode) {
+        this.#setThemeMode(m);
+    }
+
+    /**
+     * 设置本地化信息
+     * @param t 本地化字符串
+     */
+    setLocale(t: string) {
+        t = getCanonicalLocale(t);
+
+        this.options.locale = t;
+        this.#setLocale(t);
+    }
+
+    /**
      * 根据状态自动跳转到指定的页面
      */
     selectPage(r: Router) {
@@ -121,27 +172,8 @@ export class Cmfx {
 
         writeToken(this.#options, r.body as Token);
     }
-
-    install(app: App) {
-        app.provide(key, this);
-    }
 }
 
-/**
- * 创建 cmfx 插件
- * @param o 选项
- * @param v 本地化对象
- * @returns
- */
-export function createCmfx(o: Options): Cmfx {
-    return new Cmfx(o);
-}
-
-/**
- * 获取配置项
- *
- * @returns 配置项
- */
 export function useCmfx(): Cmfx {
     const inst = inject(key);
     if (!inst) {

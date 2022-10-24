@@ -1,19 +1,10 @@
 // SPDX-License-Identifier: MIT
 
-import { Component, h } from 'vue';
+import { h } from 'vue';
 import { MenuOption, NIcon } from 'naive-ui';
 import { RouterLink } from 'vue-router';
 
-/**
- * 菜单项
- */
-export interface MenuItem {
-    label: string // 标题
-    key: string // 唯一 ID，也是路由跳转的名称
-    icon?: Component
-    children?: Array<MenuItem>
-    type?: 'group' | 'divider' // 特殊类别
-}
+import type { MenuItem } from '@/plugins/options';
 
 /**
  * 生成 n-layout-side 中的菜单项
@@ -80,3 +71,4 @@ function buildMenuItems(p: Array<string>, menus: Array<MenuItem>): Array<MenuOpt
 
     return menuOptions;
 }
+

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-import { Options } from './options';
+import { Options } from '@/plugins/options';
 
 /**
  * 获取 Token

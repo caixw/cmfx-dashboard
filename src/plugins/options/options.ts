@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 import { MenuItem } from './menu';
+import { Theme } from './theme';
 
 /**
  * 整个项目的配置对象
@@ -22,6 +23,9 @@ export interface Options {
     contentType?: string
     acceptType?: string
     locale?: string // 初始语言，如果未设置，则采用当前浏览器的语言。
+
+    // 所有的主题
+    themes: Array<Theme>
 
     menus: Array<MenuItem> // 侧边栏的菜单
 }

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 import { test, expect } from 'vitest';
-import { buildURL } from '@/plugins/cmfx/api';
+import { buildURL } from '@/pages/app/api';
 
 test('buildURL', ()=>{
     expect(buildURL('https://example.com','message')).toEqual('https://example.com/message');

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-import { Options } from './options';
+import { Options } from '@/plugins/options';
 import { delToken, getToken } from './token';
 
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'

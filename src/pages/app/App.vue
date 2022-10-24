@@ -19,31 +19,26 @@ import {
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
-import { ThemeMode, Theme } from './theme';
-import { getCanonicalLocale, getNaiveLocale, NaiveLocale, presetLocale } from './locale';
-import { useCmfx } from '@/plugins/cmfx';
+import { ThemeMode, Theme } from '@/plugins/options';
+import { Cmfx } from './cmfx';
+import { getNaiveLocale, NaiveLocale, presetLocale } from './locale';
 
-const $cmfx = useCmfx();
 const $router = useRouter();
 const $i18n = useI18n();
 
+// theme mode
+
 const themeMode = ref<GlobalTheme | null>(null);
-const theme = ref<Theme | null>(null);
 
 const osTheme = useOsTheme();
 let stopOsThemeWatcher = watch(osTheme, (n) => {
     themeMode.value = n === 'dark' ? darkTheme : null;
 });
 
-/**
- * 设置新的主题
- * @param mode 主题名称，可以是 os, dark 和 light
- */
-function setThemeMode(mode?: ThemeMode) {
+function setThemeMode(mode: ThemeMode) {
     stopOsThemeWatcher();
     switch (mode) {
     case 'os':
-    case undefined:
         themeMode.value = osTheme.value === 'dark' ? darkTheme : null;
 
         stopOsThemeWatcher = watch(osTheme, (n) => { // 监视变化
@@ -59,47 +54,25 @@ function setThemeMode(mode?: ThemeMode) {
     }
 }
 
-/**
- * 设置子标题
- *
- * 设置 document.title 的子标题
- * @param title 子标题，如果为空，则只显示 name 属性值。
- */
-function setTitle(title: string) {
-    if (title) { title += $cmfx.options.titleSeparator; }
-    document.title = title + $cmfx.options.name;
-}
-
-/**
- * 设置新的主题
- *
- * 会根据 setThemeMode 的设置自动选择是 light 还是 dark。
- * @param t 主题的定义
- */
-function setTheme(t: Theme) {
+const theme = ref<Theme | null>(null);
+function setTheme(t: Theme | null) {
     theme.value = t;
 }
 
+// 本地化
+
 const naiveLocale = ref<NaiveLocale>(getNaiveLocale('zh-CN'));
-
-/**
- * 设置本地化信息
- * @param t 本地化字符串
- */
 function setLocale(t: string) {
-    t = getCanonicalLocale(t);
-
-    $cmfx.setAcceptLanguage(t);
     $i18n.locale.value = t;
     naiveLocale.value = getNaiveLocale(t);
 }
 
+const $cmfx = new Cmfx(setLocale, setTheme, setThemeMode);
 
-
-defineExpose({ setThemeMode, setTheme, setTitle, setLocale });
-
-setTitle('');
-setLocale(presetLocale);
+$cmfx.setTitle('');
+$cmfx.setLocale(presetLocale);
+$cmfx.setThemeMode('os');
+$cmfx.setTheme(null);
 
 onMounted(() => {
     $cmfx.selectPage($router);

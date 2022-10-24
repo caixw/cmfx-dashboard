@@ -5,7 +5,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import { HomeRound } from '@vicons/material';
 
 import App from '@/pages/app/App.vue';
-import { createCmfx } from './plugins/cmfx';
+import { createOptions } from './plugins/options';
 import logo from '@/assets/logo.png';
 
 import { createI18n } from 'vue-i18n';
@@ -46,7 +46,7 @@ const i18n = createI18n({
     messages: Object.assign(zhCN, zhTW),
 });
 
-const cmfx = createCmfx({
+const options = createOptions({
     name: 'cmfx',
     logo: logo,
     locale: 'zh-CN',
@@ -54,6 +54,8 @@ const cmfx = createCmfx({
     urlPrefix: 'http://localhost/admin',
     loginPage: 'login',
     presetPage: 'logout',
+
+    themes: [],
 
     menus: [
         {
@@ -91,4 +93,4 @@ const cmfx = createCmfx({
     ]
 });
 
-createApp(App).use(router).use(i18n).use(cmfx).mount('#app');
+createApp(App).use(router).use(i18n).use(options).mount('#app');

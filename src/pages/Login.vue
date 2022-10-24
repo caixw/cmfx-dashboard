@@ -1,6 +1,6 @@
 <template>
-    <n-grid cols="12" responsive="screen" :item-responsive="true" class="card">
-        <n-grid-item span="12 m:8 l:6 xl:4" offset="0 m:2 l:3 xl:4">
+    <n-grid cols="12" responsive="screen" item-responsive class="card">
+        <n-grid-item span="12 s:8 m:6 xl:4" offset="0 s:2 m:3 xl:4">
             <n-card :title="$t('message.login')">
                 <n-form :model="account" :rules="rules" ref="form">
                     <n-form-item :label="$t('message.username')" path="username">
@@ -58,7 +58,7 @@ import {
 import { NavigateNextFilled, ClearFilled, AccountCircleFilled, PasswordFilled } from '@vicons/material';
 import { useI18n } from 'vue-i18n';
 
-import { useCmfx } from '@/plugins/cmfx';
+import { useCmfx } from '@/pages/app/cmfx';
 
 export default defineComponent({
     components: {
