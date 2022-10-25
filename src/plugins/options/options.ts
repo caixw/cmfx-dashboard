@@ -21,14 +21,8 @@ export interface Options {
     }
 
     // 一些必要页面的名称定义
-    pages: {
-        login: string
-        logout: string
-        preset: string
-        userSetting: string
-        userPassword: string
-        userSecurityLog: string
-    }
+    loginPage: string
+    presetPage: string
 
     // api 相关
     urlPrefix: string
@@ -39,6 +33,8 @@ export interface Options {
     //
     //可以创建一个 theme 为空的主题，表示采用系统主题。
     themes: Array<NamedTheme>
+
+    userMenus: Array<MenuItem> // 用户菜单
 
     menus: Array<MenuItem> // 侧边栏的菜单
 }

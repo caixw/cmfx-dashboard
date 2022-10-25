@@ -15,6 +15,7 @@ import zhTW from '@/locales/zhTW';
 
 // createWebHistory 路径不带 #，不能直接访问项目，需要 nginx 转发
 // createWebHashHistory 路径带 #
+import { XLogout } from '@/index';
 const router = createRouter({
     history: createWebHashHistory(),
     routes: [
@@ -26,7 +27,7 @@ const router = createRouter({
         {
             path: '/logout',
             name: 'logout',
-            component: () => import('@/pages/Test.vue')
+            component: XLogout
         },
         {
             path: '/layout',
@@ -39,9 +40,9 @@ const router = createRouter({
                     component: () => import('@/pages/Test.vue')
                 },
                 {
-                    path: '/test',
-                    name: 'test',
-                    component: () => import('@/pages/Test.vue')
+                    path: '/test2',
+                    name: 'test2',
+                    component: () => import('@/pages/Test2.vue')
                 },
             ]
         },
@@ -62,18 +63,45 @@ const options = createOptions({
     name: 'cmfx',
     logo: logo,
 
-    pages: {
-        login: 'login',
-        logout: 'logout',
-        preset: 'test',
-        userSetting: 'user_settings',
-        userPassword: 'user_password',
-        userSecurityLog: 'user_securitylog',
-    },
-
     urlPrefix: 'http://localhost:8080/admin',
+    loginPage: 'login',
+    presetPage: 'test',
 
     themes: presetThemes,
+
+    userMenus: [
+        {
+            label: 'common.settings',
+            key: 'test2',
+        },
+        {
+            label: 'common.password',
+            key: 'test2',
+        },
+        {
+            label: 'common.security_log',
+            key: 'test2',
+            children: [
+                {
+                    label: 'common.logout',
+                    key: 'test'
+                },
+                {
+                    label: 'common.logout',
+                    key: 'test'
+                }
+            ]
+        },
+        {
+            label: '---',
+            key: '---',
+            type: 'divider'
+        },
+        {
+            label: 'common.logout',
+            key: 'logout'
+        }
+    ],
 
     menus: [
         {
@@ -82,16 +110,16 @@ const options = createOptions({
             key: 'layout'
         },
         {
-            label: 'label2',
+            label: 'common.login',
             icon: HomeRound,
             key: 'test',
             children: [
                 {
-                    label: '无图标',
+                    label: 'common.logout',
                     key: 'test'
                 },
                 {
-                    label: '有图标',
+                    label: 'common.username',
                     icon: HomeRound,
                     key: 'test',
                     children: [
@@ -100,7 +128,7 @@ const options = createOptions({
                             key: 'test'
                         },
                         {
-                            label: '三级菜单-有图标',
+                            label: 'common.username',
                             icon: HomeRound,
                             key: 'test'
                         },

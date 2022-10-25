@@ -35,11 +35,9 @@
                         <n-dropdown trigger="hover" :options="userMenus" @select="userMenuSelect">
                             <n-button round>
                                 <template #icon>
-                                    <n-icon>
-                                        <menu-open-filled />
-                                    </n-icon>
+                                    <n-icon class="avatar" :size="35" :component="AccountCircleFilled" />
                                 </template>
-                                abc
+                                {{info.username}}
                             </n-button>
                         </n-dropdown>
                     </n-space>
@@ -54,15 +52,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, VNodeChild, onMounted } from 'vue';
 import {
     NLayout, NLayoutHeader, NLayoutSider, NLayoutContent, // layout
     NBreadcrumb, NBreadcrumbItem, // breadcrumb
-    NAvatar, NButton, NDropdown, NIcon, NMenu, NSpace, MenuOption,
-    DropdownOption, DropdownDividerOption
+    NAvatar, NButton, NDropdown, NIcon, NMenu, NSpace, MenuOption, DropdownOption
 } from 'naive-ui';
 import {
-    MenuFilled, MenuOpenFilled,
+    MenuFilled, MenuOpenFilled, AccountCircleFilled,
     FullscreenFilled, FullscreenExitFilled,
 } from '@vicons/material';
 import { useFullscreen } from '@vueuse/core';
@@ -71,52 +68,42 @@ import { useRouter } from 'vue-router';
 
 import { XThemeSelector } from '@/components/theme-selector';
 import { XLocaleSelector } from '@/components/locale-selector';
-import { buildMenus } from './menu';
 import { useCmfx } from '@/pages/app';
+import { buildMenus, buildUserMenus, buildMenuLabels } from './menu';
+import { Admin, getInfo } from './admin';
 
 const $i18n = useI18n();
 const $cmfx = useCmfx();
 const $router = useRouter();
 const breadcrumbs = ref<string[]>([]);
 
-const userMenus: Array<DropdownOption&{name: string} | DropdownDividerOption> = [
-    {
-        key: 'settings',
-        name: $cmfx.options.pages.userSetting,
-        label: ()=> $i18n.t('common.settings')
-    },
-    {
-        key: 'password',
-        name: $cmfx.options.pages.userPassword,
-        label: ()=> $i18n.t('common.password')
-    },
-    {
-        key: 'securitylog',
-        name: $cmfx.options.pages.userSecurityLog,
-        label: ()=> $i18n.t('common.security_log')
-    },
-    {
-        type: 'divider'
-    },
-    {
-        key: 'logout',
-        name: $cmfx.options.pages.logout,
-        label: ()=> $i18n.t('common.logout')
-    },
-];
-function userMenuSelect(key: string, item: DropdownOption&{name:string}) {
-    $router.push({name: item.name});
-    $cmfx.setTitle(item.label as string);
+const userMenus = buildUserMenus($i18n, $cmfx.options.userMenus);
+function userMenuSelect(key: string, item: DropdownOption) {
+    $router.push({name: key});
+
+    const f = item.label as {():VNodeChild};
+    $cmfx.setTitle(f() as string);
+    breadcrumbs.value = [f() as string];
 }
 
-const menus = ref(buildMenus($cmfx.options.menus));
+const menus = ref(buildMenus($i18n, $cmfx.options.menus));
 const sideVisible = ref(false);
-function menuSelect(key: string, item: MenuOption&{name:string}) {
-    $cmfx.setTitle(item.label as string);
-    breadcrumbs.value = item.labels as string[];
+function menuSelect(key: string, item: MenuOption) {
+    if (typeof(item.label) === 'string' ) {
+        $cmfx.setTitle(item.label);
+    }else{
+        const f = item.label as {():VNodeChild};
+        $cmfx.setTitle(f() as string);
+    }
+    breadcrumbs.value = buildMenuLabels(item);
 }
 
 const { isFullscreen, toggle } = useFullscreen();
+
+const info = ref<Admin>({name: '', username: '', nickname: '', state: 'normal', sex: 'unknown'});
+onMounted(async()=>{
+    info.value = await getInfo($cmfx);
+});
 </script>
 
 <style scoped>
@@ -126,5 +113,9 @@ const { isFullscreen, toggle } = useFullscreen();
 
 .main {
     top: 64px;
+}
+
+.avatar {
+    margin-left: -20px;
 }
 </style>

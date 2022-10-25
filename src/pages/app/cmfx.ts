@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 
 import { InjectionKey, inject, provide } from 'vue';
-import { Router } from 'vue-router';
 
 import { Return, f } from './api';
 import { Options, NamedTheme, Theme, ThemeMode, optionsKey } from '@/plugins/options';
@@ -140,26 +139,23 @@ export class Cmfx {
     /**
      * 根据状态自动跳转到指定的页面
      */
-    selectPage(r: Router) {
-        let name = this.options.pages.login;
+    selectPage(): string {
         if (getToken(this.options)) {
-            name = this.options.pages.preset;
+            return this.options.presetPage;
         }
-        r.push({name: name});
+        return this.options.loginPage;
     }
 
     /**
      * 退出登录
-     * @param r 路由
      */
-    async logout(r: Router) {
+    async logout() {
         const ret = await this.del('/login');
         if (!ret.ok) {
             console.error(ret.problem);
         }
 
         delToken(this.options);
-        r.push({name: this.options.pages.login});
     }
 
     /**

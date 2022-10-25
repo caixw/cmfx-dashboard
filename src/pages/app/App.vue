@@ -70,7 +70,7 @@ function setLocale(t: string) {
 const $cmfx = new Cmfx(setLocale, setTheme, setThemeMode);
 
 onMounted(() => {
-    $cmfx.selectPage($router);
+    $router.push({name: $cmfx.selectPage()});
     $cmfx.themeMode = 'os';
     $cmfx.locale = $i18n.availableLocales[0];
 });
