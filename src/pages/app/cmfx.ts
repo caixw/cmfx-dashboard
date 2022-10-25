@@ -158,8 +158,8 @@ export class Cmfx {
             console.error(ret.problem);
         }
 
-        delToken(this.#options);
-        r.push({name: this.#options.loginPage});
+        delToken(this.options);
+        r.push({name: this.options.loginPage});
     }
 
     /**
@@ -172,7 +172,7 @@ export class Cmfx {
             console.log(r.problem);
         }
 
-        writeToken(this.#options, r.body as Token);
+        writeToken(this.options, r.body as Token);
     }
 }
 

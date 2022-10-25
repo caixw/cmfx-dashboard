@@ -41,15 +41,8 @@ export async function f(cmfx: Cmfx, method: Method, url: string, obj?: FormData 
     url = buildURL(o.urlPrefix, url);
 
     const t = getToken(o);
-    if (!t) {
-        return {
-            status: 401,
-            ok: false
-        };
-    }
-
     const headers: HeadersInit = {
-        'Authorization': t.access_token,
+        'Authorization': t ? t.access_token : '',
         'Content-Type': o.contentType,
         'Accept-Language': cmfx.locale
     };

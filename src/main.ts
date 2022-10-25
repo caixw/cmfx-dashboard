@@ -4,8 +4,8 @@ import { createApp } from 'vue';
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { HomeRound } from '@vicons/material';
 
-import App from '@/pages/app/App.vue';
-import { createOptions } from './plugins/options';
+import { XApp } from '@/pages/app';
+import { createOptions, presetThemes } from './plugins/options';
 import logo from '@/assets/logo.png';
 
 import { createI18n } from 'vue-i18n';
@@ -29,14 +29,26 @@ const router = createRouter({
             component: () => import('@/pages/logout.vue')
         },
         {
-            path: '/page',
-            name: 'page',
-            component: () => import('@/packages/page/Page.vue')
+            path: '/layout',
+            name: 'layout',
+            component: () => import('@/pages/layout/Layout.vue'),
+            children: [
+                {
+                    path: '/test',
+                    name: 'test',
+                    component: () => import('@/pages/Test.vue')
+                },
+                {
+                    path: '/test',
+                    name: 'test',
+                    component: () => import('@/pages/Test.vue')
+                },
+            ]
         },
         {
             path: '/errpage',
             name: 'errpage',
-            component: () => import('@/packages/errpage/Page.vue')
+            component: () => import('@/pages/Test.vue')
         },
     ],
 });
@@ -50,34 +62,11 @@ const options = createOptions({
     name: 'cmfx',
     logo: logo,
 
-    urlPrefix: 'http://localhost/admin',
+    urlPrefix: 'http://localhost:8080/admin',
     loginPage: 'login',
-    presetPage: 'logout',
+    presetPage: 'test',
 
-    themes: [
-        {
-            id: 'default',
-            name: 'common.default'
-        },
-        {
-            id: 'blue',
-            name: 'blue',
-            theme: {
-                light: {
-                    common: {
-                        baseColor: '#8bbccc',
-                        primaryColor: '#000000'
-                    }
-                },
-                dark: {
-                    common: {
-                        baseColor: '#eaeaea',
-                        primaryColor: '#00abb3'
-                    }
-                }
-            }
-        }
-    ],
+    themes: presetThemes,
 
     menus: [
         {
@@ -88,25 +77,25 @@ const options = createOptions({
         {
             label: 'label2',
             icon: HomeRound,
-            key: 'layout',
+            key: 'test',
             children: [
                 {
                     label: '无图标',
-                    key: 'layout'
+                    key: 'test'
                 },
                 {
                     label: '有图标',
                     icon: HomeRound,
-                    key: 'layout',
+                    key: 'test',
                     children: [
                         {
                             label: '三级菜单-无图标',
-                            key: 'layout'
+                            key: 'test'
                         },
                         {
                             label: '三级菜单-有图标',
                             icon: HomeRound,
-                            key: 'layout'
+                            key: 'test'
                         },
                     ]
                 },
@@ -115,4 +104,4 @@ const options = createOptions({
     ]
 });
 
-createApp(App).use(router).use(i18n).use(options).mount('#app');
+createApp(XApp).use(router).use(i18n).use(options).mount('#app');

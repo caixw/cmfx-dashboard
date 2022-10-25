@@ -16,7 +16,7 @@ import { LanguageFilled, RadioButtonCheckedFilled, RadioButtonUncheckedFilled } 
 import { useI18n } from 'vue-i18n';
 import { DropdownOption, DropdownDividerOption, NIcon, NButton, NDropdown } from 'naive-ui';
 
-import { useCmfx } from '@/pages/app/cmfx';
+import { useCmfx } from '@/pages/app';
 
 const $cmfx = useCmfx();
 const $i18n = useI18n();
