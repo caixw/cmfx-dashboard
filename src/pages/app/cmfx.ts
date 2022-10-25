@@ -4,9 +4,9 @@ import { InjectionKey, inject, provide } from 'vue';
 import { Router } from 'vue-router';
 
 import { Return, f } from './api';
-import { Options, Theme, ThemeMode, optionsKey } from '@/plugins/options';
+import { Options, NamedTheme, Theme, ThemeMode, optionsKey } from '@/plugins/options';
 import { getToken, delToken, writeToken, Token } from './token';
-import { getCanonicalLocale } from './locale';
+import { getCanonicalLocale, presetLocale } from './locale';
 
 const key = Symbol('cmfx') as InjectionKey<Cmfx>;
 
@@ -15,7 +15,7 @@ interface LocaleSetter {
 }
 
 interface ThemeSetter {
-    (t: Theme | null): void
+    (t?: Theme): void
 }
 
 interface ThemeModeSetter {
@@ -24,8 +24,14 @@ interface ThemeModeSetter {
 
 export class Cmfx {
     readonly #options: Required<Options>;
+
+    #locale: string;
     readonly #setLocale: LocaleSetter;
+
+    #theme?: string;
     readonly #setTheme: ThemeSetter;
+
+    #themeMode: ThemeMode;
     readonly #setThemeMode: ThemeModeSetter;
 
     constructor(ls: LocaleSetter, ts: ThemeSetter, ms: ThemeModeSetter) {
@@ -35,8 +41,13 @@ export class Cmfx {
         }
         this.#options = o;
 
+        this.#locale = presetLocale;
         this.#setLocale = ls;
+
+        this.#theme = undefined;
         this.#setTheme = ts;
+
+        this.#themeMode = 'os';
         this.#setThemeMode = ms;
 
         provide(key, this);
@@ -54,23 +65,23 @@ export class Cmfx {
      * @returns
      */
     post(url: string, body: unknown): Promise<Return> {
-        return f(this.#options, 'POST', url, body);
+        return f(this, 'POST', url, body);
     }
 
     patch(url: string, body: unknown): Promise<Return> {
-        return f(this.#options, 'PATCH', url, body);
+        return f(this, 'PATCH', url, body);
     }
 
     put(url: string, body: unknown): Promise<Return> {
-        return f(this.#options, 'PUT', url, body);
+        return f(this, 'PUT', url, body);
     }
 
     del(url: string): Promise<Return> {
-        return f(this.#options, 'DELETE', url);
+        return f(this, 'DELETE', url);
     }
 
     get(url: string): Promise<Return> {
-        return f(this.#options, 'GET', url);
+        return f(this, 'GET', url);
     }
 
     /**
@@ -83,7 +94,7 @@ export class Cmfx {
     upload(url: string, field: string, blob: Blob): Promise<Return> {
         const data = new FormData();
         data.append(field, blob);
-        return f(this.#options, 'POST', url, data, true);
+        return f(this, 'POST', url, data, true);
     }
 
     /**
@@ -97,41 +108,32 @@ export class Cmfx {
         document.title = title + this.options.name;
     }
 
-    /**
-     * 设置新的主题
-     *
-     * 会根据 setThemeMode 的设置自动选择是 light 还是 dark。
-     * @param t 主题的 ID，如果为 null，表示采用默认的主题。
-     */
-    setTheme(t: string | null) {
-        if (t === null) {
-            this.#setTheme(null);
+    get theme(): string | undefined { return this.#theme; }
+    set theme(id: string | undefined) {
+        this.#theme = id;
+
+        if (!id) {
+            this.#setTheme();
             return;
         }
 
-        const theme = this.options.themes.find((theme: Theme):boolean=>{return theme.id == t;});
+        const theme = this.options.themes.find((theme: NamedTheme):boolean=>{return theme.id == id;});
         if (!theme) {
-            throw `${t} 主题并不存在`;
+            throw `${id} 主题并不存在`;
         }
-        this.#setTheme(theme);
+        this.#setTheme(theme.theme);
     }
 
-    /**
-     * 设置新的主题
-     * @param mode 主题名称，可以是 os, dark 和 light
-     */
-    setThemeMode(m: ThemeMode) {
+    get themeMode(): ThemeMode { return this.#themeMode; }
+    set themeMode(m: ThemeMode) {
+        this.#themeMode = m;
         this.#setThemeMode(m);
     }
 
-    /**
-     * 设置本地化信息
-     * @param t 本地化字符串
-     */
-    setLocale(t: string) {
+    get locale(): string { return this.#locale; }
+    set locale(t: string) {
         t = getCanonicalLocale(t);
-
-        this.options.locale = t;
+        this.#locale = t;
         this.#setLocale(t);
     }
 

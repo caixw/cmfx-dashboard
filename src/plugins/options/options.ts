@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: MIT
 
+import type { InjectionKey, App } from 'vue';
+
 import { MenuItem } from './menu';
-import { Theme } from './theme';
+import { NamedTheme } from './theme';
+
+export const optionsKey = Symbol() as InjectionKey<Required<Options>>;
 
 /**
  * 整个项目的配置对象
@@ -22,15 +26,40 @@ export interface Options {
     presetPage: string // 登录后的默认页
     contentType?: string
     acceptType?: string
-    locale?: string // 初始语言，如果未设置，则采用当前浏览器的语言。
 
     // 所有的主题
-    themes: Array<Theme>
+    //
+    //可以创建一个 theme 为空的主题，表示采用系统主题。
+    themes: Array<NamedTheme>
 
     menus: Array<MenuItem> // 侧边栏的菜单
 }
 
-export const presetOptions = {
+/**
+ * 创建 options 插件
+ * @param o 选项
+ * @returns
+ */
+export function createOptions(o: Options) {
+    return {
+        install(app: App) {
+            app.provide(optionsKey, buildOptions(o));
+        }
+    };
+}
+
+// 检测对象的正确性
+function buildOptions(o: Options): Required<Options> {
+    const opt = Object.assign(presetOptions, o);
+
+    if (opt.themes.length === 0) {
+        throw 'themes 不能为空';
+    }
+
+    return opt;
+}
+
+const presetOptions = {
     titleSeparator: ' | ',
 
     token: {
@@ -40,5 +69,5 @@ export const presetOptions = {
 
     contentType: 'application/json',
     acceptType: 'application/json',
-    locale: 'en',
+    locale: 'zh-CN',
 };

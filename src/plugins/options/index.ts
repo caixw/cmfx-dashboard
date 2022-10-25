@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: MIT
 
-export { optionsKey, createOptions } from './plugin';
-
 export type { MenuItem } from './menu';
 
 export type { Options } from './options';
+export { optionsKey, createOptions } from './options';
 
-export type { ThemeMode, Theme } from './theme';
+export type { ThemeMode, Theme, NamedTheme } from './theme';

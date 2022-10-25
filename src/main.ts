@@ -49,13 +49,35 @@ const i18n = createI18n({
 const options = createOptions({
     name: 'cmfx',
     logo: logo,
-    locale: 'zh-CN',
 
     urlPrefix: 'http://localhost/admin',
     loginPage: 'login',
     presetPage: 'logout',
 
-    themes: [],
+    themes: [
+        {
+            id: 'default',
+            name: 'common.default'
+        },
+        {
+            id: 'blue',
+            name: 'blue',
+            theme: {
+                light: {
+                    common: {
+                        baseColor: '#8bbccc',
+                        primaryColor: '#000000'
+                    }
+                },
+                dark: {
+                    common: {
+                        baseColor: '#eaeaea',
+                        primaryColor: '#00abb3'
+                    }
+                }
+            }
+        }
+    ],
 
     menus: [
         {

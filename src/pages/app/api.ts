@@ -2,6 +2,7 @@
 
 import { Options } from '@/plugins/options';
 import { delToken, getToken } from './token';
+import { Cmfx } from './cmfx';
 
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 
@@ -35,7 +36,8 @@ export interface Return {
  * @param upload 是否为上传对象。
  * @returns
  */
-export async function f(o: Required<Options>, method: Method, url: string, obj?: FormData | unknown, upload?: boolean): Promise<Return> {
+export async function f(cmfx: Cmfx, method: Method, url: string, obj?: FormData | unknown, upload?: boolean): Promise<Return> {
+    const o = cmfx.options;
     url = buildURL(o.urlPrefix, url);
 
     const t = getToken(o);
@@ -49,7 +51,7 @@ export async function f(o: Required<Options>, method: Method, url: string, obj?:
     const headers: HeadersInit = {
         'Authorization': t.access_token,
         'Content-Type': o.contentType,
-        'Accept-Language': o.locale
+        'Accept-Language': cmfx.locale
     };
 
     let body: FormData | string | undefined = undefined;

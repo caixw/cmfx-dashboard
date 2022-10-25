@@ -1,6 +1,6 @@
 <template>
     <n-config-provider :theme="themeMode"
-        :theme-overrides="theme === null ? null : (themeMode === null ? theme.light : theme.dark)"
+        :theme-overrides="theme === undefined ? null : (themeMode === null ? theme.light : theme.dark)"
         :locale="naiveLocale.locale" :date-locale="naiveLocale.date">
         <n-global-style />
         <n-message-provider>
@@ -21,7 +21,7 @@ import { useI18n } from 'vue-i18n';
 
 import { ThemeMode, Theme } from '@/plugins/options';
 import { Cmfx } from './cmfx';
-import { getNaiveLocale, NaiveLocale, presetLocale } from './locale';
+import { getNaiveLocale, NaiveLocale } from './locale';
 
 const $router = useRouter();
 const $i18n = useI18n();
@@ -54,8 +54,8 @@ function setThemeMode(mode: ThemeMode) {
     }
 }
 
-const theme = ref<Theme | null>(null);
-function setTheme(t: Theme | null) {
+const theme = ref<Theme|undefined>();
+function setTheme(t?: Theme) {
     theme.value = t;
 }
 
@@ -69,13 +69,10 @@ function setLocale(t: string) {
 
 const $cmfx = new Cmfx(setLocale, setTheme, setThemeMode);
 
-$cmfx.setTitle('');
-$cmfx.setLocale(presetLocale);
-$cmfx.setThemeMode('os');
-$cmfx.setTheme(null);
-
 onMounted(() => {
     $cmfx.selectPage($router);
+    $cmfx.themeMode = 'os';
+    $cmfx.locale = $i18n.availableLocales[0];
 });
 
 onUnmounted(() => {
