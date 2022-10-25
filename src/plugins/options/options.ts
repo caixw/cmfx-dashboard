@@ -20,10 +20,18 @@ export interface Options {
         name: string
     }
 
+    // 一些必要页面的名称定义
+    pages: {
+        login: string
+        logout: string
+        preset: string
+        userSetting: string
+        userPassword: string
+        userSecurityLog: string
+    }
+
     // api 相关
     urlPrefix: string
-    loginPage: string // 登录页的路由名称
-    presetPage: string // 登录后的默认页
     contentType?: string
     acceptType?: string
 

@@ -29,7 +29,7 @@
 
                 <template #action>
                     <n-space justify="space-between">
-                        <n-button icon-placement="left" @click="reset">
+                        <n-button icon-placement="left" attr-type="reset" @click="reset">
                             {{$t('common.reset')}}
                             <template #icon>
                                 <n-icon>
@@ -37,7 +37,7 @@
                                 </n-icon>
                             </template>
                         </n-button>
-                        <n-button type="primary" icon-placement="right" @click="login">
+                        <n-button type="primary" attr-type="submit" icon-placement="right" @click="login">
                             {{$t('common.login')}}
                             <template #icon>
                                 <n-icon>
@@ -52,8 +52,9 @@
     </n-grid>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
+<script setup lang="ts">
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import {
     NGrid, NGridItem, NCard, NButton, NSpace, NIcon,
     NForm, NFormItem, NInput, FormRules, FormInst
@@ -65,51 +66,42 @@ import { useCmfx } from '@/pages/app/cmfx';
 import { XThemeSelector } from '@/components/theme-selector';
 import { XLocaleSelector } from '@/components/locale-selector';
 
-export default defineComponent({
-    components: {
-        NGrid, NGridItem, NCard, NButton, NSpace, NIcon, XThemeSelector, XLocaleSelector,
-        NavigateNextFilled, ClearFilled, AccountCircleFilled, PasswordFilled,
-        NForm, NFormItem, NInput
-    },
+const $cmfx = useCmfx();
+const $i18n = useI18n();
+const $router = useRouter();
 
-    setup() {
-        const $cmfx = useCmfx();
-        const $i18n = useI18n();
+const form = ref<FormInst | null>(null);
+const account = ref<Account>({ username: '', password: '' });
 
-        const form = ref<FormInst | null>(null);
-        const account = ref<Account>({ username: '', password: '' });
+const rules: FormRules = {
+    username: [
+        {
+            required: true,
+            renderMessage: ()=> {return $i18n.t('common.required');},
+            trigger: ['blur', 'input']
+        }
+    ],
+    password: [
+        {
+            required: true,
+            renderMessage: ()=> {return $i18n.t('common.required');},
+            trigger: ['blur', 'input']
+        }
+    ]
+};
 
-        const rules: FormRules = {
-            username: [
-                {
-                    required: true,
-                    renderMessage: ()=> {return $i18n.t('common.required');},
-                    trigger: ['blur', 'input']
-                }
-            ],
-            password: [
-                {
-                    required: true,
-                    renderMessage: ()=> {return $i18n.t('common.required');},
-                    trigger: ['blur', 'input']
-                }
-            ]
-        };
+const reset = () => {
+    account.value.username = '';
+    account.value.password = '';
+};
 
-        const reset = () => {
-            account.value.username = '';
-            account.value.password = '';
-        };
+const login = async () => {
+    const ok = await $cmfx.login(account.value);
+    if (ok) {
+        $router.push({name: $cmfx.options.presetPage });
+    }
 
-        const login = async () => {
-            return await $cmfx.login(account.value);
-        };
-
-        return {
-            form, account, rules, login, reset,
-        };
-    },
-});
+};
 
 interface Account {
     username: string

@@ -141,9 +141,9 @@ export class Cmfx {
      * 根据状态自动跳转到指定的页面
      */
     selectPage(r: Router) {
-        let name = this.#options.loginPage;
-        if (getToken(this.#options)) {
-            name = this.#options.presetPage;
+        let name = this.options.pages.login;
+        if (getToken(this.options)) {
+            name = this.options.pages.preset;
         }
         r.push({name: name});
     }
@@ -159,20 +159,22 @@ export class Cmfx {
         }
 
         delToken(this.options);
-        r.push({name: this.options.loginPage});
+        r.push({name: this.options.pages.login});
     }
 
     /**
      * 执行登录操作
      * @param account 账号信息
      */
-    async login(account: unknown) {
+    async login(account: unknown): Promise<boolean> {
         const r = await this.post('/login', account);
         if (!r.ok) {
             console.log(r.problem);
+            return false;
         }
 
         writeToken(this.options, r.body as Token);
+        return true;
     }
 }
 

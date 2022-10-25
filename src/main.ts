@@ -21,12 +21,12 @@ const router = createRouter({
         {
             path: '/login',
             name: 'login',
-            component: () => import('@/pages/login.vue')
+            component: () => import('@/pages/Login.vue')
         },
         {
             path: '/logout',
             name: 'logout',
-            component: () => import('@/pages/logout.vue')
+            component: () => import('@/pages/Test.vue')
         },
         {
             path: '/layout',
@@ -62,9 +62,16 @@ const options = createOptions({
     name: 'cmfx',
     logo: logo,
 
+    pages: {
+        login: 'login',
+        logout: 'logout',
+        preset: 'test',
+        userSetting: 'user_settings',
+        userPassword: 'user_password',
+        userSecurityLog: 'user_securitylog',
+    },
+
     urlPrefix: 'http://localhost:8080/admin',
-    loginPage: 'login',
-    presetPage: 'test',
 
     themes: presetThemes,
 

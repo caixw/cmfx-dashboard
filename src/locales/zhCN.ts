@@ -29,12 +29,15 @@ messages[getCanonicalLocale('zh-cn')] = {
         'zh-TW': '繁体中文'
     },
     common: {
-        login: '登录',
-        username: '账号',
-        password: '密码',
-        reset: '重置',
         default: '默认',
-        required: '不能为空'
+        login: '登录',
+        logout: '退出',
+        password: '密码',
+        required: '不能为空',
+        reset: '重置',
+        security_log: '安全日志',
+        settings: '设置',
+        username: '账号'
     },
     theme: {
         dark: '暗色模式',
