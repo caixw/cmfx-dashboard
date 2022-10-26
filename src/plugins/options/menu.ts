@@ -3,7 +3,9 @@
 import { Component } from 'vue';
 
 /**
- * 菜单项
+ * 菜单栏的定义
+ *
+ * 包括了侧边栏的菜单以及用户菜单项。
  */
 export interface MenuItem {
     label: string // 标题翻译 ID

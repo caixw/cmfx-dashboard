@@ -35,7 +35,7 @@
                         <n-dropdown trigger="hover" :options="userMenus" @select="userMenuSelect">
                             <n-button round>
                                 <template #icon>
-                                    <n-icon class="avatar" :size="35" :component="AccountCircleFilled" />
+                                    <n-icon class="avatar" :size="30" :component="AccountCircleFilled" />
                                 </template>
                                 {{info.username}}
                             </n-button>
@@ -60,7 +60,7 @@ import {
 } from 'naive-ui';
 import {
     MenuFilled, MenuOpenFilled, AccountCircleFilled,
-    FullscreenFilled, FullscreenExitFilled,
+    FullscreenFilled, FullscreenExitFilled
 } from '@vicons/material';
 import { useFullscreen } from '@vueuse/core';
 import { useI18n } from 'vue-i18n';
@@ -77,6 +77,8 @@ const $cmfx = useCmfx();
 const $router = useRouter();
 const breadcrumbs = ref<string[]>([]);
 
+// 用户菜单
+
 const userMenus = buildUserMenus($i18n, $cmfx.options.userMenus);
 function userMenuSelect(key: string, item: DropdownOption) {
     $router.push({name: key});
@@ -85,6 +87,8 @@ function userMenuSelect(key: string, item: DropdownOption) {
     $cmfx.setTitle(f() as string);
     breadcrumbs.value = [f() as string];
 }
+
+// 侧边栏菜单
 
 const menus = ref(buildMenus($i18n, $cmfx.options.menus));
 const sideVisible = ref(false);
@@ -98,6 +102,7 @@ function menuSelect(key: string, item: MenuOption) {
     breadcrumbs.value = buildMenuLabels(item);
 }
 
+// 全屏
 const { isFullscreen, toggle } = useFullscreen();
 
 const info = ref<Admin>({name: '', username: '', nickname: '', state: 'normal', sex: 'unknown'});

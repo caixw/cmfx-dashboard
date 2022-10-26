@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import {
     NGrid, NGridItem, NCard, NButton, NSpace, NIcon,
@@ -100,8 +100,11 @@ const login = async () => {
     if (ok) {
         $router.push({name: $cmfx.options.presetPage });
     }
-
 };
+
+onMounted(()=>{
+    $cmfx.setTitle($i18n.t('common.login'));
+});
 
 interface Account {
     username: string

@@ -10,13 +10,12 @@ export interface Theme {
 }
 
 export interface NamedTheme {
-    id: string
-    name: string
+    id: string // 主题的唯一 ID
+    name: string // 主题名称的翻译项 ID
     theme?: Theme
 }
 
 // 一些预定义的主题内容
-// TODO
 export const presetThemes: Array<NamedTheme> = [
     {
         id: 'default',

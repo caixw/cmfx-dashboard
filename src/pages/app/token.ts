@@ -16,7 +16,7 @@ export function getToken(o: Required<Options>): undefined | Token {
     }
 
     try {
-        const t = JSON.parse(v) as Required<Token>;
+        const t = JSON.parse(v) as Required<ExpiredToken>;
         if (t.expired <= now()) {
             delToken(o);
             return;
@@ -37,8 +37,13 @@ export function writeToken(o: Required<Options>, t?: Token) {
     if (!t) { return; }
 
     const cfg = o.token;
-    t.expired = now() + t.expires;
-    cfg.storage.setItem(cfg.name, JSON.stringify(t));
+    const expired = now() + t.expires;
+    cfg.storage.setItem(cfg.name, JSON.stringify({
+        access_token: t.access_token,
+        refresh_token: t.refresh_token,
+        expires: t.expires,
+        expired: expired,
+    }));
 }
 
 /**
@@ -53,9 +58,10 @@ export function delToken(o: Required<Options>) {
 export interface Token {
     access_token: string
     refresh_token: string
-    expires: number
-    expired?: number
+    expires: number // 过期时间，单位为秒。
 }
+
+type ExpiredToken = Token & {expired: number};
 
 function now(): number {
     return Math.floor(Date.now() / 1000);
