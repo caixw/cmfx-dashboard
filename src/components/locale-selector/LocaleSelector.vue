@@ -1,11 +1,7 @@
 <template>
     <n-dropdown :options="locales" @select="change">
         <n-button circle>
-            <template #icon>
-                <n-icon>
-                    <language-filled />
-                </n-icon>
-            </template>
+            <template #icon><n-icon :component="LanguageFilled" /></template>
         </n-button>
     </n-dropdown>
 </template>

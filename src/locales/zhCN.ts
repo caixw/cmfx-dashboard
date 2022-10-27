@@ -32,12 +32,15 @@ messages[getCanonicalLocale('zh-cn')] = {
         default: '默认',
         login: '登录',
         logout: '退出',
+        no: '否',
         password: '密码',
         required: '不能为空',
         reset: '重置',
+        search: '搜索',
         security_log: '安全日志',
         settings: '设置',
-        username: '账号'
+        username: '账号',
+        yes: '是'
     },
     theme: {
         dark: '暗色模式',

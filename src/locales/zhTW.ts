@@ -29,15 +29,18 @@ messages[getCanonicalLocale('zh-TW')] = {
         'zh-TW': '繁體中文'
     },
     common: {
+        default: '默認',
         login: '登錄',
         logout: '退出',
-        default: '默認',
+        no: '否',
         password: '密碼',
         required: '不能為空',
         reset: '重置',
+        search: '搜索',
         security_log: '安全日誌',
         settings: '設置',
         username: '賬號',
+        yes: '是'
     },
     theme: {
         dark: '暗色模式',

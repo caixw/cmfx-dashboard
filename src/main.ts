@@ -76,11 +76,11 @@ const options = createOptions({
         },
         {
             label: 'common.password',
-            key: 'test2',
+            key: 'test3',
         },
         {
             label: 'common.security_log',
-            key: 'test2',
+            key: 'test4',
             children: [
                 {
                     label: 'common.logout',
@@ -88,7 +88,7 @@ const options = createOptions({
                 },
                 {
                     label: 'common.logout',
-                    key: 'test'
+                    key: 'test5'
                 }
             ]
         },
@@ -112,25 +112,25 @@ const options = createOptions({
         {
             label: 'common.login',
             icon: HomeRound,
-            key: 'test',
+            key: 'test6',
             children: [
                 {
                     label: 'common.logout',
-                    key: 'test'
+                    key: 'test7'
                 },
                 {
                     label: 'common.username',
                     icon: HomeRound,
-                    key: 'test',
+                    key: 'test8',
                     children: [
                         {
                             label: '三级菜单-无图标',
-                            key: 'test'
+                            key: 'test9'
                         },
                         {
                             label: 'common.username',
                             icon: HomeRound,
-                            key: 'test'
+                            key: 'test10'
                         },
                     ]
                 },

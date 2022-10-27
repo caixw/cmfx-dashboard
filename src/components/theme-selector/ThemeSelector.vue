@@ -1,11 +1,7 @@
 <template>
     <n-dropdown :options="themes" @select="change">
         <n-button circle>
-            <template #icon>
-                <n-icon>
-                    <palette-filled />
-                </n-icon>
-            </template>
+            <template #icon><n-icon :component="PaletteFilled" /></template>
         </n-button>
     </n-dropdown>
 </template>
