@@ -37,19 +37,19 @@ const router = createRouter({
                 {
                     path: '/test',
                     name: 'test',
-                    component: () => import('@/pages/Test.vue')
+                    component: () => import('@/demo/Test.vue')
                 },
                 {
                     path: '/test2',
                     name: 'test2',
-                    component: () => import('@/pages/Test2.vue')
+                    component: () => import('@/demo/Test2.vue')
                 },
             ]
         },
         {
             path: '/errpage',
             name: 'errpage',
-            component: () => import('@/pages/Test.vue')
+            component: () => import('@/demo/Test.vue')
         },
     ],
 });

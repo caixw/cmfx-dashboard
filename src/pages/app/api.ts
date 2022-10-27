@@ -24,7 +24,7 @@ export interface Return {
     problem?: Problem;
     body?: unknown;
     status: number;
-    ok: boolean; // [200-299]，ok 为 true。
+    ok: boolean; // [200-299], 404，ok 为 true。
 }
 
 /**
