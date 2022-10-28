@@ -44,6 +44,11 @@ const router = createRouter({
                     name: 'test2',
                     component: () => import('@/demo/Test2.vue')
                 },
+                {
+                    path: '/paging',
+                    name: 'paging',
+                    component: () => import('@/demo/Paging.vue')
+                },
             ]
         },
         {
@@ -110,13 +115,13 @@ const options = createOptions({
             key: 'layout'
         },
         {
-            label: 'common.login',
+            label: 'common.paging',
             icon: HomeRound,
-            key: 'test6',
+            key: 'test7',
             children: [
                 {
-                    label: 'common.logout',
-                    key: 'test7'
+                    label: 'common.paging',
+                    key: 'paging'
                 },
                 {
                     label: 'common.username',
