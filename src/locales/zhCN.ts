@@ -29,11 +29,13 @@ messages[getCanonicalLocale('zh-cn')] = {
         'zh-TW': '繁体中文'
     },
     common: {
+        apply: '应用',
         default: '默认',
         login: '登录',
         logout: '退出',
         no: '否',
         password: '密码',
+        refresh: '刷新',
         required: '不能为空',
         reset: '重置',
         search: '搜索',
@@ -41,6 +43,16 @@ messages[getCanonicalLocale('zh-cn')] = {
         settings: '设置',
         username: '账号',
         yes: '是'
+    },
+    table: {
+        attribute: '表属性',
+        columns: '列设置',
+        fixed_left: '固定在左侧',
+        fixed_right: '固定在右侧',
+        large_height: '宽松',
+        medium_height: '标准',
+        small_height: '紧凑',
+        striped: '斑马线条纹',
     },
     theme: {
         dark: '暗色模式',

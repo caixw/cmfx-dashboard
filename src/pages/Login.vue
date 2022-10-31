@@ -5,7 +5,7 @@
                 <template #header-extra>
                     <x-theme-selector />&#160;<x-locale-selector />
                 </template>
-                <n-form :model="account" :rules="rules" ref="form">
+                <n-form :model="account" :rules="rules">
                     <n-form-item :label="$t('common.username')" path="username">
                         <n-input v-model:value="account.username">
                             <template #prefix>
@@ -57,7 +57,7 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import {
     NGrid, NGridItem, NCard, NButton, NSpace, NIcon,
-    NForm, NFormItem, NInput, FormRules, FormInst
+    NForm, NFormItem, NInput, FormRules
 } from 'naive-ui';
 import { NavigateNextFilled, ClearFilled, AccountCircleFilled, PasswordFilled } from '@vicons/material';
 import { useI18n } from 'vue-i18n';
@@ -70,7 +70,6 @@ const $cmfx = useCmfx();
 const $i18n = useI18n();
 const $router = useRouter();
 
-const form = ref<FormInst | null>(null);
 const account = ref<Account>({ username: '', password: '' });
 
 const rules: FormRules = {

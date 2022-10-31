@@ -68,7 +68,7 @@ const options = createOptions({
     name: 'cmfx',
     logo: logo,
 
-    urlPrefix: 'http://localhost:8080/admin',
+    urlPrefix: 'http://caixw.local:8080/admin',
     loginPage: 'login',
     presetPage: 'test',
 

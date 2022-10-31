@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: MIT
 
+import { RouteLocationNormalized } from 'vue-router';
+import { DataTableColumn } from 'naive-ui';
+
 export interface Page<T> {
     count: number
     more?: boolean
@@ -27,4 +30,51 @@ export function encodeQuery(q?: Query): string {
         query+=`&${key}=${val}`;
     });
     return query;
+}
+
+/**
+ * 从查询参数中初始化 Query 对象
+ * @param $route
+ * @returns
+ */
+export function initQuery($route: RouteLocationNormalized): Query {
+    const q: Query = {};
+    Object.entries($route.query).forEach(([k,v])=>{
+        if (Array.isArray(v)) {
+            q[k] = v[0];
+        } else {
+            q[k] = v;
+        }
+    });
+    return q;
+}
+
+
+// 用于表示可编辑的数据类型
+export type EditableColumnType = DataTableColumn & { visible?: boolean }
+
+export function fromEditableColumnTypes(cols: Array<EditableColumnType>): Array<DataTableColumn> {
+    const ret: Array<DataTableColumn> = [];
+
+    for(const col of cols) {
+        if (!col.visible) {
+            continue;
+        }
+
+        const clone = Object.assign({}, col);
+        delete clone.visible;
+        ret.push(clone);
+    }
+
+    return ret;
+}
+
+export function toEditableColumnTypes(cols: Array<DataTableColumn>): Array<EditableColumnType> {
+    const ret: Array<EditableColumnType> = [];
+
+    for(const col of cols) {
+        ret.push(Object.assign({visible: true}, col));
+    }
+
+    return ret;
 }

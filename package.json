@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "type": "module",
     "scripts": {
-        "dev": "vite",
+        "dev": "vite --host",
         "build": "vue-tsc --noEmit && vite build",
         "lint": "npx eslint .",
         "test": "vitest",
@@ -26,6 +26,7 @@
         "@vue/test-utils": "^2.2.0",
         "eslint": "^8.25.0",
         "eslint-plugin-vue": "^9.6.0",
+        "fetch-mock": "^9.11.0",
         "jsdom": "^20.0.1",
         "path": "^0.12.7",
         "typescript": "^4.8.4",
