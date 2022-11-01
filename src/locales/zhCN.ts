@@ -51,6 +51,7 @@ messages[getCanonicalLocale('zh-cn')] = {
         fixed_right: '固定在右侧',
         large_height: '宽松',
         medium_height: '标准',
+        select_all: '全选',
         small_height: '紧凑',
         striped: '斑马线条纹',
     },

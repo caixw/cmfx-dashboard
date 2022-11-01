@@ -32,16 +32,19 @@ describe('encodeQuery', ()=>{
 });
 
 describe('toEditableColumnTypes', ()=>{
-    const cols: Array<DataTableColumn> = [
-        {key: 'k1'},
-        {key: 'k2'},
-    ];
+    const t = (id: string): string => { return id }
 
     test('default', ()=>{
-        expect(toEditableColumnTypes(cols.slice())).toEqual([
+        const cols: Array<DataTableColumn> = [
+            {key: 'k1'},
+            {key: 'k2'},
+        ];
+
+        expect(toEditableColumnTypes(t, cols)).toEqual([
             {key: 'k1', visible: true},
             {key: 'k2', visible: true},
         ]);
+
         expect(cols).toEqual([
             {key: 'k1'},
             {key: 'k2'},
@@ -49,22 +52,44 @@ describe('toEditableColumnTypes', ()=>{
     });
 
     test('empty', ()=>{
-        expect(toEditableColumnTypes([])).toEqual([]);
+        expect(toEditableColumnTypes(t, [])).toEqual([]);
+    });
+
+    test('type = selection | expand', () => {
+        const cols: Array<DataTableColumn> = [
+            {key: 'k1'},
+            {type: 'selection'},
+            {type: 'expand'},
+        ];
+
+        expect(toEditableColumnTypes(t, cols)).toEqual([
+            {key: 'k1', visible: true},
+            {visible: true, key: '__selection__1', title: 'table.select_all', type: 'selection'},
+            {visible: true, key: '__expand__2', type: 'expand'},
+        ]);
+
+        expect(cols).toEqual([
+            {key: 'k1'},
+            {type: 'selection'},
+            {type: 'expand'},
+        ]);
     });
 });
 
 describe('fromEditableColumnTypes',()=>{
-    const cols1: Array<EditableColumnType> = [
-        {key: 'k1', visible: true},
-        {key: 'k2', visible: false},
-        {key: 'k3', visible: true},
-    ];
     test('default', ()=>{
-        expect(fromEditableColumnTypes(cols1.slice())).toEqual([
+        const cols: Array<EditableColumnType> = [
+            {key: 'k1', visible: true},
+            {key: 'k2', visible: false},
+            {key: 'k3', visible: true},
+        ];
+
+        expect(fromEditableColumnTypes(cols)).toEqual([
             {key: 'k1'},
             {key: 'k3'},
         ]);
-        expect(cols1).toEqual([
+
+        expect(cols).toEqual([ // 未改哟从原始的值
             {key: 'k1', visible: true},
             {key: 'k2', visible: false},
             {key: 'k3', visible: true},
@@ -76,13 +101,14 @@ describe('fromEditableColumnTypes',()=>{
         expect(fromEditableColumnTypes([])).toEqual([]);
     });
 
-    const cols2 = [
-        {key: 'k1', visible: false},
-        {key: 'k2', visible: false},
-    ];
     test('!visible', ()=>{
-        expect(fromEditableColumnTypes(cols2)).toEqual([]);
-        expect(cols2).toEqual([
+        const cols = [
+            {key: 'k1', visible: false},
+            {key: 'k2', visible: false},
+        ];
+
+        expect(fromEditableColumnTypes(cols)).toEqual([]);
+        expect(cols).toEqual([
             {key: 'k1', visible: false},
             {key: 'k2', visible: false},
         ]);

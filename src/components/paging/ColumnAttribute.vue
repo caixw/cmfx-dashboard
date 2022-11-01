@@ -19,46 +19,53 @@
     </template>
 
     <n-space vertical>
-        <div v-for="(col,index) of editable" justify="space-between" class="line" :key="index">
-            <n-icon class="drag" :component="DragIndicatorFilled" :size="20" />
+        <draggable v-model="editable" group="g1" item-key="key">
+        <template #item="{element}">
+            <div justify="space-between" class="line">
+                <n-icon class="drag" :component="DragIndicatorFilled" :size="20" />
 
-            <n-checkbox v-model:checked="col.visible">
-                {{getTitle(col)}}
-            </n-checkbox>
+                <n-checkbox v-model:checked="element.visible">
+                    {{getTitle(element)}}
+                </n-checkbox>
 
-            <div class="fixed">
-                <n-tooltip>
-                    <template #trigger>
-                        <n-icon :size="20" :component="AlignHorizontalLeftFilled" @click="col.fixed='left'"
-                        :color="col.fixed === 'left' ? $theme.primaryColor : ''" />
-                    </template>
-                    {{$t('table.fixed_left')}}
-                </n-tooltip>
-                &#160;&#160;
-                <n-tooltip>
-                    <template #trigger>
-                        <n-icon :size="20" :component="AlignHorizontalRightFilled" @click="col.fixed='right'"
-                        :color="col.fixed === 'right' ? $theme.primaryColor : ''" />
-                    </template>
-                    {{$t('table.fixed_right')}}
-                </n-tooltip>
+                <div class="fixed">
+                    <n-tooltip>
+                        <template #trigger>
+                            <n-icon :size="20" :component="AlignHorizontalLeftFilled" @click="element.fixed='left'"
+                            :color="element.fixed === 'left' ? $theme.primaryColor : ''" />
+                        </template>
+                        {{$t('table.fixed_left')}}
+                    </n-tooltip>
+                    &#160;&#160;
+                    <n-tooltip>
+                        <template #trigger>
+                            <n-icon :size="20" :component="AlignHorizontalRightFilled" @click="element.fixed='right'"
+                            :color="element.fixed === 'right' ? $theme.primaryColor : ''" />
+                        </template>
+                        {{$t('table.fixed_right')}}
+                    </n-tooltip>
+                </div>
             </div>
-        </div>
+        </template>
+        </draggable>
     </n-space>
 </n-popover>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { ViewColumnFilled, DragIndicatorFilled, AlignHorizontalLeftFilled, AlignHorizontalRightFilled } from '@vicons/material';
 import {
     NButton, NIcon, NTooltip, NPopover, NSpace, NCheckbox,
     DataTableColumn, useThemeVars
 } from 'naive-ui';
+import Draggable from 'vuedraggable';
+import { useI18n } from 'vue-i18n';
 
 import { fromEditableColumnTypes, toEditableColumnTypes, EditableColumnType } from './paging';
 
 const $theme = useThemeVars();
+const $i18n = useI18n();
 
 // props
 interface Props {
@@ -66,13 +73,13 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-const origin: Array<EditableColumnType> = [];// 保留原始的列数据
-const editable = ref<Array<EditableColumnType>>([]);// 可编辑对象
-
 // emit
 const emit = defineEmits<{
     (e: 'setColumns', v: Array<DataTableColumn>): void
 }>();
+
+const origin = toEditableColumnTypes($i18n.t, props.columns); // 保留原始的列数据
+const editable = ref(toEditableColumnTypes($i18n.t, props.columns));// 可编辑对象
 
 function getTitle(col: EditableColumnType): string {
     if (!('title' in col)) { return ''; }
@@ -93,11 +100,6 @@ function reset() {
 function apply() {
     emit('setColumns', fromEditableColumnTypes(editable.value));
 }
-
-onMounted(()=>{
-    origin.push(...toEditableColumnTypes(props.columns));
-    editable.value.push(...toEditableColumnTypes(props.columns));
-});
 </script>
 
 <style scoped>
