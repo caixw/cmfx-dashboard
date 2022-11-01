@@ -14,3 +14,16 @@ export interface MenuItem {
     children?: Array<MenuItem>
     type?: 'group' | 'divider' // 特殊类别
 }
+
+export function checkMenuKey(keys: Array<string>, menus: Array<MenuItem>) {
+    for(const m of menus) {
+        if (keys.find((v)=>{return v==m.key;})) {
+            throw `存在同名的 key: ${m.key}`;
+        }
+        keys.push(m.key);
+
+        if (m.children) {
+            checkMenuKey(keys, m.children);
+        }
+    }
+}

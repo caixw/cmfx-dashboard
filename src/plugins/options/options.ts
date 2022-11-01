@@ -2,7 +2,7 @@
 
 import type { InjectionKey, App } from 'vue';
 
-import { MenuItem } from './menu';
+import { MenuItem, checkMenuKey } from './menu';
 import { NamedTheme } from './theme';
 
 export const optionsKey = Symbol() as InjectionKey<Required<Options>>;
@@ -80,21 +80,9 @@ export function buildOptions(o: Options): Required<Options> {
         ids.push(t.id);
     }
 
-    ids = [];
-    for(const t of opt.menus) {
-        if (ids.find((v)=>{return v==t.key;})) {
-            throw `menus.key 存在同名的 ${t.key}`;
-        }
-        ids.push(t.key);
-    }
+    checkMenuKey([], opt.menus);
 
-    ids = [];
-    for(const t of opt.userMenus) {
-        if (ids.find((v)=>{return v==t.key;})) {
-            throw `userMenus.key 存在同名的 ${t.key}`;
-        }
-        ids.push(t.key);
-    }
+    checkMenuKey([], opt.userMenus);
 
     return opt;
 }

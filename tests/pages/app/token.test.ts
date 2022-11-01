@@ -3,7 +3,7 @@
 import { test, expect, describe } from 'vitest';
 
 import { buildOptions } from '@/plugins/options/options';
-import { defaultOptions } from '~/plugins/options.test';
+import { defaultOptions } from '~/plugins/options/options.test';
 import { getToken, writeToken, delToken } from '@/pages/app/token';
 
 const o = buildOptions(defaultOptions);

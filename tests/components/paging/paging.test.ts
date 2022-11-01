@@ -32,7 +32,7 @@ describe('encodeQuery', ()=>{
 });
 
 describe('toEditableColumnTypes', ()=>{
-    const t = (id: string): string => { return id }
+    const t = (id: string): string => { return id; };
 
     test('default', ()=>{
         const cols: Array<DataTableColumn> = [
@@ -55,23 +55,24 @@ describe('toEditableColumnTypes', ()=>{
         expect(toEditableColumnTypes(t, [])).toEqual([]);
     });
 
+    const render = ()=> '';
     test('type = selection | expand', () => {
         const cols: Array<DataTableColumn> = [
             {key: 'k1'},
             {type: 'selection'},
-            {type: 'expand'},
+            {type: 'expand', renderExpand: render},
         ];
 
         expect(toEditableColumnTypes(t, cols)).toEqual([
             {key: 'k1', visible: true},
             {visible: true, key: '__selection__1', title: 'table.select_all', type: 'selection'},
-            {visible: true, key: '__expand__2', type: 'expand'},
+            {visible: true, key: '__expand__2', type: 'expand', renderExpand: render},
         ]);
 
         expect(cols).toEqual([
             {key: 'k1'},
             {type: 'selection'},
-            {type: 'expand'},
+            {type: 'expand', renderExpand: render},
         ]);
     });
 });

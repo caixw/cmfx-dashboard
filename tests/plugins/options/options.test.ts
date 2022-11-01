@@ -58,7 +58,7 @@ describe('buildOptions', ()=>{
         expect(()=>buildOptions(o)).toThrowError('themes.id');
     });
 
-    test('menus.id 有相同值',() => {
+    test('menus.key 有相同值',() => {
         const o = Object.assign(copy(), {menus: [
             {
                 key: 'id',
@@ -69,10 +69,10 @@ describe('buildOptions', ()=>{
                 label: 'name',
             }
         ]});
-        expect(()=>buildOptions(o)).toThrowError('menus.key');
+        expect(()=>buildOptions(o)).toThrowError('存在同名的 key: id');
     });
 
-    test('userMenus.id 有相同值',() => {
+    test('userMenus.key 有相同值',() => {
         const o = Object.assign(copy(), {userMenus: [
             {
                 key: 'id',
@@ -83,7 +83,7 @@ describe('buildOptions', ()=>{
                 label: 'name',
             }
         ]});
-        expect(()=>buildOptions(o)).toThrowError('userMenus.key');
+        expect(()=>buildOptions(o)).toThrowError('存在同名的 key: id');
     });
 });
 
