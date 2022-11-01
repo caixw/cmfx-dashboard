@@ -4,7 +4,7 @@ import { InjectionKey, inject, provide } from 'vue';
 
 import { Return, f } from './api';
 import { Options, NamedTheme, Theme, ThemeMode, optionsKey } from '@/plugins/options';
-import { getToken, delToken, writeToken, Token } from './token';
+import { delToken, writeToken, Token } from './token';
 import { getCanonicalLocale, presetLocale } from './locale';
 
 const key = Symbol('cmfx') as InjectionKey<Cmfx>;
@@ -134,16 +134,6 @@ export class Cmfx {
         t = getCanonicalLocale(t);
         this.#locale = t;
         this.#setLocale(t);
-    }
-
-    /**
-     * 根据状态自动跳转到指定的页面
-     */
-    selectPage(): string {
-        if (getToken(this.options)) {
-            return this.options.presetPage;
-        }
-        return this.options.loginPage;
     }
 
     /**

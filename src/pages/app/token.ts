@@ -1,6 +1,27 @@
 // SPDX-License-Identifier: MIT
 
+import type { Router } from 'vue-router';
+
 import { Options } from '@/plugins/options';
+
+/**
+ * 安装路由守卫
+ */
+export function installRouter(o: Required<Options>, r: Router) {
+    r.beforeEach((to)=>{
+        if (getToken(o)) { // 已登录
+            if (to.name === o.loginPage) {
+                return { name: o.presetPage };
+            }
+            return true;
+        } else { // 已登录
+            if (to.name !== o.loginPage) {
+                return { name: o.loginPage };
+            }
+            return true;
+        }
+    });
+}
 
 /**
  * 获取 Token
@@ -29,8 +50,6 @@ export function getToken(o: Required<Options>): undefined | Token {
 
 /**
  * 写入 token
- * @param o
- * @param t
  * @returns
  */
 export function writeToken(o: Required<Options>, t?: Token) {
