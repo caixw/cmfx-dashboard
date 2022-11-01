@@ -2,5 +2,5 @@
 
 export { default as XPaging } from './Paging.vue';
 
-export type { Page, Query } from './paging';
+export type { Page, Query, CheckMeta } from './paging';
 export { initQuery } from './paging';

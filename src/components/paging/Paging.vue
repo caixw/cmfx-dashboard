@@ -36,7 +36,8 @@
         </n-space>
     </n-space>
 
-    <n-data-table :columns="columns" :data="data" :striped="striped" :size="height" :rowKey="rowKey"
+    <n-data-table :columns="columns" :data="data" :striped="striped" :size="height"
+        :rowKey="rowKey" :on-update:checked-row-keys="check"
         :on-update:page-size="load" :on-update:page="load" :pagination="pagination" /><!-- pagination -->
 </template>
 
@@ -49,7 +50,7 @@ import {
 import { SearchFilled, RefreshFilled } from '@vicons/material';
 
 import { useCmfx } from '@/pages/app';
-import { Page, Query, encodeQuery } from './paging';
+import { Page, Query, encodeQuery, CheckMeta } from './paging';
 import { default as XTableAttribute, HeightType } from './TableAttribute.vue';
 import { default as XColumnAttribute } from './ColumnAttribute.vue';
 
@@ -80,6 +81,14 @@ for(const col of props.columns) {
     if (col.type === 'selection' && !props.rowKey) {
         throw '当列类型为 selection 时，rowKey 不能为空';
     }
+}
+
+// emits
+const emits = defineEmits<{
+    (e: 'on-update:checked', keys: Array<string | number>, rows: Array<unknown>, meta: CheckMeta): void
+}>();
+function check(keys: Array<string | number>, rows: Array<unknown>, meta: CheckMeta): void {
+    emits('on-update:checked', keys, rows, meta);
 }
 
 function rowKey(a: {[key: string]: unknown}): string | number {

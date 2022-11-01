@@ -13,6 +13,11 @@ export interface Page<T> {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Query = Record<string, any>;
 
+export interface CheckMeta {
+    row: unknown | undefined
+    action: 'check' | 'uncheck' | 'checkAll' | 'uncheckAll'
+}
+
 /**
  * 将一个普通对象转换成查询字符串
  * @param q 普通对象

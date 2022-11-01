@@ -1,5 +1,5 @@
 <template>
-    <x-paging url="/paging/1" :columns="cols" :queries="queries" :page-sizes="[50,100]" row-key="id">
+    <x-paging url="/paging/1" :columns="cols" :queries="queries" :page-sizes="[50,100]" row-key="id" :on-update:check="check">
         <template #search>
             <n-input v-model:value="queries.str" style="width: 1000px" />
             <n-input-number v-model:value="queries.num" style="width: 500px" />
@@ -18,10 +18,13 @@
 import { ref, onBeforeMount, onUnmounted } from 'vue';
 import fetchMock from 'fetch-mock';
 import {
-    DataTableColumn, NSpace, NInput, NInputNumber, NSelect, SelectOption, NButton
+    DataTableColumn, NSpace, NInput, NInputNumber, NSelect, SelectOption, NButton,
+    useMessage
 } from 'naive-ui';
 
-import { XPaging, Query } from '@/components/paging';
+import { XPaging, Query, CheckMeta } from '@/components/paging';
+
+const $message = useMessage();
 
 const queries = ref<Query>({
     str: 'str',
@@ -63,4 +66,8 @@ onBeforeMount(()=>{
 onUnmounted(()=>{
     fetchMock.restore();
 });
+
+function check(keys: Array<string | number>, rows: Array<unknown>, meta: CheckMeta): void {
+    $message.success(meta.action + "," + keys);
+}
 </script>
