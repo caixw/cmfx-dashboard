@@ -31,14 +31,13 @@
 
                 <!-- 列设置 -->
                 <x-column-attribute :columns="props.columns" @set-columns="setColumns" />
-
             </n-space>
         </n-space>
     </n-space>
 
     <n-data-table :columns="columns" :data="data" :striped="striped" :size="height"
-        :rowKey="rowKey" :on-update:checked-row-keys="check"
-        :on-update:page-size="load" :on-update:page="load" :pagination="pagination" /><!-- pagination -->
+        :rowKey="rowKey" @update-checked-row-keys="checked"
+        @update:page-size="load" @update:page="load" :pagination="pagination" /><!-- pagination -->
 </template>
 
 <script setup lang="ts">
@@ -85,10 +84,15 @@ for(const col of props.columns) {
 
 // emits
 const emits = defineEmits<{
-    (e: 'on-update:checked', keys: Array<string | number>, rows: Array<unknown>, meta: CheckMeta): void
+    // 选择列的事件
+    //
+    // keys 表示选中列的唯一 ID，值来源于 row-key 属性指定的字段所表示的值；
+    // rows 为选中的每一行数据；
+    // meta 表示执行的操作；
+    (e: 'checked', keys: Array<string | number>, rows: Array<unknown>, meta: CheckMeta): void
 }>();
-function check(keys: Array<string | number>, rows: Array<unknown>, meta: CheckMeta): void {
-    emits('on-update:checked', keys, rows, meta);
+function checked(keys: Array<string | number>, rows: Array<unknown>, meta: CheckMeta): void {
+    emits('checked', keys, rows, meta);
 }
 
 function rowKey(a: {[key: string]: unknown}): string | number {

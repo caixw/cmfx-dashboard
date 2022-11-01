@@ -1,5 +1,5 @@
 <template>
-    <x-paging url="/paging/1" :columns="cols" :queries="queries" :page-sizes="[50,100]" row-key="id" :on-update:check="check">
+    <x-paging url="/paging/1" :columns="cols" :queries="queries" :page-sizes="[50,100]" row-key="id" @checked="check">
         <template #search>
             <n-input v-model:value="queries.str" style="width: 1000px" />
             <n-input-number v-model:value="queries.num" style="width: 500px" />
