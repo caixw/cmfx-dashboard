@@ -36,7 +36,7 @@
         </n-space>
     </n-space>
 
-    <n-data-table :columns="columns" :data="data" :striped="striped" :size="height"
+    <n-data-table :columns="columns" :data="data" :striped="striped" :size="height" :rowKey="rowKey"
         :on-update:page-size="load" :on-update:page="load" :pagination="pagination" /><!-- pagination -->
 </template>
 
@@ -64,6 +64,7 @@ interface Props {
 
     // data table
     columns: Array<DataTableColumn>
+    rowKey?: string // 每一行的唯一字段的字段名
 }
 const props = withDefaults(defineProps<Props>(), {
     pageSizes: () => [20, 50, 100],
@@ -71,6 +72,30 @@ const props = withDefaults(defineProps<Props>(), {
 });
 if (props.pageSizes.length === 0) {
     throw '参数 pageSizes 不能为空';
+}
+for(const col of props.columns) {
+    if (!('type' in col)) {
+        continue;
+    }
+    if (col.type === 'selection' && !props.rowKey) {
+        throw '当列类型为 selection 时，rowKey 不能为空';
+    }
+}
+
+function rowKey(a: {[key: string]: unknown}): string | number {
+    if (!props.rowKey) {
+        throw '未指定的 rowKey';
+    }
+
+    const v = a[props.rowKey];
+    switch (typeof v) {
+    case 'string':
+        return v as string;
+    case 'number':
+        return v as number;
+    default:
+        throw '无效的字段类型';
+    }
 }
 
 // 分页对象
