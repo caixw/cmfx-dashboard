@@ -1,10 +1,10 @@
 <template>
     <n-layout has-sider position="absolute">
-        <n-layout-sider :native-scrollbar="false" :collapsed="sideVisible" bordered collapse-mode="width"
+        <n-layout-sider :native-scrollbar="false" :collapsed="collapsed" bordered collapse-mode="width"
             :collapsed-width="64" content-style="padding: 10px">
             <n-space align="center">
                 <n-avatar :size="44" round :src="$cmfx.options.logo" />
-                <div v-show="!sideVisible">{{$cmfx.options.name}}</div>
+                <div v-show="!collapsed">{{$cmfx.options.name}}</div>
             </n-space>
             <n-menu :collapsed-width="48" :collapsed-icon-size="22" :options="menus" @update:value="menuSelect" />
         </n-layout-sider>
@@ -13,9 +13,9 @@
             <n-layout-header class="header" position="absolute" bordered>
                 <n-space justify="space-between" align="center">
                     <n-space align="center">
-                        <n-button circle @click="sideVisible=!sideVisible">
+                        <n-button circle @click="collapsed=!collapsed">
                             <template #icon>
-                                <n-icon :component="sideVisible ? MenuFilled : MenuOpenFilled" />
+                                <n-icon :component="collapsed ? MenuFilled : MenuOpenFilled" />
                             </template>
                         </n-button>
                         <n-breadcrumb>
@@ -91,7 +91,7 @@ function userMenuSelect(key: string, item: DropdownOption) {
 // 侧边栏菜单
 
 const menus = ref(buildMenus($i18n, $cmfx.options.menus));
-const sideVisible = ref(false);
+const collapsed = ref(false);
 function menuSelect(key: string, item: MenuOption) {
     if (typeof(item.label) === 'string' ) {
         $cmfx.setTitle(item.label);
@@ -108,6 +108,9 @@ const { isFullscreen, toggle } = useFullscreen();
 const info = ref<Admin>({name: '', username: '', nickname: '', state: 'normal', sex: 'unknown'});
 onMounted(async()=>{
     info.value = await getInfo($cmfx);
+    $cmfx.watchBreakpoint((p?: string)=>{
+        collapsed.value = p === 'xs' || p === 's';
+    });
 });
 </script>
 

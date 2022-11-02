@@ -1,5 +1,5 @@
 <template>
-    <n-config-provider :theme="themeMode"
+    <n-config-provider :theme="themeMode" :preflight-style-disabled="true" :breakpoints="breakpoints"
         :theme-overrides="theme === undefined ? null : (themeMode === null ? theme.light : theme.dark)"
         :locale="naiveLocale.locale" :date-locale="naiveLocale.date">
         <n-global-style />
@@ -61,7 +61,6 @@ function setTheme(t?: Theme) {
 }
 
 // 本地化
-
 const naiveLocale = ref<NaiveLocale>(getNaiveLocale('zh-CN'));
 function setLocale(t: string) {
     $i18n.locale.value = t;
@@ -69,6 +68,9 @@ function setLocale(t: string) {
 }
 
 const $cmfx = new Cmfx(setLocale, setTheme, setThemeMode);
+
+// 不需要 ref，config-provider 本身就是响应式的。
+const breakpoints = $cmfx.options.breakpoints;
 
 onMounted(() => {
     installRouter($cmfx.options, $router);

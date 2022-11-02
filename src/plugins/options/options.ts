@@ -3,7 +3,7 @@
 import type { InjectionKey, App } from 'vue';
 
 import { MenuItem, checkMenuKey } from './menu';
-import { NamedTheme } from './theme';
+import { NamedTheme, Breakpoints, presetBreakpoints } from './theme';
 
 export const optionsKey = Symbol() as InjectionKey<Required<Options>>;
 
@@ -41,6 +41,19 @@ export interface Options {
     userMenus: Array<MenuItem> // 用户菜单
 
     menus: Array<MenuItem> // 侧边栏的菜单
+
+    // 自适应断点
+    //
+    // 最终会传递给 config-provider.breakpoints，
+    // 如果为 undefined，则采用以下值：{
+    //     xs: 0,
+    //     s: 640,
+    //     m: 1024,
+    //     l: 1280,
+    //     xl: 1536,
+    //     xxl: 1290
+    // }。
+    breakpoints?: Breakpoints
 }
 
 /**
@@ -72,7 +85,7 @@ export function buildOptions(o: Options): Required<Options> {
         throw 'menus 不能为空';
     }
 
-    let ids: Array<string> = [];
+    const ids: Array<string> = [];
     for(const t of opt.themes) {
         if (ids.find((v)=>{return v==t.id;})) {
             throw `themes.id 存在同名的 ${t.id}`;
@@ -98,4 +111,6 @@ export const presetOptions = {
     contentType: 'application/json',
     acceptType: 'application/json',
     locale: 'zh-CN',
+
+    breakpoints: presetBreakpoints,
 };

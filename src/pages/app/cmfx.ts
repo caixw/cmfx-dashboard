@@ -1,13 +1,16 @@
 // SPDX-License-Identifier: MIT
 
-import { InjectionKey, inject, provide } from 'vue';
+import { InjectionKey, inject, provide, watch } from 'vue';
+import { useBreakpoint } from 'vooks';
 
 import { Return, f } from './api';
 import { Options, NamedTheme, Theme, ThemeMode, optionsKey } from '@/plugins/options';
 import { delToken, writeToken, Token } from './token';
 import { getCanonicalLocale, presetLocale } from './locale';
 
-const key = Symbol('cmfx') as InjectionKey<Cmfx>;
+const cmfxKey = Symbol('cmfx') as InjectionKey<Cmfx>;
+
+type BreakpointChange = { (v?: string): void; }
 
 interface LocaleSetter {
     (t: string): void
@@ -33,6 +36,8 @@ export class Cmfx {
     #themeMode: ThemeMode;
     readonly #setThemeMode: ThemeModeSetter;
 
+    #breakpoints: Array<BreakpointChange> = [];
+
     constructor(ls: LocaleSetter, ts: ThemeSetter, ms: ThemeModeSetter) {
         const o = inject(optionsKey);
         if (!o) {
@@ -49,7 +54,15 @@ export class Cmfx {
         this.#themeMode = 'os';
         this.#setThemeMode = ms;
 
-        provide(key, this);
+        // 监视变化
+        const r = useBreakpoint(this.options.breakpoints);
+        watch(r, (v?: string)=>{
+            for(const f of this.#breakpoints) {
+                f(v);
+            }
+        });
+
+        provide(cmfxKey, this);
     }
 
     /**
@@ -82,6 +95,14 @@ export class Cmfx {
     get(url: string): Promise<Return> {
         return f(this, 'GET', url);
     }
+
+    /**
+     * 添加监视自适应断点发生变化时的处理方法
+     * @param f 处理方法，其签名为：
+     *  (v?: string): void
+     * v 为新的名称。
+     */
+    watchBreakpoint(f: BreakpointChange) { this.#breakpoints.push(f); }
 
     /**
      * 上传内容
@@ -165,7 +186,7 @@ export class Cmfx {
 }
 
 export function useCmfx(): Cmfx {
-    const inst = inject(key);
+    const inst = inject(cmfxKey);
     if (!inst) {
         throw '未指定配置项';
     }

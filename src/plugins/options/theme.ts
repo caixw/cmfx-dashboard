@@ -2,6 +2,18 @@
 
 import { GlobalThemeOverrides } from 'naive-ui';
 
+export interface Breakpoints {[k:string]:number}
+
+// NOTE: 尽量保持与 naive 的 config-provider.breakpoints 相同。
+export const presetBreakpoints: Breakpoints = {
+    xs: 0,
+    s: 640,
+    m: 1024,
+    l: 1280,
+    xl: 1536,
+    xxl: 1290
+};
+
 export type ThemeMode = 'os' | 'dark' | 'light'
 
 export interface Theme {
