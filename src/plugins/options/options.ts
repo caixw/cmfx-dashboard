@@ -110,7 +110,6 @@ export const presetOptions = {
 
     contentType: 'application/json',
     acceptType: 'application/json',
-    locale: 'zh-CN',
 
     breakpoints: presetBreakpoints,
 };

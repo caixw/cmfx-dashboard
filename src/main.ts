@@ -7,6 +7,7 @@ import { HomeRound } from '@vicons/material';
 import { XApp } from '@/pages/app';
 import { createOptions, presetThemes } from './plugins/options';
 import logo from '@/assets/logo.png';
+import { mock } from './demo/mock';
 
 import { createI18n } from 'vue-i18n';
 import zhCN from '@/locales/zhCN';
@@ -68,7 +69,7 @@ const options = createOptions({
     name: 'cmfx',
     logo: logo,
 
-    urlPrefix: 'http://caixw.local:8080/admin',
+    urlPrefix: 'http://localhost:8080/admin',
     loginPage: 'login',
     presetPage: 'test',
 
@@ -143,5 +144,7 @@ const options = createOptions({
         },
     ]
 });
+
+mock();
 
 createApp(XApp).use(router).use(i18n).use(options).mount('#app');

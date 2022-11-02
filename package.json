@@ -3,12 +3,12 @@
     "version": "1.0.0",
     "type": "module",
     "scripts": {
-        "dev": "vite --host",
+        "dev": "vite",
         "build": "vue-tsc --noEmit && vite build",
         "lint": "npx eslint .",
         "test": "vitest",
         "coverage": "vitest run --coverage",
-        "preview": "vite preview --host"
+        "preview": "vite preview"
     },
     "dependencies": {
         "@vicons/material": "^0.12.0",

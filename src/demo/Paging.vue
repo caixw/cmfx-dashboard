@@ -1,5 +1,5 @@
 <template>
-    <x-paging url="/paging/1" :columns="cols" :queries="queries" :page-sizes="[50,100]" row-key="id" @checked="check">
+    <x-paging url="/paging-1" :columns="cols" :queries="queries" :page-sizes="[50,100]" row-key="id" @checked="check">
         <template #search>
             <n-input v-model:value="queries.str" style="width: 1000px" />
             <n-input-number v-model:value="queries.num" style="width: 500px" />
@@ -15,8 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onBeforeMount, onUnmounted } from 'vue';
-import fetchMock from 'fetch-mock';
+import { ref } from 'vue';
 import {
     DataTableColumn, NSpace, NInput, NInputNumber, NSelect, SelectOption, NButton,
     useMessage
@@ -48,24 +47,6 @@ const cols: Array<DataTableColumn> = [
     {title: '特别长的列名称', key: 'sex'},
     //{title: '操作', key: 'no'},
 ];
-
-onBeforeMount(()=>{
-    fetchMock.mock(/.*/i, {
-        count: 1,
-        more: true,
-        current: [
-            {id: 1, no: 'no1', name: 'n1', username: 'u1', sex: 'female' },
-            {id: 2, no: 'no2', name: 'n2', username: 'u2', sex: 'male' },
-            {id: 3, no: 'no3', name: 'n3', username: 'u3', sex: 'male' },
-            {id: 4, no: 'no4', name: 'n4', username: 'u4', sex: 'male' },
-            {id: 5, no: 'no5', name: 'n5', username: 'u5', sex: 'male' },
-        ]
-    });
-});
-
-onUnmounted(()=>{
-    fetchMock.restore();
-});
 
 function check(keys: Array<string | number>, rows: Array<unknown>, meta: CheckMeta): void {
     $message.success(meta.action + "," + keys);

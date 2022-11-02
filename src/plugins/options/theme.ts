@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-import { GlobalThemeOverrides } from 'naive-ui';
+import { darkTheme, GlobalThemeOverrides, lightTheme } from 'naive-ui';
 
 export interface Breakpoints {[k:string]:number}
 
@@ -38,16 +38,16 @@ export const presetThemes: Array<NamedTheme> = [
         name: 'blue',
         theme: {
             light: {
-                common: {
+                common: Object.assign({}, lightTheme.common, {
                     baseColor: '#8bbccc',
                     primaryColor: '#000000'
-                }
+                })
             },
             dark: {
-                common: {
+                common: Object.assign({}, darkTheme.common, {
                     baseColor: '#eaeaea',
                     primaryColor: '#00abb3'
-                }
+                })
             }
         }
     }
