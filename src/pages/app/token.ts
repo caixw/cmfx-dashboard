@@ -1,15 +1,18 @@
 // SPDX-License-Identifier: MIT
 
 import type { Router } from 'vue-router';
+import localforage from 'localforage';
 
 import { Options } from '@/plugins/options';
+
+const tokenName = 'admin_token';
 
 /**
  * 安装路由守卫
  */
-export function installRouter(o: Required<Options>, r: Router) {
-    r.beforeEach((to)=>{
-        if (getToken(o)) { // 已登录
+export function installNavigationGuard(o: Required<Options>, r: Router) {
+    r.beforeEach(async(to)=>{
+        if (await getToken()) { // 已登录
             if (to.name === o.loginPage) {
                 return { name: o.presetPage };
             }
@@ -26,52 +29,43 @@ export function installRouter(o: Required<Options>, r: Router) {
 /**
  * 获取 Token
  *
- * @param o 选项
  * @returns 如果返回的空，表示不存在或是已经过期被删除。
  */
-export function getToken(o: Required<Options>): undefined | Token {
-    const cfg = o.token;
-    const v = cfg.storage.getItem(cfg.name);
+export async function getToken(): Promise<undefined | Token> {
+    const v = await localforage.getItem(tokenName);
     if (v === null) {
         return;
     }
+    const t = v as ExpiredToken;
 
-    try {
-        const t = JSON.parse(v) as Required<ExpiredToken>;
-        if (t.expired <= now()) {
-            delToken(o);
-            return;
-        }
-        return t;
-    } catch (error) {
-        console.error(error);
+    if (t.expired <= now()) {
+        await delToken();
+        return;
     }
+    return t;
 }
 
 /**
  * 写入 token
  * @returns
  */
-export function writeToken(o: Required<Options>, t?: Token) {
+export async function writeToken(t?: Token) {
     if (!t) { return; }
 
-    const cfg = o.token;
     const expired = now() + t.expires;
-    cfg.storage.setItem(cfg.name, JSON.stringify({
+    await localforage.setItem(tokenName, {
         access_token: t.access_token,
         refresh_token: t.refresh_token,
         expires: t.expires,
         expired: expired,
-    }));
+    });
 }
 
 /**
  * 删除 token
- * @param o
  */
-export function delToken(o: Required<Options>) {
-    const cfg = o.token;
-    cfg.storage.removeItem(cfg.name);
+export async function delToken() {
+    await localforage.removeItem(tokenName);
 }
 
 export interface Token {

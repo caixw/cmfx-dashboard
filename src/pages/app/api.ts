@@ -40,7 +40,7 @@ export async function f(cmfx: Cmfx, method: Method, url: string, obj?: FormData 
     const o = cmfx.options;
     url = buildURL(o.urlPrefix, url);
 
-    const t = getToken(o);
+    const t = await getToken();
     const headers: HeadersInit = {
         'Authorization': t ? t.access_token : '',
         'Content-Type': o.contentType,
@@ -90,7 +90,7 @@ async function request(o: Required<Options>, req: RequestInit, url: string): Pro
     let ok = false;
     switch (resp.status) {
     case 401:
-        delToken(o); // 不返回
+        await delToken(); // 不返回
         break;
     case 404: // 404 算正常返回
         ok = true;

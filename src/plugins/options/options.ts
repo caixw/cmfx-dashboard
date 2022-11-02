@@ -15,12 +15,6 @@ export interface Options {
     logo: string // 应用图标
     titleSeparator?: string // 标题与子标题之间的分隔符，默认为 |
 
-    // 存储 token 的配置项
-    token?: {
-        storage: Storage
-        name: string
-    }
-
     loginPage: string // 登录页的名称
     presetPage: string // 登录之后自动跳转的页面名称
 
@@ -102,11 +96,6 @@ export function buildOptions(o: Options): Required<Options> {
 
 export const presetOptions = {
     titleSeparator: ' | ',
-
-    token: {
-        storage: window.localStorage,
-        name: 'admin_token'
-    },
 
     contentType: 'application/json',
     acceptType: 'application/json',

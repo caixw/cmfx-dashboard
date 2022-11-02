@@ -22,7 +22,7 @@ import { useI18n } from 'vue-i18n';
 import { ThemeMode, Theme } from '@/plugins/options';
 import { Cmfx } from './cmfx';
 import { getNaiveLocale, NaiveLocale } from './locale';
-import { installRouter } from './token';
+import { installNavigationGuard } from './token';
 
 const $router = useRouter();
 const $i18n = useI18n();
@@ -73,7 +73,7 @@ const $cmfx = new Cmfx(setLocale, setTheme, setThemeMode);
 const breakpoints = $cmfx.options.breakpoints;
 
 onMounted(() => {
-    installRouter($cmfx.options, $router);
+    installNavigationGuard($cmfx.options, $router);
     $cmfx.themeMode = 'os';
     $cmfx.locale = $i18n.availableLocales[0];
 });

@@ -165,8 +165,7 @@ export class Cmfx {
         if (!ret.ok) {
             console.error(ret.problem);
         }
-
-        delToken(this.options);
+        await delToken();
     }
 
     /**
@@ -180,7 +179,7 @@ export class Cmfx {
             return false;
         }
 
-        writeToken(this.options, r.body as Token);
+        await writeToken(r.body as Token);
         return true;
     }
 }

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 
 import { test, expect, describe } from 'vitest';
-import { buildOptions, presetOptions } from '@/plugins/options/options';
+import { buildOptions } from '@/plugins/options/options';
 
-export const defaultOptions = {
+export const presetOptions = {
     name: 'name',
     logo: 'logo',
     loginPage: 'login',
@@ -33,15 +33,14 @@ export const defaultOptions = {
 };
 
 function copy() {
-    return Object.assign({}, defaultOptions);
+    return Object.assign({}, presetOptions);
 }
 
 describe('buildOptions', ()=>{
     test('default', ()=>{
         const o = buildOptions(copy());
-        expect(o.urlPrefix).toEqual(defaultOptions.urlPrefix);
+        expect(o.urlPrefix).toEqual(presetOptions.urlPrefix);
         expect(o.themes.length).toEqual(1);
-        expect(o.token.name).toEqual(presetOptions.token.name);
     });
 
     test('themes.id 有相同值',() => {
