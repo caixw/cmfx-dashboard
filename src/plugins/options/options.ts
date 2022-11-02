@@ -11,8 +11,8 @@ export const optionsKey = Symbol() as InjectionKey<Required<Options>>;
  * 整个项目的配置对象
  */
 export interface Options {
-    name: string // 应用名称
-    logo: string // 应用图标
+    name: string // 应用名称，将显示在标题和左侧菜单栏顶部。
+    logo: string // 应用图标，显示在左侧菜单栏顶部。
     titleSeparator?: string // 标题与子标题之间的分隔符，默认为 |
 
     loginPage: string // 登录页的名称
@@ -23,9 +23,6 @@ export interface Options {
     // 如果请求的 API 不是以 https:// 和 http:// 开头的，
     // 都将以此值作为其访问地址的前缀添加上去。
     urlPrefix: string
-
-    contentType?: string // 传递给服务的数据格式，默认为 application/json
-    acceptType?: string // 请求的内容，默认为 application/json
 
     // 所有的预定义主题
     //

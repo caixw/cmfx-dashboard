@@ -6,6 +6,8 @@ import { Cmfx } from './cmfx';
 
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 
+const contentType = 'application/json';
+
 /**
  * api 接口返回的错误信息接口
  */
@@ -43,28 +45,16 @@ export async function f(cmfx: Cmfx, method: Method, url: string, obj?: FormData 
     const t = await getToken();
     const headers: HeadersInit = {
         'Authorization': t ? t.access_token : '',
-        'Content-Type': o.contentType,
+        'Content-Type': contentType,
+        'Accept': contentType + '; charset=utf-8',
         'Accept-Language': cmfx.locale
     };
-
-    let body: FormData | string | undefined = undefined;
-    if (upload) {
-        body = obj as FormData;
-    } else if (obj) {
-        switch (o.contentType) {
-        case 'application/json':
-            body = JSON.stringify(obj);
-            break;
-        default:
-            throw '不支持的 content-type';
-        }
-    }
 
     const req: RequestInit = {
         method: method,
         mode: 'cors',
         headers: headers,
-        body: body,
+        body: upload ? obj as FormData : JSON.stringify(obj),
     };
     return await request(o, req, url);
 }
