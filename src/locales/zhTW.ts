@@ -58,7 +58,12 @@ messages[getCanonicalLocale('zh-TW')] = {
     theme: {
         dark: '暗色模式',
         light: '亮色模式',
-        os: '跟隨系統'
+        os: '跟隨系統',
+
+        blue: '藍色',
+        purple: '紫色',
+        yellow: '黃色',
+        cyan: '青綠色'
     }
 };
 

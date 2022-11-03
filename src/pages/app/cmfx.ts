@@ -152,7 +152,9 @@ export class Cmfx {
 
         const theme = this.options.themes.find((theme: NamedTheme):boolean=>{return theme.id == id;});
         if (!theme) {
-            throw `${id} 主题并不存在`;
+            console.log(`${id} 主题并不存在`);
+            this.#setTheme(undefined);
+            return;
         }
 
         window.localStorage.setItem(themeKey, id);

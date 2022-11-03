@@ -35,20 +35,69 @@ export const presetThemes: Array<NamedTheme> = [
     },
     {
         id: 'blue',
-        name: 'blue',
+        name: 'theme.blue',
         theme: {
             light: {
                 common: Object.assign({}, lightTheme.common, {
-                    baseColor: '#8bbccc',
-                    primaryColor: '#000000'
+                    primaryColor: '#069'
                 })
             },
             dark: {
                 common: Object.assign({}, darkTheme.common, {
-                    baseColor: '#eaeaea',
-                    primaryColor: '#00abb3'
+                    primaryColor: '#09c'
                 })
             }
         }
-    }
+    },
+
+    {
+        id: 'purple',
+        name: 'theme.purple',
+        theme: {
+            light: {
+                common: Object.assign({}, lightTheme.common, {
+                    primaryColor: '#309'
+                })
+            },
+            dark: {
+                common: Object.assign({}, darkTheme.common, {
+                    primaryColor: '#90f'
+                })
+            }
+        }
+    },
+
+    {
+        id: 'yellow',
+        name: 'theme.yellow',
+        theme: {
+            light: {
+                common: Object.assign({}, lightTheme.common, {
+                    primaryColor: '#960'
+                })
+            },
+            dark: {
+                common: Object.assign({}, darkTheme.common, {
+                    primaryColor: '#fc0'
+                })
+            }
+        }
+    },
+
+    {
+        id: 'cyan',
+        name: 'theme.cyan',
+        theme: {
+            light: {
+                common: Object.assign({}, lightTheme.common, {
+                    primaryColor: '#699'
+                })
+            },
+            dark: {
+                common: Object.assign({}, darkTheme.common, {
+                    primaryColor: '#cf9'
+                })
+            }
+        }
+    },
 ];
