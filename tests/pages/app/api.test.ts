@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 import { test, expect } from 'vitest';
+
 import { buildURL } from '@/pages/app/api';
 
 test('buildURL', ()=>{

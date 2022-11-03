@@ -3,12 +3,15 @@
 import { InjectionKey, inject, provide, watch } from 'vue';
 import { useBreakpoint } from 'vooks';
 
-import { Return, f } from './api';
+import { Return, f, upload } from './api';
 import { Options, NamedTheme, Theme, ThemeMode, optionsKey } from '@/plugins/options';
 import { delToken, writeToken, Token } from './token';
 import { getCanonicalLocale, presetLocale } from './locale';
 
 const cmfxKey = Symbol('cmfx') as InjectionKey<Cmfx>;
+
+const themeModeKey = 'theme_mode';
+const themeKey = 'theme';
 
 type BreakpointChange = { (v?: string): void; }
 
@@ -33,7 +36,7 @@ export class Cmfx {
     #theme?: string;
     readonly #setTheme: ThemeSetter;
 
-    #themeMode: ThemeMode;
+    #themeMode: ThemeMode = 'os';
     readonly #setThemeMode: ThemeModeSetter;
 
     #breakpoints: Array<BreakpointChange> = [];
@@ -48,11 +51,20 @@ export class Cmfx {
         this.#locale = presetLocale;
         this.#setLocale = ls;
 
-        this.#theme = undefined;
-        this.#setTheme = ts;
-
-        this.#themeMode = 'os';
         this.#setThemeMode = ms;
+        let mode = window.localStorage.getItem(themeModeKey);
+        if (!mode) {
+            mode = 'os';
+        }
+        this.themeMode = mode as ThemeMode;
+
+        this.#setTheme = ts;
+        const theme = window.localStorage.getItem(themeKey);
+        if (!theme) {
+            this.theme = undefined;
+        } else {
+            this.theme = theme;
+        }
 
         // 监视变化
         const r = useBreakpoint(this.options.breakpoints);
@@ -114,7 +126,7 @@ export class Cmfx {
     upload(url: string, field: string, blob: Blob): Promise<Return> {
         const data = new FormData();
         data.append(field, blob);
-        return f(this, 'POST', url, data, true);
+        return upload(this, url, data);
     }
 
     /**
@@ -133,7 +145,8 @@ export class Cmfx {
         this.#theme = id;
 
         if (!id) {
-            this.#setTheme();
+            this.#setTheme(undefined);
+            window.localStorage.removeItem(themeKey);
             return;
         }
 
@@ -141,6 +154,8 @@ export class Cmfx {
         if (!theme) {
             throw `${id} 主题并不存在`;
         }
+
+        window.localStorage.setItem(themeKey, id);
         this.#setTheme(theme.theme);
     }
 
@@ -148,6 +163,7 @@ export class Cmfx {
     set themeMode(m: ThemeMode) {
         this.#themeMode = m;
         this.#setThemeMode(m);
+        window.localStorage.setItem(themeModeKey, this.#themeMode);
     }
 
     get locale(): string { return this.#locale; }

@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 
-import { Options } from '@/plugins/options';
 import { delToken, getToken } from './token';
 import { Cmfx } from './cmfx';
 
@@ -35,44 +34,54 @@ export interface Return {
  * @param method 请求方法
  * @param url 访问的路径，如果不是以 https:// 或是 http:// 开头的，则会当其当作 Options.urlPrefix 下的子路径处理。
  * @param obj 发送的对象，如果是 GET 等操作，传递 null 即可。
- * @param upload 是否为上传对象。
  * @returns
  */
-export async function f(cmfx: Cmfx, method: Method, url: string, obj?: FormData | unknown, upload?: boolean): Promise<Return> {
-    const o = cmfx.options;
-    url = buildURL(o.urlPrefix, url);
-
+export async function f(cmfx: Cmfx, method: Method, url: string, obj?: unknown): Promise<Return> {
     const t = await getToken();
-    const headers: HeadersInit = {
-        'Authorization': t ? t.access_token : '',
-        'Content-Type': contentType,
-        'Accept': contentType + '; charset=utf-8',
-        'Accept-Language': cmfx.locale
-    };
-
     const req: RequestInit = {
         method: method,
+        body: JSON.stringify(obj),
         mode: 'cors',
-        headers: headers,
-        body: upload ? obj as FormData : JSON.stringify(obj),
+        headers: {
+            'Authorization': t ? t.access_token : '',
+            'Content-Type': contentType,
+            'Accept': contentType + '; charset=utf-8',
+            'Accept-Language': cmfx.locale
+        },
     };
-    return await request(o, req, url);
+    return await request(req, buildURL(cmfx.options.urlPrefix, url));
 }
 
-async function request(o: Required<Options>, req: RequestInit, url: string): Promise<Return> {
+/**
+ * 采用 fetch 上传内容
+ * @param url 上传地址
+ * @param obj 上传的对象
+ * @returns
+ */
+export async function upload(cmfx: Cmfx, url: string, obj: FormData): Promise<Return> {
+    const t = await getToken();
+    const req: RequestInit = {
+        method: 'POST',
+        mode: 'cors',
+        body: obj,
+        headers: {
+            'Authorization': t ? t.access_token : '',
+            'Accept': contentType + '; charset=utf-8',
+            'Accept-Language': cmfx.locale
+        },
+    };
+    return await request(req, buildURL(cmfx.options.urlPrefix, url));
+}
+
+async function request(req: RequestInit, url: string): Promise<Return> {
     const resp = await fetch(url, req);
 
     if (resp.ok) { // status: 200-299
-        let body: unknown = undefined;
         const txt = await resp.text();
-        if (txt.length > 0){ // 比如 204，没有实际内容返回。
-            body = JSON.parse(txt);
+        if (txt.length === 0) { // 比如 204，没有实际内容返回。
+            return { status: resp.status, ok: true };
         }
-        return {
-            status: resp.status,
-            ok: true,
-            body: body
-        };
+        return { status: resp.status, ok: true, body: JSON.parse(txt) };
     }
 
     // 以下为非正常状态处理
@@ -92,13 +101,15 @@ async function request(o: Required<Options>, req: RequestInit, url: string): Pro
     } catch(error) {
         console.error(error);
     }
-    return {
-        status: resp.status,
-        ok: ok,
-        problem: p,
-    };
+    return { status: resp.status, ok: ok, problem: p };
 }
 
+/**
+ * 将 prefix 和 url 合并形成一条完整的 URL
+ * @param prefix URL 前缀
+ * @param url 访问的路径，也可以是完成的 URL，则会忽略 prefix。
+ * @returns 结合之后的内容
+ */
 export function buildURL(prefix: string, url: string): string {
     if (url.startsWith('http://') || url.startsWith('https://')) {
         return url;

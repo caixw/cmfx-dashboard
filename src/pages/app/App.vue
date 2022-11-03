@@ -75,9 +75,8 @@ const $cmfx = new Cmfx(setLocale, setTheme, setThemeMode);
 // 不需要 ref，config-provider 本身就是响应式的。
 const breakpoints = $cmfx.options.breakpoints;
 
-onMounted(() => {
+onMounted(async() => {
     installNavigationGuard($cmfx.options, $router);
-    $cmfx.themeMode = 'os';
     $cmfx.locale = $i18n.availableLocales[0];
 });
 

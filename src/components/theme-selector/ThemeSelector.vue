@@ -32,32 +32,30 @@ const renderThemeIcon = (v: string) => {
     };
 };
 
-const renderLabel = (id: string) => {
-    return () => {
-        return h('span', null, {default: ()=> $i18n.t(id)});
-    };
-};
-
 const themes: Array<DropdownDividerOption | DropdownOption> = [
     {
         key: 'os',
-        label: renderLabel('theme.os'),
+        label: $i18n.t('theme.os'),
         icon: renderThemeModeIcon('os')
     },
     {
         key: 'light',
-        label: renderLabel('theme.light'),
+        label: ()=> $i18n.t('theme.light'),
         icon: renderThemeModeIcon('light')
     },
     {
         key: 'dark',
-        label: renderLabel('theme.dark'),
+        label: $i18n.t('theme.dark'),
         icon: renderThemeModeIcon('dark')
     },
     { type: 'divider' },
 ];
 for (const t of $cmfx.options.themes) {
-    themes.push({ key: t.id, label: renderLabel(t.name), icon: renderThemeIcon(t.id) });
+    themes.push({
+        key: t.id,
+        label: $i18n.t(t.name),
+        icon: renderThemeIcon(t.id),
+    });
 }
 
 const change = (id: string) => {
