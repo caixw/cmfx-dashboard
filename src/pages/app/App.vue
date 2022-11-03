@@ -3,17 +3,20 @@
         :theme-overrides="theme === undefined ? null : (themeMode === null ? theme.light : theme.dark)"
         :locale="naiveLocale.locale" :date-locale="naiveLocale.date">
         <n-global-style />
-        <n-message-provider>
-            <router-view></router-view>
-        </n-message-provider>
+
+        <n-notification-provider>
+            <n-message-provider>
+                <router-view></router-view>
+            </n-message-provider>
+        </n-notification-provider>
     </n-config-provider>
 </template>
 
 <script setup lang="ts">
 import { ref, watch, onMounted, onUnmounted } from 'vue';
 import {
-    NConfigProvider, NMessageProvider,
-    darkTheme, useOsTheme, NGlobalStyle, // 主题
+    NConfigProvider, NMessageProvider, NNotificationProvider,
+    lightTheme, darkTheme, useOsTheme, NGlobalStyle, // 主题
     GlobalTheme
 } from 'naive-ui';
 import { useRouter } from 'vue-router';
@@ -33,7 +36,7 @@ const themeMode = ref<GlobalTheme | null>(null);
 
 const osTheme = useOsTheme();
 let stopOsThemeWatcher = watch(osTheme, (n) => {
-    themeMode.value = n === 'dark' ? darkTheme : null;
+    themeMode.value = n === 'dark' ? darkTheme : lightTheme;
 });
 
 function setThemeMode(mode: ThemeMode) {
