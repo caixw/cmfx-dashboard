@@ -50,6 +50,11 @@ const router = createRouter({
                     name: 'paging',
                     component: () => import('@/demo/Paging.vue')
                 },
+                {
+                    path: '/settings',
+                    name: 'user_settings',
+                    component: () => import('@/demo/Settings.vue')
+                }
             ]
         },
         {
@@ -78,7 +83,7 @@ const options = createOptions({
     userMenus: [
         {
             label: 'common.settings',
-            key: 'test2',
+            key: 'user_settings',
         },
         {
             label: 'common.password',
@@ -111,9 +116,9 @@ const options = createOptions({
 
     menus: [
         {
-            label: 'label1',
+            label: 'test',
             icon: HomeRound,
-            key: 'layout'
+            key: 'test'
         },
         {
             label: 'common.paging',
@@ -131,13 +136,8 @@ const options = createOptions({
                     children: [
                         {
                             label: '三级菜单-无图标',
-                            key: 'test9'
-                        },
-                        {
-                            label: 'common.username',
-                            icon: HomeRound,
-                            key: 'test10'
-                        },
+                            key: 'test2'
+                        }
                     ]
                 },
             ]

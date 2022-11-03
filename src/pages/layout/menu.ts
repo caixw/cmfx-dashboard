@@ -130,3 +130,17 @@ function buildMenuItems($i18n: Composer, p: Array<LabelRender>, menus: Array<Men
     return menuOptions;
 }
 
+export function findUserMenu(key: string, menus: Array<DropdownOption>): DropdownOption|undefined {
+    for(const v of menus) {
+        if (v.key === key) {
+            return v;
+        }
+
+        if (v.children) {
+            const ret = findUserMenu(key, v.children);
+            if (ret) {
+                return ret;
+            }
+        }
+    }
+}

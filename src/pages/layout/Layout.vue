@@ -6,7 +6,7 @@
                 <n-avatar :size="44" round :src="$cmfx.options.logo" />
                 <div v-show="!collapsed">{{$cmfx.options.name}}</div>
             </n-space>
-            <n-menu :collapsed-width="48" :collapsed-icon-size="22" :options="menus" @update:value="menuSelect" />
+            <n-menu :collapsed-width="48" :collapsed-icon-size="22" :options="menus" :value="menuSelectedKey" @update:value="menuSelect" />
         </n-layout-sider>
 
         <n-layout>
@@ -69,7 +69,7 @@ import { useRouter } from 'vue-router';
 import { XThemeSelector } from '@/components/theme-selector';
 import { XLocaleSelector } from '@/components/locale-selector';
 import { useCmfx } from '@/pages/app';
-import { buildMenus, buildUserMenus, buildMenuLabels } from './menu';
+import { buildMenus, buildUserMenus, buildMenuLabels, findUserMenu } from './menu';
 import { Admin, getInfo } from './admin';
 
 const $i18n = useI18n();
@@ -77,20 +77,11 @@ const $cmfx = useCmfx();
 const $router = useRouter();
 const breadcrumbs = ref<string[]>([]);
 
-// 用户菜单
-
-const userMenus = buildUserMenus($i18n, $cmfx.options.userMenus);
-function userMenuSelect(key: string, item: DropdownOption) {
-    $router.push({name: key});
-
-    const f = item.label as {():VNodeChild};
-    $cmfx.setTitle(f() as string);
-    breadcrumbs.value = [f() as string];
-}
+const currentRouteName = $router.currentRoute.value.name as string;
 
 // 侧边栏菜单
-
 const menus = ref(buildMenus($i18n, $cmfx.options.menus));
+const menuSelectedKey = ref<string|null|undefined>(currentRouteName);
 const collapsed = ref(false);
 function menuSelect(key: string, item: MenuOption) {
     if (typeof(item.label) === 'string' ) {
@@ -100,17 +91,39 @@ function menuSelect(key: string, item: MenuOption) {
         $cmfx.setTitle(f() as string);
     }
     breadcrumbs.value = buildMenuLabels(item);
+    menuSelectedKey.value = key;
+}
+
+// 用户菜单
+const userMenus = buildUserMenus($i18n, $cmfx.options.userMenus);
+function userMenuSelect(key: string, item: DropdownOption) {
+    $router.push({name: key});
+
+    const f = item.label as {():VNodeChild};
+    $cmfx.setTitle(f() as string);
+    breadcrumbs.value = [f() as string];
+    menuSelectedKey.value = key;
 }
 
 // 全屏
 const { isFullscreen, toggle } = useFullscreen();
 
 const info = ref<Admin>({name: '', username: '', nickname: '', state: 'normal', sex: 'unknown'});
+
 onMounted(async()=>{
     info.value = await getInfo($cmfx);
+
     $cmfx.watchBreakpoint((p?: string)=>{
         collapsed.value = p === 'xs' || p === 's';
     });
+
+    // 确保用户点击了刷新之后标题能正确显示
+    const m = findUserMenu(currentRouteName, userMenus);
+    if (m) {
+        userMenuSelect(currentRouteName, m);
+    }else{
+        menuSelectedKey.value = currentRouteName;
+    }
 });
 </script>
 
