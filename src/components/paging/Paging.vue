@@ -26,6 +26,15 @@
                     {{$t('common.refresh')}}
                 </n-tooltip>
 
+                <n-tooltip>
+                    <template #trigger>
+                        <n-button circle :bordered="false" :focusable="false" v-print="'#table'">
+                            <template #icon><n-icon :component="PrintFilled" /></template>
+                        </n-button>
+                    </template>
+                    {{$t('common.print')}}
+                </n-tooltip>
+
                 <!-- 表属性 -->
                 <x-table-attribute @striped="setStriped" @height="setHeight" />
 
@@ -35,7 +44,7 @@
         </n-space>
     </n-space>
 
-    <n-data-table :columns="columns" :data="data" :striped="striped" :size="height"
+    <n-data-table id="table" :columns="columns" :data="data" :striped="striped" :size="height"
         :rowKey="rowKey" @update-checked-row-keys="checked"
         @update:page-size="load" @update:page="load" :pagination="pagination" /><!-- pagination -->
 </template>
@@ -46,7 +55,8 @@ import {
     NButton, NDataTable, NDivider, NIcon, NTooltip, NSpace,
     PaginationProps, DataTableColumn
 } from 'naive-ui';
-import { SearchFilled, RefreshFilled } from '@vicons/material';
+import { SearchFilled, RefreshFilled, PrintFilled } from '@vicons/material';
+import vPrint from 'vue3-print-nb';
 
 import { useCmfx } from '@/pages/app';
 import { Page, Query, encodeQuery, CheckMeta } from './paging';

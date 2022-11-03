@@ -12,3 +12,5 @@ declare module '*.vue' {
 declare namespace Intl {
     function getCanonicalLocales(locales: string | string[]): string[];
 }
+
+declare module 'vue3-print-nb';

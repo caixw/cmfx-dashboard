@@ -35,6 +35,7 @@ messages[getCanonicalLocale('zh-TW')] = {
         logout: '退出',
         no: '否',
         password: '密碼',
+        print: '打印',
         refresh: '刷新',
         required: '不能為空',
         reset: '重置',
