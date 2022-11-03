@@ -3,10 +3,7 @@
 import { test, expect, describe } from 'vitest';
 
 import { getToken, writeToken, delToken } from '@/pages/app/token';
-
-function sleep(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
-}
+import { sleep } from '@/utils';
 
 describe('token', async()=>{
     test('getToken undefined', async()=>{

@@ -19,7 +19,7 @@
                 <!-- 刷新 -->
                 <n-tooltip>
                     <template #trigger>
-                        <n-button circle :bordered="false" :focusable="false" @click="load">
+                        <n-button :disabled="loading" circle :bordered="false" :focusable="false" @click="load">
                             <template #icon><n-icon :component="RefreshFilled" /></template>
                         </n-button>
                     </template>
@@ -28,7 +28,7 @@
 
                 <n-tooltip>
                     <template #trigger>
-                        <n-button circle :bordered="false" :focusable="false" v-print="'#table'">
+                        <n-button :disabled="loading" circle :bordered="false" :focusable="false" v-print="'#table'">
                             <template #icon><n-icon :component="PrintFilled" /></template>
                         </n-button>
                     </template>
@@ -44,7 +44,7 @@
         </n-space>
     </n-space>
 
-    <n-data-table id="table" :columns="columns" :data="data" :striped="striped" :size="height"
+    <n-data-table id="table" :columns="columns" :data="data" :striped="striped" :size="height" :loading="loading"
         :rowKey="rowKey" @update-checked-row-keys="checked"
         @update:page-size="load" @update:page="load" :pagination="pagination" /><!-- pagination -->
 </template>
@@ -145,6 +145,8 @@ function setColumns(v: Array<DataTableColumn>) {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const data = ref<any>(undefined);
 
+const loading = ref(true); // 初始时为 loading 状态
+
 /**
  * 重新加载当前页的数据，如果执行了删除操作，那么可能会使当前页失效。
  */
@@ -152,7 +154,9 @@ async function load() {
     let query = `page=${pagination.value.page}&size=${pagination.value.pageSize}`;
     query += encodeQuery(props.queries);
 
+    loading.value = true;
     const r = await $cmfx.get(`${props.url}?${query}`);
+    loading.value = false;
     if (!r.ok) {
         console.error(r.problem);
         return;

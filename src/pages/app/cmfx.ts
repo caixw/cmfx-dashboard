@@ -136,7 +136,9 @@ export class Cmfx {
      * @param title 子标题，如果为空，则只显示 name 属性值。
      */
     setTitle(title: string) {
-        if (title) { title += this.options.titleSeparator; }
+        if (title) {
+            title += this.options.titleSeparator;
+        }
         document.title = title + this.options.name;
     }
 
