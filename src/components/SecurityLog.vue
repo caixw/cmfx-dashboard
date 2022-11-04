@@ -8,6 +8,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import {
     NInput,
     DataTableColumn
@@ -15,11 +16,13 @@ import {
 
 import { XPaging, Query } from '@/components/paging';
 
+const $i18n = useI18n();
+
 const columns: Array<DataTableColumn> = [
-    { key: 'ua', title: 'common.ua' },
-    { key: 'ip', title: 'common.ip' },
-    { key: 'created', title: 'common.created_time' },
-    { key: 'content', title: 'common.content' },
+    { key: 'ua', title: ()=>$i18n.t('common.ua') },
+    { key: 'ip', title: ()=>$i18n.t('common.ip') },
+    { key: 'created', title: ()=>$i18n.t('common.created_time') },
+    { key: 'content', title: ()=>$i18n.t('common.content') },
 ];
 
 const props = defineProps<{url: string}>();
