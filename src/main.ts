@@ -51,6 +51,11 @@ const router = createRouter({
                     component: () => import('@/demo/Paging.vue')
                 },
                 {
+                    path: '/securitylog',
+                    name: 'securitylog',
+                    component: () => import('@/demo/SecurityLog.vue')
+                },
+                {
                     path: '/settings',
                     name: 'user_settings',
                     component: () => import('@/demo/Settings.vue')
@@ -88,10 +93,6 @@ const options = createOptions({
         {
             label: 'common.password',
             key: 'test3',
-        },
-        {
-            label: 'common.security_log',
-            key: 'test4',
             children: [
                 {
                     label: 'common.logout',
@@ -102,6 +103,11 @@ const options = createOptions({
                     key: 'test5'
                 }
             ]
+        },
+        {
+            label: 'common.security_log',
+            key: 'securitylog',
+
         },
         {
             label: '---',

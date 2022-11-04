@@ -26,7 +26,7 @@ export function mock(){
         await sleep(1000);
 
         return {
-            count: 1,
+            count: 100,
             more: true,
             current: [
                 {id: 1, no: 'no1', name: 'n1', username: 'u1', sex: 'female' },
@@ -34,6 +34,18 @@ export function mock(){
                 {id: 3, no: 'no3', name: 'n3', username: 'u3', sex: 'male' },
                 {id: 4, no: 'no4', name: 'n4', username: 'u4', sex: 'male' },
                 {id: 5, no: 'no5', name: 'n5', username: 'u5', sex: 'male' },
+            ]
+        };
+    });
+
+    fetchMock.get(/.+security-log/i, async ()=>{ // 分页信息
+        return {
+            count: 10,
+            more: true,
+            current: [
+                {id: 1, ua: 'firefox', content: '登录', ip: '[::1]', created: '2022-01-02 17:00:02' },
+                {id: 2, ua: 'firefox', content: '修改密码', ip: '[::1]', created: '2022-01-02 17:00:02' },
+                {id: 3, ua: 'edge', content: '修改密码', ip: '[::1]', created: '2022-01-02 17:00:02' },
             ]
         };
     });

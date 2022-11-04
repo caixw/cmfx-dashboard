@@ -30,7 +30,10 @@ messages[getCanonicalLocale('zh-cn')] = {
     },
     common: {
         apply: '应用',
+        content: '内容',
+        created_time: '创建时间',
         default: '默认',
+        ip: 'IP',
         login: '登录',
         logout: '退出',
         no: '否',
@@ -40,8 +43,10 @@ messages[getCanonicalLocale('zh-cn')] = {
         required: '不能为空',
         reset: '重置',
         search: '搜索',
+        search_content: '搜索内容',
         security_log: '安全日志',
         settings: '设置',
+        ua: 'UA',
         username: '账号',
         yes: '是'
     },

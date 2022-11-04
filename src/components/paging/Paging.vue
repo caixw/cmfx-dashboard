@@ -45,7 +45,7 @@
     </n-space>
 
     <n-data-table id="table" :columns="columns" :data="data" :striped="striped" :size="height" :loading="loading"
-        :rowKey="rowKey" @update-checked-row-keys="checked"
+        :rowKey="props.rowKey ? rowKey : undefined" @update-checked-row-keys="checked"
         @update:page-size="load" @update:page="load" :pagination="props.paging ? pagination : undefined" /><!-- pagination -->
 </template>
 
@@ -70,8 +70,8 @@ interface Props {
     // query
     url: string
     queries?: Query
-    pageSizes: Array<number>
-    paging: boolean
+    pageSizes?: Array<number>
+    paging?: boolean
 
     // data table
     columns: Array<DataTableColumn>
