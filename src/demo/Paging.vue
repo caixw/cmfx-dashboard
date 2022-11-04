@@ -1,5 +1,5 @@
 <template>
-    <x-paging url="/paging-1" :columns="cols" :queries="queries" :page-sizes="[50,100]" row-key="id" @checked="check">
+    <x-paging ref="pagingRef" url="/paging-1" :columns="cols" :queries="queries" :page-sizes="[50,100]" :paging="paging" row-key="id" @checked="check">
         <template #search>
             <n-input v-model:value="queries.str" style="width: 1000px" />
             <n-input-number v-model:value="queries.num" style="width: 500px" />
@@ -7,8 +7,9 @@
         </template>
         <template #actions>
             <n-space>
-                <n-button>aaa</n-button>
-                <n-button>bbb</n-button>
+                <n-button @click="reload_exit">刷新未执行</n-button>
+                <n-button @click="reload">刷新</n-button>
+                <n-button @click="paging=!paging">分页：{{paging}}</n-button>
             </n-space>
         </template>
     </x-paging>
@@ -24,6 +25,8 @@ import {
 import { XPaging, Query, CheckMeta } from '@/components/paging';
 
 const $message = useMessage();
+const pagingRef = ref<InstanceType<typeof XPaging>>();
+const paging = ref(true);
 
 const queries = ref<Query>({
     str: 'str',
@@ -50,5 +53,19 @@ const cols: Array<DataTableColumn> = [
 
 function check(keys: Array<string | number>, rows: Array<unknown>, meta: CheckMeta): void {
     $message.success(meta.action + "," + keys);
+}
+
+function reload_exit() {
+    pagingRef.value?.reload(()=>{
+        $message.error('前置条件出错，未执行刷新！');
+        return false;
+    });
+}
+
+function reload() {
+    pagingRef.value?.reload(()=>{
+        $message.info('执行刷新！');
+        return true;
+    });
 }
 </script>

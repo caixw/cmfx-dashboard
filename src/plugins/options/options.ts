@@ -94,8 +94,5 @@ export function buildOptions(o: Options): Required<Options> {
 export const presetOptions = {
     titleSeparator: ' | ',
 
-    contentType: 'application/json',
-    acceptType: 'application/json',
-
     breakpoints: presetBreakpoints,
 };

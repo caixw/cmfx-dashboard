@@ -46,7 +46,7 @@
 
     <n-data-table id="table" :columns="columns" :data="data" :striped="striped" :size="height" :loading="loading"
         :rowKey="rowKey" @update-checked-row-keys="checked"
-        @update:page-size="load" @update:page="load" :pagination="pagination" /><!-- pagination -->
+        @update:page-size="load" @update:page="load" :pagination="props.paging ? pagination : undefined" /><!-- pagination -->
 </template>
 
 <script setup lang="ts">
@@ -69,16 +69,18 @@ const $cmfx = useCmfx();
 interface Props {
     // query
     url: string
-    pageSizes: Array<number>
     queries?: Query
+    pageSizes: Array<number>
+    paging: boolean
 
     // data table
     columns: Array<DataTableColumn>
     rowKey?: string // 每一行的唯一字段的字段名
 }
 const props = withDefaults(defineProps<Props>(), {
-    pageSizes: () => [20, 50, 100],
     queries: undefined,
+    pageSizes: () => [20, 50, 100, 200],
+    paging: true
 });
 if (props.pageSizes.length === 0) {
     throw '参数 pageSizes 不能为空';
@@ -147,16 +149,30 @@ const data = ref<any>(undefined);
 
 const loading = ref(true); // 初始时为 loading 状态
 
+async function load() { reload(); }
+
 /**
- * 重新加载当前页的数据，如果执行了删除操作，那么可能会使当前页失效。
+ * 重新加载数据，诸如删除或是修改了数据，可以调用此方法刷新页面数据。
+ *
+ * NOTE: 在处理 before 时，页面即会处于 loading 状态。
+ * @param before 在加载数据之前执行的操作，如果返回 false，则会中断函数的操作。
  */
-async function load() {
-    let query = `page=${pagination.value.page}&size=${pagination.value.pageSize}`;
-    query += encodeQuery(props.queries);
+async function reload(before?: {():boolean}) {
+    let query = encodeQuery(props.queries);
+    if (props.paging) {
+        query += `page=${pagination.value.page}&size=${pagination.value.pageSize}`;
+    }
 
     loading.value = true;
+
+    if (before && !before()) {
+        loading.value = false;
+        return;
+    }
+
     const r = await $cmfx.get(`${props.url}?${query}`);
     loading.value = false;
+
     if (!r.ok) {
         console.error(r.problem);
         return;
@@ -176,7 +192,7 @@ onMounted(() => {
     load();
 });
 
-defineExpose(load);
+defineExpose({reload});
 </script>
 
 <style scoped>

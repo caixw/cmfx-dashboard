@@ -33,7 +33,7 @@ export function encodeQuery(q?: Query): string {
         if (Array.isArray(val)) {
             val = val.join(',');
         }
-        query+=`&${key}=${val}`;
+        query+=`${key}=${val}&`;
     });
     return query;
 }
