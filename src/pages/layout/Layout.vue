@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, VNodeChild, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import {
     NLayout, NLayoutHeader, NLayoutSider, NLayoutContent, // layout
     NBreadcrumb, NBreadcrumbItem, // breadcrumb
@@ -69,7 +69,10 @@ import { useRouter } from 'vue-router';
 import { XThemeSelector } from '@/components/theme-selector';
 import { XLocaleSelector } from '@/components/locale-selector';
 import { useCmfx } from '@/pages/app';
-import { buildMenus, buildUserMenus, buildMenuLabels, findUserMenu } from './menu';
+import {
+    buildMenus, buildUserMenus, buildLabels, findUserMenu, findMenu,
+    Labels, LabelRender
+} from './menu';
 import { Admin, getInfo } from './admin';
 
 const $i18n = useI18n();
@@ -79,30 +82,26 @@ const breadcrumbs = ref<string[]>([]);
 
 const currentRouteName = $router.currentRoute.value.name as string;
 
+function select(key: string, title: string, labels: Labels) {
+    $cmfx.setTitle(title);
+    breadcrumbs.value = buildLabels(labels);
+
+    menuSelectedKey.value = key;
+    $router.push({name: key});
+}
+
 // 侧边栏菜单
-const menus = ref(buildMenus($i18n, $cmfx.options.menus));
+const menus = buildMenus($i18n.t, $cmfx.options.menus);
 const menuSelectedKey = ref<string|null|undefined>(currentRouteName);
 const collapsed = ref(false);
 function menuSelect(key: string, item: MenuOption) {
-    if (typeof(item.label) === 'string' ) {
-        $cmfx.setTitle(item.label);
-    }else{
-        const f = item.label as {():VNodeChild};
-        $cmfx.setTitle(f() as string);
-    }
-    breadcrumbs.value = buildMenuLabels(item);
-    menuSelectedKey.value = key;
+    select(key, (item.label as LabelRender)() as string, item as Labels);
 }
 
 // 用户菜单
-const userMenus = buildUserMenus($i18n, $cmfx.options.userMenus);
+const userMenus = buildUserMenus($i18n.t, $cmfx.options.userMenus);
 function userMenuSelect(key: string, item: DropdownOption) {
-    $router.push({name: key});
-
-    const f = item.label as {():VNodeChild};
-    $cmfx.setTitle(f() as string);
-    breadcrumbs.value = [f() as string];
-    menuSelectedKey.value = key;
+    select(key, (item.label as LabelRender)() as string, item as Labels);
 }
 
 // 全屏
@@ -118,11 +117,12 @@ onMounted(async()=>{
     });
 
     // 确保用户点击了刷新之后标题能正确显示
-    const m = findUserMenu(currentRouteName, userMenus);
-    if (m) {
-        userMenuSelect(currentRouteName, m);
-    }else{
-        menuSelectedKey.value = currentRouteName;
+    const um = findUserMenu(currentRouteName, userMenus);
+    const m = findMenu(currentRouteName, menus);
+    if (um) {
+        userMenuSelect(currentRouteName, um);
+    } else if(m) {
+        menuSelect(currentRouteName, m);
     }
 });
 </script>
