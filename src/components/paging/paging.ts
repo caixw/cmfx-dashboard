@@ -38,11 +38,7 @@ export function encodeQuery(q?: Query): string {
     return query;
 }
 
-/**
- * 从查询参数中初始化 Query 对象
- * @param $route
- * @returns
- */
+// 从查询参数中初始化 Query 对象
 export function initQuery($route: RouteLocationNormalized): Query {
     const q: Query = {};
     Object.entries($route.query).forEach(([k,v])=>{

@@ -51,6 +51,11 @@ const router = createRouter({
                     component: () => import('@/demo/Paging.vue')
                 },
                 {
+                    path: '/table',
+                    name: 'table',
+                    component: () => import('@/demo/Table.vue')
+                },
+                {
                     path: '/securitylog',
                     name: 'securitylog',
                     component: () => import('@/demo/SecurityLog.vue')
@@ -127,13 +132,17 @@ const options = createOptions({
             key: 'test'
         },
         {
-            label: 'common.paging',
+            label: '表格',
             icon: HomeRound,
             key: 'test7',
             children: [
                 {
-                    label: 'common.paging',
+                    label: '分页表格',
                     key: 'paging'
+                },
+                {
+                    label: '表格',
+                    key: 'table'
                 },
                 {
                     label: 'common.username',

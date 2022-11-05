@@ -25,7 +25,7 @@ import { useI18n } from 'vue-i18n';
 import { ThemeMode, Theme } from '@/plugins/options';
 import { Cmfx } from './cmfx';
 import { getNaiveLocale, NaiveLocale } from './locale';
-import { installNavigationGuard } from './token';
+import { installNavigationGuard } from './api';
 
 const $router = useRouter();
 const $i18n = useI18n();
