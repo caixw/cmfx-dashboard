@@ -1,5 +1,5 @@
 <template>
-    <x-paging ref="pagingRef" url="/paging-1" :columns="cols" :queries="queries" :page-sizes="[50,100]" :paging="paging" row-key="id" @checked="check">
+    <x-paging ref="pagingRef" url="/paging-1" :columns="cols" :queries="queries" :page-sizes="[50,100]" :paging="paging" row-key="id" @checked="check" @loaded="loaded">
         <template #search>
             <n-input v-model:value="queries.str" style="width: 1000px" />
             <n-input-number v-model:value="queries.num" style="width: 500px" />
@@ -22,7 +22,7 @@ import {
     useMessage
 } from 'naive-ui';
 
-import { XPaging, Query, CheckMeta } from '@/components/paging';
+import { XPaging, Query, CheckMeta, Page } from '@/components/paging';
 
 const $message = useMessage();
 const pagingRef = ref<InstanceType<typeof XPaging>>();
@@ -67,5 +67,9 @@ function reload() {
         $message.info('执行刷新！');
         return true;
     });
+}
+
+function loaded(data: Page<{id:string,name: string,username:string,sex:'male'|'female'}>) {
+    $message.info(`loaded: more: ${data.more}, count: ${data.count}, len: ${data.current.length}`);
 }
 </script>

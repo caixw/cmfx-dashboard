@@ -64,6 +64,10 @@ for(const col of props.columns) {
 const emits = defineEmits<{
     // DataTable.update-checked-row-keys 事件的外放
     (e: 'checked', keys: Array<string | number>, rows: Array<unknown>, meta: CheckMeta): void
+
+    // 每次刷新数据成功之后触发的事件
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (e: 'loaded', data: Page<any>): void
 }>();
 function checked(keys: Array<string | number>, rows: Array<unknown>, meta: CheckMeta): void {
     emits('checked', keys, rows, meta);
@@ -142,11 +146,13 @@ async function reload(before?: {():boolean}) {
 
     if (r.status === 404) {
         data.value = [];
+        emits('loaded', {count:0, more: false, current:[]});
     } else {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const page = r.body as Page<any>;
         data.value = page.current;
         pagination.value.itemCount = page.count;
+        emits('loaded', page);
     }
 }
 

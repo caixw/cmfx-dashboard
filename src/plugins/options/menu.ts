@@ -9,7 +9,7 @@ import { Component } from 'vue';
  */
 export interface MenuItem {
     label: string // 标题翻译 ID
-    key: string // 唯一 ID，也是路由跳转的名称
+    key?: string // 唯一 ID，也是路由跳转的名称
     icon?: Component
     children?: Array<MenuItem>
     type?: 'group' | 'divider' // 特殊类别
@@ -20,7 +20,9 @@ export function checkMenuKey(keys: Array<string>, menus: Array<MenuItem>) {
         if (keys.find((v)=>{return v==m.key;})) {
             throw `存在同名的 key: ${m.key}`;
         }
-        keys.push(m.key);
+        if (m.key) {
+            keys.push(m.key);
+        }
 
         if (m.children) {
             checkMenuKey(keys, m.children);
