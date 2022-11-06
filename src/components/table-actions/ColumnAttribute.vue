@@ -62,18 +62,15 @@ import {
 import Draggable from 'vuedraggable';
 import { useI18n } from 'vue-i18n';
 
-import { fromEditableColumnTypes, toEditableColumnTypes, EditableColumnType } from './paging';
+import { fromEditableColumnTypes, toEditableColumnTypes, EditableColumnType } from './column';
 
 const $theme = useThemeVars();
 const $i18n = useI18n();
 
-// props
-interface Props {
+const props = defineProps<{
     columns: Array<DataTableColumn>
-}
-const props = defineProps<Props>();
+}>();
 
-// emit
 const emit = defineEmits<{
     (e: 'setColumns', v: Array<DataTableColumn>): void
 }>();

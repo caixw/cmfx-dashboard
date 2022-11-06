@@ -5,7 +5,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import { HomeRound } from '@vicons/material';
 
 import { XApp } from '@/pages/app';
-import { createOptions, presetThemes } from './plugins/options';
+import { createOptions, presetThemes } from './plugins';
 import logo from '@/assets/logo.png';
 import { mock } from './demo/mock';
 

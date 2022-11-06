@@ -1,48 +1,17 @@
 <template>
-    <n-space vertical class="topbar">
-        <div class="search" v-if="props.queries">
-            <slot name="search"></slot>
-            <n-button type="primary" @click="load" class="search-button">
-                <template #icon><n-icon :component="SearchFilled" /></template>
-                {{ $t('common.search') }}
-            </n-button>
-        </div>
+    <div class="search" v-if="props.queries">
+        <slot name="search"></slot>
+        <n-button type="primary" @click="load" class="search-button">
+            <template #icon><n-icon :component="SearchFilled" /></template>
+            {{ $t('common.search') }}
+        </n-button>
+    </div>
 
-        <n-divider class="divider" v-if="props.queries" />
+    <n-divider class="divider" v-if="props.queries" />
 
-        <n-space justify="space-between">
-            <n-space justify="start">
-                <slot name="actions"></slot>
-            </n-space>
-
-            <n-space justify="end" :size="0">
-                <!-- 刷新 -->
-                <n-tooltip>
-                    <template #trigger>
-                        <n-button :disabled="loading" circle :bordered="false" :focusable="false" @click="load">
-                            <template #icon><n-icon :component="RefreshFilled" /></template>
-                        </n-button>
-                    </template>
-                    {{$t('common.refresh')}}
-                </n-tooltip>
-
-                <n-tooltip>
-                    <template #trigger>
-                        <n-button :disabled="loading" circle :bordered="false" :focusable="false" v-print="'#table'">
-                            <template #icon><n-icon :component="PrintFilled" /></template>
-                        </n-button>
-                    </template>
-                    {{$t('common.print')}}
-                </n-tooltip>
-
-                <!-- 表属性 -->
-                <x-table-attribute @striped="setStriped" @height="setHeight" />
-
-                <!-- 列设置 -->
-                <x-column-attribute :columns="props.columns" @set-columns="setColumns" />
-            </n-space>
-        </n-space>
-    </n-space>
+    <x-table-actions :columns="props.columns" :loading="loading" @load="load" @set-columns="setColumns" @set-striped="setStriped" @set-height="setHeight">
+        <slot name="actions"></slot>
+    </x-table-actions>
 
     <n-data-table id="table" :columns="columns" :data="data" :striped="striped" :size="height" :loading="loading"
         :rowKey="props.rowKey ? rowKey : undefined" @update-checked-row-keys="checked"
@@ -52,32 +21,29 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import {
-    NButton, NDataTable, NDivider, NIcon, NTooltip, NSpace,
+    NButton, NDataTable, NDivider, NIcon,
     PaginationProps, DataTableColumn
 } from 'naive-ui';
-import { SearchFilled, RefreshFilled, PrintFilled } from '@vicons/material';
-import vPrint from 'vue3-print-nb';
+import { SearchFilled } from '@vicons/material';
 
 import { useCmfx } from '@/pages/app';
 import { Page, Query, encodeQuery, CheckMeta } from './paging';
-import { default as XTableAttribute, HeightType } from './TableAttribute.vue';
-import { default as XColumnAttribute } from './ColumnAttribute.vue';
+import { XTableActions, HeightType } from '@/components/table-actions';
 
 const $cmfx = useCmfx();
 
 // props
-interface Props {
+const props = withDefaults(defineProps<{
     // query
-    url: string
-    queries?: Query
-    pageSizes?: Array<number>
-    paging?: boolean
+    url: string // 表格数据请求的地址
+    queries?: Query // 表格数据的查询参数
+    pageSizes?: Array<number> // 同 DataTable.page-size 属性
+    paging?: boolean // 是否需要分页
 
     // data table
-    columns: Array<DataTableColumn>
+    columns: Array<DataTableColumn> // 列定义
     rowKey?: string // 每一行的唯一字段的字段名
-}
-const props = withDefaults(defineProps<Props>(), {
+}>(), {
     queries: undefined,
     pageSizes: () => [20, 50, 100, 200],
     paging: true
@@ -96,11 +62,7 @@ for(const col of props.columns) {
 
 // emits
 const emits = defineEmits<{
-    // 选择列的事件
-    //
-    // keys 表示选中列的唯一 ID，值来源于 row-key 属性指定的字段所表示的值；
-    // rows 为选中的每一行数据；
-    // meta 表示执行的操作；
+    // DataTable.update-checked-row-keys 事件的外放
     (e: 'checked', keys: Array<string | number>, rows: Array<unknown>, meta: CheckMeta): void
 }>();
 function checked(keys: Array<string | number>, rows: Array<unknown>, meta: CheckMeta): void {
@@ -206,13 +168,8 @@ defineExpose({reload});
 .search-button {
     margin-left: auto;
 }
-
-.topbar {
-    margin-bottom: 10px;
-}
-
 .divider {
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 </style>
