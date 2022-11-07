@@ -1,5 +1,5 @@
 <template>
-    <x-paging ref="pagingRef" url="/paging-1" :columns="cols" :queries="queries" :page-sizes="[50,100]" :paging="paging" row-key="id" @checked="check" @loaded="loaded">
+    <x-paging ref="pagingRef" url="/paging" :columns="cols" :queries="queries" :page-sizes="[20,100]" :paging="paging" row-key="id" @checked="check" @loaded="loaded">
         <template #search>
             <n-input v-model:value="queries.str" style="width: 1000px" />
             <n-input-number v-model:value="queries.num" style="width: 500px" />
@@ -25,7 +25,7 @@ import {
 import { XPaging, Query, CheckMeta, Page } from '@/components/paging';
 
 const $message = useMessage();
-const pagingRef = ref<InstanceType<typeof XPaging>>();
+const pagingRef = ref();
 const paging = ref(true);
 
 const queries = ref<Query>({
@@ -69,7 +69,9 @@ function reload() {
     });
 }
 
-function loaded(data: Page<{id:string,name: string,username:string,sex:'male'|'female'}>) {
-    $message.info(`loaded: more: ${data.more}, count: ${data.count}, len: ${data.current.length}`);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function loaded(data: Page<any>|Array<any>) {
+    const d = data as Page<{id: number, no: string}>;
+    $message.info(`loaded: more: ${d.more}, count: ${d.count}, len: ${d.current.length}`);
 }
 </script>

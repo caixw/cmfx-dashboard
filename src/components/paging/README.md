@@ -13,6 +13,24 @@
 | columns     | []DataTableColumn | 无                | 列定义
 | row-key     | string|undefined  | undefined         | 带有选择列时，该值是必须的，表示唯一字段的字段名。
 
+### 事件
+
+#### loaded
+
+每次刷新成功之后执行的事件，其签名为：
+
+```ts
+{
+    (data: Page<T> | Array<T>): void
+}
+```
+
+其中的 T 继承自 `{[k: string]: any}`
+
+#### checked
+
+这是重新派发的 `DataTable.on-update:checked-row-keys` 事件。
+
 ### 方法
 
 #### reload

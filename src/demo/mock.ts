@@ -4,6 +4,37 @@ import fetchMock from 'fetch-mock';
 
 import { sleep } from '@/utils';
 
+function getQuery(url: string, key: string): string | undefined {
+    const p = new URLSearchParams(url);
+    const ps = Object.fromEntries(p.entries());
+    return ps[key];
+}
+
+export interface PagingDataType {
+    id:number
+    no: string
+    name: string
+    username: string
+    sex: 'female' | 'male' | 'unknown'
+}
+const maxPagingSize = 500;
+
+function buildPagingData(start:number, size: number):Array<PagingDataType> {
+    const data:Array<PagingDataType> = [];
+    for(let i=1;i<=size;i++) {
+        const id = start+i;
+        data.push({
+            id: id,
+            no: 'no'+id,
+            name: 'name-'+id,
+            username: 'username-'+id,
+            sex: (id%2===0) ? 'female': 'male'
+        });
+    }
+    return data;
+
+}
+
 export function mock(){
     fetchMock.config.overwriteRoutes = true;
 
@@ -22,20 +53,23 @@ export function mock(){
         state: 'normal'
     });
 
-    fetchMock.get(/.+paging-1/i, async ()=>{ // 分页信息
+    fetchMock.get(/.+paging/i, async (url: string)=>{ // 分页信息
         await sleep(1000);
+        console.log('mock:', url);
+        const page = parseInt(getQuery(url, 'page') ?? '0');
+        const size = parseInt(getQuery(url, 'size') ?? '20');
 
+        const start = page * size;
         return {
-            count: 100,
-            more: true,
-            current: [
-                {id: 1, no: 'no1', name: 'n1', username: 'u1', sex: 'female' },
-                {id: 2, no: 'no2', name: 'n2', username: 'u2', sex: 'male' },
-                {id: 3, no: 'no3', name: 'n3', username: 'u3', sex: 'male' },
-                {id: 4, no: 'no4', name: 'n4', username: 'u4', sex: 'male' },
-                {id: 5, no: 'no5', name: 'n5', username: 'u5', sex: 'male' },
-            ]
+            current: buildPagingData(start, size),
+            more: (page*(size+1)) < maxPagingSize,
+            count: maxPagingSize
         };
+    });
+
+    fetchMock.get(/.+table/i, async ()=>{ // 分页信息
+        await sleep(500);
+        return buildPagingData(0, 50);
     });
 
     fetchMock.get(/.+security-log/i, async ()=>{ // 分页信息
@@ -48,6 +82,10 @@ export function mock(){
                 {id: 3, ua: 'edge', content: '修改密码', ip: '[::1]', created: '2022-01-02 17:00:02' },
             ]
         };
+    });
+
+    fetchMock.get(/.+groups/i, async()=>{
+        // TODO
     });
 }
 

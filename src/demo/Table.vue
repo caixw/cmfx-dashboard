@@ -1,5 +1,5 @@
 <template>
-    <x-paging ref="pagingRef" url="/paging-1" :columns="cols" :page-sizes="[50,100]" :paging="false">
+    <x-paging ref="pagingRef" url="/table" :columns="cols" :paging="false">
     </x-paging>
 </template>
 

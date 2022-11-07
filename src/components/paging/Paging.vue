@@ -14,11 +14,11 @@
     </x-table-actions>
 
     <n-data-table id="table" :columns="columns" :data="data" :striped="striped" :size="height" :loading="loading"
-        :rowKey="props.rowKey ? rowKey : undefined" @update-checked-row-keys="checked"
-        @update:page-size="load" @update:page="load" :pagination="props.paging ? pagination : undefined" /><!-- pagination -->
+        :rowKey="props.rowKey ? rowKey : undefined" @update:checked-row-keys="checked" remote
+        @update:page-size="onPageSize" @update:page="onPage" :pagination="props.paging ? pagination : undefined" /><!-- pagination -->
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends {[k:string]:any}">
 import { ref, onMounted } from 'vue';
 import {
     NButton, NDataTable, NDivider, NIcon,
@@ -34,22 +34,19 @@ const $cmfx = useCmfx();
 
 // props
 const props = withDefaults(defineProps<{
-    // query
     url: string // 表格数据请求的地址
     queries?: Query // 表格数据的查询参数
     pageSizes?: Array<number> // 同 DataTable.page-size 属性
-    paging?: boolean // 是否需要分页
+    paging?: boolean // 是否需要分页，此值不同，请求接口返回的数据格式是不一样的
 
-    // data table
     columns: Array<DataTableColumn> // 列定义
     rowKey?: string // 每一行的唯一字段的字段名
 }>(), {
-    queries: undefined,
     pageSizes: () => [20, 50, 100, 200],
     paging: true
 });
-if (props.pageSizes.length === 0) {
-    throw '参数 pageSizes 不能为空';
+if (props.paging && props.pageSizes.length === 0) {
+    throw 'paging 模式时 pageSizes 不能为空';
 }
 for(const col of props.columns) {
     if (!('type' in col)) {
@@ -66,8 +63,8 @@ const emits = defineEmits<{
     (e: 'checked', keys: Array<string | number>, rows: Array<unknown>, meta: CheckMeta): void
 
     // 每次刷新数据成功之后触发的事件
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (e: 'loaded', data: Page<any>): void
+    // eslint-disable-next-line no-undef
+    (e: 'loaded', data: Page<T>|Array<T>): void
 }>();
 function checked(keys: Array<string | number>, rows: Array<unknown>, meta: CheckMeta): void {
     emits('checked', keys, rows, meta);
@@ -97,21 +94,25 @@ const pagination = ref<PaginationProps>({
     page: 0,
     pageSize: props.pageSizes[0]
 });
-
-// 表属性
-const striped = ref(false);
-const height = ref<HeightType>('medium');
-function setStriped(v: boolean) { striped.value = v; }
-function setHeight(v: HeightType) { height.value = v; }
-
-// 设置列属性
-const columns = ref(props.columns);
-function setColumns(v: Array<DataTableColumn>) {
-    columns.value = v;
+async function onPage(p: number) {
+    pagination.value.page = p;
+    await load();
+}
+async function onPageSize(s: number) {
+    pagination.value.pageSize = s;
+    await load();
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const data = ref<any>(undefined);
+// table actions
+const striped = ref(false);
+const height = ref<HeightType>('medium');
+const columns = ref(props.columns);
+function setStriped(v: boolean) { striped.value = v; }
+function setHeight(v: HeightType) { height.value = v; }
+function setColumns(v: Array<DataTableColumn>) { columns.value = v; }
+
+// eslint-disable-next-line no-undef
+const data = ref<Array<T>>();
 
 const loading = ref(true); // 初始时为 loading 状态
 
@@ -146,13 +147,24 @@ async function reload(before?: {():boolean}) {
 
     if (r.status === 404) {
         data.value = [];
-        emits('loaded', {count:0, more: false, current:[]});
-    } else {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const page = r.body as Page<any>;
+        if (props.paging) {
+            emits('loaded', {count:0, more: false, current:[]});
+        } else {
+            emits('loaded', []);
+        }
+        return;
+    }
+
+    if (props.paging) {
+        // eslint-disable-next-line no-undef
+        const page = r.body as Page<T>;
         data.value = page.current;
         pagination.value.itemCount = page.count;
         emits('loaded', page);
+    } else {
+        // eslint-disable-next-line no-undef
+        data.value = r.body as Array<T>;
+        emits('loaded', data.value);
     }
 }
 

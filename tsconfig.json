@@ -1,4 +1,7 @@
 {
+    "vueCompilerOptions": {
+        "experimentalRfc436": true
+    },
     "compilerOptions": {
         "target": "ESNext",
         "outDir": "dist",

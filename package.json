@@ -28,7 +28,7 @@
         "@vitest/coverage-c8": "^0.24.3",
         "@vue/test-utils": "^2.2.0",
         "eslint": "^8.25.0",
-        "eslint-plugin-vue": "^9.6.0",
+        "eslint-plugin-vue": "^9.7.0",
         "fetch-mock": "^9.11.0",
         "jsdom": "^20.0.1",
         "path": "^0.12.7",
@@ -36,6 +36,6 @@
         "vite": "^3.1.8",
         "vitest": "^0.24.3",
         "vooks": "^0.2.12",
-        "vue-tsc": "^1.0.8"
+        "vue-tsc": "^1.0.9"
     }
 }
