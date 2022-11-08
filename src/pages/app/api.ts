@@ -35,14 +35,24 @@ export interface Return {
  * 安装路由守卫
  */
 export function installNavigationGuard(o: Required<Options>, r: Router) {
+    const redirectNameKey = 'redirect_name';
+    const s = window.sessionStorage;
+
     r.beforeEach(async(to)=>{
         if (await getToken()) { // 已登录
+            const name = s.getItem(redirectNameKey);
+            s.removeItem(redirectNameKey);
+            if (to.name !== name) {
+                to.name = name;
+            }
+
             if (to.name === o.loginPage) {
                 return { name: o.presetPage };
             }
             return true;
-        } else { // 已登录
+        } else { // 未登录
             if (to.name !== o.loginPage) {
+                s.setItem(redirectNameKey, to.name as string);
                 return { name: o.loginPage };
             }
             return true;
