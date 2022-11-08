@@ -83,7 +83,7 @@ const breadcrumbs = ref<string[]>([]);
 const currentRouteName = $router.currentRoute.value.name as string;
 
 function select(key: string, title: string, labels: Labels) {
-    $cmfx.setTitle(title);
+    $cmfx.title = title;
     breadcrumbs.value = buildLabels(labels);
 
     menuSelectedKey.value = key;

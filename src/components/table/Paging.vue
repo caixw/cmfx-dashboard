@@ -9,11 +9,11 @@
 
     <n-divider class="divider" v-if="props.queries" />
 
-    <x-actions :columns="props.columns" :loading="loading" @load="load" @set-columns="setColumns" @set-striped="setStriped" @set-height="setHeight">
+    <x-actions print-area="printer" :print-title="$cmfx.title" :columns="props.columns" :loading="loading" @load="load" @set-columns="setColumns" @set-striped="setStriped" @set-height="setHeight">
         <slot name="actions"></slot>
     </x-actions>
 
-    <n-data-table id="table" :columns="columns" :data="data" :striped="striped" :size="height" :loading="loading"
+    <n-data-table id="printer" :columns="columns" :data="data" :striped="striped" :size="height" :loading="loading"
         :rowKey="props.rowKey ? buildRowKey(props.rowKey) : undefined" @update:checked-row-keys="checked" remote
         @update:page-size="onPageSize" @update:page="onPage" :pagination="pagination" /><!-- pagination -->
 </template>
@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<{
     queries?: Query // 表格数据的查询参数
     pageSizes?: Array<number> // 同 DataTable.page-size 属性
 
-    columns: Array<DataTableColumn> // 列定义
+    columns: Array<DataTableColumn> // 列定义，如果其 className 包含了 no-print，则在打印时不会打印。
     rowKey?: string // 每一行的唯一字段的字段名
 }>(), {
     pageSizes: () => [20, 50, 100, 200],

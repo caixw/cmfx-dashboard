@@ -102,7 +102,7 @@ const login = async () => {
 };
 
 onMounted(()=>{
-    $cmfx.setTitle($i18n.t('common.login'));
+    $cmfx.title = $i18n.t('common.login');
 });
 
 interface Account {

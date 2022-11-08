@@ -4,6 +4,7 @@ import { createApp } from 'vue';
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { HomeRound } from '@vicons/material';
 
+import './style.css';
 import { XApp } from '@/pages/app';
 import { createOptions, presetThemes } from './plugins';
 import logo from '@/assets/logo.png';

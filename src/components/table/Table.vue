@@ -9,11 +9,12 @@
 
     <n-divider class="divider" v-if="props.queries" />
 
-    <x-actions :columns="props.columns" :loading="loading" @load="load" @set-columns="setColumns" @set-striped="setStriped" @set-height="setHeight">
+    <x-actions print-area="printer" :print-title="$cmfx.title" :columns="props.columns" :loading="loading" @load="load"
+        @set-columns="setColumns" @set-striped="setStriped" @set-height="setHeight">
         <slot name="actions"></slot>
     </x-actions>
 
-    <n-data-table id="table" :columns="columns" :data="data" :striped="striped" :size="height" :loading="loading"
+    <n-data-table id="printer" :columns="columns" :data="data" :striped="striped" :size="height" :loading="loading"
         :rowKey="props.rowKey ? buildRowKey(props.rowKey) : undefined" @update:checked-row-keys="checked" remote />
 </template>
 
@@ -35,7 +36,7 @@ const $cmfx = useCmfx();
 const props = defineProps<{
     url: string // 表格数据请求的地址
     queries?: Query // 表格数据的查询参数
-    columns: Array<DataTableColumn> // 列定义
+    columns: Array<DataTableColumn> // 列定义，如果其 className 包含了 no-print，则在打印时不会打印。
     rowKey?: string // 每一行的唯一字段的字段名
 }>();
 for(const col of props.columns) {

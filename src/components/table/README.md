@@ -9,7 +9,7 @@
 | url         | string            | 无                | 列表页请求的地址
 | queries     | {[x:string]:any}  | undefined         | 查询参数对象
 | pageSizes   | []number          | [20,50,100,200]   | 分页数值
-| columns     | []DataTableColumn | 无                | 列定义
+| columns     | []DataTableColumn | 无                | 列定义，如果其 className 包含了 no-print，则在打印时不会打印。
 | row-key     | string|undefined  | undefined         | 带有选择列时，该值是必须的，表示唯一字段的字段名。
 
 ### 事件
@@ -57,7 +57,7 @@ before 表示在执行刷新之前可以执行的额外，只有该方法返回 
 |-------------|-------------------|-------------------|-------------
 | url         | string            | 无                | 列表页请求的地址
 | queries     | {[x:string]:any}  | undefined         | 查询参数对象
-| columns     | []DataTableColumn | 无                | 列定义
+| columns     | []DataTableColumn | 无                | 列定义，如果其 className 包含了 no-print，则在打印时不会打印。
 
 ### 事件
 

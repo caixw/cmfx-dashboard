@@ -30,6 +30,8 @@ interface ThemeModeSetter {
 export class Cmfx {
     readonly #options: Required<Options>;
 
+    #title = '';
+
     #locale: string;
     readonly #setLocale: LocaleSetter;
 
@@ -129,18 +131,15 @@ export class Cmfx {
         return upload(this, url, data);
     }
 
-    /**
-     * 设置子标题
-     *
-     * 设置 document.title 的子标题
-     * @param title 子标题，如果为空，则只显示 name 属性值。
-     */
-    setTitle(title: string) {
+    set title(title: string) {
+        this.#title = title;
         if (title) {
             title += this.options.titleSeparator;
         }
         document.title = title + this.options.name;
     }
+    get title(): string { return this.#title; }
+
 
     get theme(): string | undefined { return this.#theme; }
     set theme(id: string | undefined) {

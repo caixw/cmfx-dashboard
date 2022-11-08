@@ -15,9 +15,9 @@
                 {{$t('common.refresh')}}
             </n-tooltip>
 
-            <n-tooltip>
+            <n-tooltip v-if="props.printArea">
                 <template #trigger>
-                    <n-button :disabled="loading" circle :bordered="false" :focusable="false" v-print="'#table'">
+                    <n-button :disabled="loading" circle :bordered="false" :focusable="false" v-print="printer">
                         <template #icon><n-icon :component="PrintFilled" /></template>
                     </n-button>
                 </template>
@@ -63,10 +63,14 @@ export type HeightType = 'small' | 'medium' | 'large';
 const $i18n = useI18n();
 
 // props
-const props = defineProps<{
+const props = withDefaults(defineProps<{
+    printArea?: string // 需要打印的元素 ID，如果为空则不显示打印按钮。
+    printTitle?: string
     columns: Array<DataTableColumn>
-    loading: boolean
-}>();
+    loading: boolean // 父元素是否处于加载状态，该状态下，某些按钮可能不可用。
+}>(), {
+    printTitle: '',
+});
 
 // emits
 const emits = defineEmits<{
@@ -75,6 +79,11 @@ const emits = defineEmits<{
     (e: 'setHeight', v: HeightType): void
     (e: 'load'): void
 }>();
+
+const printer = {
+    id: props.printArea,
+    popTitle: props.printTitle,
+};
 
 const striped = ref(false);
 const height = ref<HeightType>('medium');
