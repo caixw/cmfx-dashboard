@@ -64,6 +64,22 @@ export function createOptions(o: Options) {
 export function buildOptions(o: Options): Required<Options> {
     const opt = Object.assign({}, presetOptions, o);
 
+    if (!opt.name) {
+        throw 'name 不能为空';
+    }
+
+    if (!opt.logo) {
+        throw 'logo 不能为空';
+    }
+
+    if (!opt.loginPage) {
+        throw 'loginPage 不能为空';
+    }
+
+    if (!opt.presetPage) {
+        throw 'presetPage 不能为空';
+    }
+
     if (opt.themes.length === 0) {
         throw 'themes 不能为空';
     }

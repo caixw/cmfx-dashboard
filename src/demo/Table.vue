@@ -1,6 +1,6 @@
 <template>
-    <x-paging ref="pagingRef" url="/table" :columns="cols" :paging="false">
-    </x-paging>
+    <x-table url="/table" :columns="cols">
+    </x-table>
 </template>
 
 <script setup lang="ts">
@@ -8,7 +8,7 @@ import {
     DataTableColumn,
 } from 'naive-ui';
 
-import { XPaging } from '@/components/paging';
+import { XTable } from '@/components/table';
 
 const cols: Array<DataTableColumn> = [
     {title: 'ID', key: 'id'},

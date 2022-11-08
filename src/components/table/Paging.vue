@@ -9,13 +9,13 @@
 
     <n-divider class="divider" v-if="props.queries" />
 
-    <x-table-actions :columns="props.columns" :loading="loading" @load="load" @set-columns="setColumns" @set-striped="setStriped" @set-height="setHeight">
+    <x-actions :columns="props.columns" :loading="loading" @load="load" @set-columns="setColumns" @set-striped="setStriped" @set-height="setHeight">
         <slot name="actions"></slot>
-    </x-table-actions>
+    </x-actions>
 
     <n-data-table id="table" :columns="columns" :data="data" :striped="striped" :size="height" :loading="loading"
-        :rowKey="props.rowKey ? rowKey : undefined" @update:checked-row-keys="checked" remote
-        @update:page-size="onPageSize" @update:page="onPage" :pagination="props.paging ? pagination : undefined" /><!-- pagination -->
+        :rowKey="props.rowKey ? buildRowKey(props.rowKey) : undefined" @update:checked-row-keys="checked" remote
+        @update:page-size="onPageSize" @update:page="onPage" :pagination="pagination" /><!-- pagination -->
 </template>
 
 <script setup lang="ts" generic="T extends {[k:string]:any}">
@@ -27,8 +27,8 @@ import {
 import { SearchFilled } from '@vicons/material';
 
 import { useCmfx } from '@/pages/app';
-import { Page, Query, encodeQuery, CheckMeta } from './paging';
-import { XTableActions, HeightType } from '@/components/table-actions';
+import { Page, Query, encodeQuery, CheckMeta, buildRowKey } from './table';
+import { default as XActions, HeightType } from './actions/Actions.vue';
 
 const $cmfx = useCmfx();
 
@@ -37,17 +37,12 @@ const props = withDefaults(defineProps<{
     url: string // 表格数据请求的地址
     queries?: Query // 表格数据的查询参数
     pageSizes?: Array<number> // 同 DataTable.page-size 属性
-    paging?: boolean // 是否需要分页，此值不同，请求接口返回的数据格式是不一样的
 
     columns: Array<DataTableColumn> // 列定义
     rowKey?: string // 每一行的唯一字段的字段名
 }>(), {
     pageSizes: () => [20, 50, 100, 200],
-    paging: true
 });
-if (props.paging && props.pageSizes.length === 0) {
-    throw 'paging 模式时 pageSizes 不能为空';
-}
 for(const col of props.columns) {
     if (!('type' in col)) {
         continue;
@@ -64,26 +59,10 @@ const emits = defineEmits<{
 
     // 每次刷新数据成功之后触发的事件
     // eslint-disable-next-line no-undef
-    (e: 'loaded', data: Page<T>|Array<T>): void
+    (e: 'loaded', data: Page<T>): void
 }>();
 function checked(keys: Array<string | number>, rows: Array<unknown>, meta: CheckMeta): void {
     emits('checked', keys, rows, meta);
-}
-
-function rowKey(a: {[key: string]: unknown}): string | number {
-    if (!props.rowKey) {
-        throw '未指定的 rowKey';
-    }
-
-    const v = a[props.rowKey];
-    switch (typeof v) {
-    case 'string':
-        return v as string;
-    case 'number':
-        return v as number;
-    default:
-        throw '无效的字段类型';
-    }
 }
 
 // 分页对象
@@ -125,10 +104,7 @@ async function load() { reload(); }
  * @param before 在加载数据之前执行的操作，如果返回 false，则会中断函数的操作。
  */
 async function reload(before?: {():boolean}) {
-    let query = encodeQuery(props.queries);
-    if (props.paging) {
-        query += `page=${pagination.value.page}&size=${pagination.value.pageSize}`;
-    }
+    const query = encodeQuery(props.queries)+`page=${pagination.value.page}&size=${pagination.value.pageSize}`;
 
     loading.value = true;
 
@@ -147,25 +123,15 @@ async function reload(before?: {():boolean}) {
 
     if (r.status === 404) {
         data.value = [];
-        if (props.paging) {
-            emits('loaded', {count:0, more: false, current:[]});
-        } else {
-            emits('loaded', []);
-        }
+        emits('loaded', {count:0, more: false, current:[]});
         return;
     }
 
-    if (props.paging) {
-        // eslint-disable-next-line no-undef
-        const page = r.body as Page<T>;
-        data.value = page.current;
-        pagination.value.itemCount = page.count;
-        emits('loaded', page);
-    } else {
-        // eslint-disable-next-line no-undef
-        data.value = r.body as Array<T>;
-        emits('loaded', data.value);
-    }
+    // eslint-disable-next-line no-undef
+    const page = r.body as Page<T>;
+    data.value = page.current;
+    pagination.value.itemCount = page.count;
+    emits('loaded', page);
 }
 
 onMounted(() => {

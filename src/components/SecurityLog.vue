@@ -14,7 +14,7 @@ import {
     DataTableColumn
 } from 'naive-ui';
 
-import { XPaging, Query } from '@/components/paging';
+import { XPaging, Query } from '@/components/table';
 
 const $i18n = useI18n();
 

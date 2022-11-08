@@ -1,5 +1,5 @@
 <template>
-    <x-paging ref="pagingRef" url="/paging" :columns="cols" :queries="queries" :page-sizes="[20,100]" :paging="paging" row-key="id" @checked="check" @loaded="loaded">
+    <x-paging ref="pagingRef" url="/paging" :columns="cols" :queries="queries" :page-sizes="[20,100]" row-key="id" @checked="check" @loaded="loaded">
         <template #search>
             <n-input v-model:value="queries.str" style="width: 1000px" />
             <n-input-number v-model:value="queries.num" style="width: 500px" />
@@ -9,7 +9,6 @@
             <n-space>
                 <n-button @click="reload_exit">刷新未执行</n-button>
                 <n-button @click="reload">刷新</n-button>
-                <n-button @click="paging=!paging">分页：{{paging}}</n-button>
             </n-space>
         </template>
     </x-paging>
@@ -22,11 +21,10 @@ import {
     useMessage
 } from 'naive-ui';
 
-import { XPaging, Query, CheckMeta, Page } from '@/components/paging';
+import { XPaging, Query, CheckMeta, Page } from '@/components/table';
 
 const $message = useMessage();
 const pagingRef = ref();
-const paging = ref(true);
 
 const queries = ref<Query>({
     str: 'str',

@@ -3,7 +3,7 @@
 import { test, describe, expect } from 'vitest';
 import { DataTableColumn } from 'naive-ui';
 
-import { EditableColumnType, toEditableColumnTypes, fromEditableColumnTypes } from '@/components/table-actions/column';
+import { EditableColumnType, toEditableColumnTypes, fromEditableColumnTypes } from '@/components/table/actions/column';
 
 describe('toEditableColumnTypes', ()=>{
     const t = (id: string): string => { return id; };

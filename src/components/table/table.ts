@@ -48,3 +48,25 @@ export function initQuery($route: RouteLocationNormalized): Query {
     });
     return q;
 }
+
+interface RowKey {
+    (obj: {[key: string]: unknown}): string|number
+}
+
+export function buildRowKey(key?: string): RowKey {
+    return (obj: {[key: string]: unknown}): string|number => {
+        if (!key) {
+            throw '未指定的 rowKey';
+        }
+
+        const v = obj[key];
+        switch (typeof v) {
+        case 'string':
+            return v as string;
+        case 'number':
+            return v as number;
+        default:
+            throw '无效的字段类型';
+        }
+    };
+}
