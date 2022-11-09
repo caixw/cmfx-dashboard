@@ -37,9 +37,9 @@ const router = createRouter({
             component: () => import('@/pages/layout/Layout.vue'),
             children: [
                 {
-                    path: '/test',
-                    name: 'test',
-                    component: () => import('@/demo/Test.vue')
+                    path: '/buttons',
+                    name: 'buttons',
+                    component: () => import('@/demo/Buttons.vue')
                 },
                 {
                     path: '/test2',
@@ -65,13 +65,20 @@ const router = createRouter({
                     path: '/settings',
                     name: 'user_settings',
                     component: () => import('@/demo/Settings.vue')
-                }
+                },
+
+                // admin
+                {
+                    path: '/groups',
+                    name: 'groups',
+                    component: async () => (await import('@/pages')).XAdminGroups
+                },
             ]
         },
         {
             path: '/errpage',
             name: 'errpage',
-            component: () => import('@/demo/Test.vue')
+            component: () => import('@/demo/Buttons.vue')
         },
     ],
 });
@@ -87,7 +94,7 @@ const options = createOptions({
 
     urlPrefix: 'http://localhost:8080/admin',
     loginPage: 'login',
-    presetPage: 'test',
+    presetPage: 'buttons',
 
     themes: presetThemes,
 
@@ -98,11 +105,10 @@ const options = createOptions({
         },
         {
             label: 'common.password',
-            key: 'test3',
             children: [
                 {
                     label: 'common.logout',
-                    key: 'test'
+                    key: 'buttons'
                 },
                 {
                     label: 'common.logout',
@@ -117,7 +123,6 @@ const options = createOptions({
         },
         {
             label: '---',
-            key: '---',
             type: 'divider'
         },
         {
@@ -128,14 +133,14 @@ const options = createOptions({
 
     menus: [
         {
-            label: 'test',
+            label: '各类按钮',
             icon: HomeRound,
-            key: 'test'
+            key: 'buttons'
         },
         {
             label: '表格',
+            key: 'table-key',
             icon: HomeRound,
-            key: 'test7',
             children: [
                 {
                     label: '分页表格',
@@ -148,7 +153,7 @@ const options = createOptions({
                 {
                     label: 'common.username',
                     icon: HomeRound,
-                    key: 'test8',
+                    key: 'username',
                     children: [
                         {
                             label: '三级菜单-无图标',
