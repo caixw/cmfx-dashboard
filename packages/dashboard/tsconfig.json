@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "ESNext",
         "useDefineForClassFields": true,
-        "outDir": "dist",
+        "outDir": "lib",
         "types": ["vite/client"],
         "lib": [
             "DOM",
@@ -23,23 +23,14 @@
         "jsx": "react-jsx",
         "baseUrl": ".",
         "paths": {
-            "@/*": [
-                "src/*"
-            ],
-            "@dashboard": [
-                "./packages/dashboard"
-            ],
-            "cmfx-dashboard": [
-                "./packages/dashboard/index.ts"
-            ],
+                "@dashboard/*": [
+                    "./*"
+                ],
+            },
         },
-    },
     "include": [
-        "src/**/*.ts",
-        "src/**/*.tsx",
-        "packages/**/*.ts",
-        "packages/**/*.tsx",
-        "vite-env.d.ts"
+        "**/*.ts",
+        "**/*.tsx",
     ],
     "references": [
         {

@@ -1,50 +1,50 @@
 {
-    "name": "cmfx-demo",
+    "name": "cmfx-dashboard",
     "version": "1.0.0",
     "type": "module",
-    "private": true,
-    "scripts": {
-        "dev": "vite",
-        "build": "tsc && vite build",
-        "lint": "eslint --ext .ts --ext .tsx --ext .json src && stylelint **/*.css",
-        "preview": "vite preview"
+    "module": "./lib/cmfx-dashboard.es.js",
+    "exports": {
+        ".": {
+            "import": "./lib/cmfx-dashboard.es.js"
+        }
     },
-    "pre-commit": [
-        "lint"
-    ],
     "license": "MIT",
-    "workspaces": [
-        "packages/*"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/caixw/cmfx-dashboard"
+    },
+    "files": [
+        "lib/*"
     ],
+    "scripts": {
+        "build": "tsc && vite build",
+        "test": "vitest",
+        "coverage": "vitest run --coverage"
+    },
     "dependencies": {
         "@douyinfe/semi-icons": "^2.23.5",
         "@douyinfe/semi-ui": "^2.23.5",
         "@semi-bot/semi-theme-a11y": "^1.0.0",
         "eslint-plugin-json": "^3.1.0",
+        "lodash-es": "^4.17.21",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.4.3"
     },
     "devDependencies": {
         "@testing-library/react": "^13.4.0",
+        "@types/lodash-es": "^4.17.6",
         "@types/node": "^18.11.9",
         "@types/react": "^18.0.24",
         "@types/react-dom": "^18.0.9",
         "@typescript-eslint/eslint-plugin": "^5.43.0",
         "@typescript-eslint/parser": "^5.43.0",
         "@vitejs/plugin-react": "^2.2.0",
-        "eslint": "^8.28.0",
-        "eslint-config-airbnb": "^19.0.4",
-        "eslint-plugin-jsx-a11y": "^6.6.1",
-        "eslint-plugin-react": "^7.31.11",
-        "eslint-plugin-react-hooks": "^4.6.0",
-        "fetch-mock": "^9.11.0",
+        "jsdom": "^20.0.2",
         "path": "^0.12.7",
         "pre-commit": "^1.2.2",
-        "stylelint": "^14.15.0",
-        "stylelint-config-rational-order": "^0.1.2",
-        "stylelint-config-standard": "^29.0.0",
         "typescript": "^4.9.3",
-        "vite": "^3.2.4"
+        "vite": "^3.2.4",
+        "vitest": "^0.25.2"
     }
 }

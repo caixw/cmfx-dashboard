@@ -1,0 +1,12 @@
+{
+    "extends": [
+        "stylelint-config-standard",
+        "stylelint-config-rational-order"
+    ],
+
+    "rules": {
+        "color-hex-case": "lower",
+        "indentation": 4,
+        "number-leading-zero": "never"
+    }
+}

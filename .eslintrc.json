@@ -1,32 +1,48 @@
 {
+    "root": true,
     "env": {
         "browser": true,
         "es2021": true
     },
     "extends": [
         "eslint:recommended",
-        "plugin:vue/vue3-essential",
+        "plugin:react/recommended",
+        "plugin:json/recommended",
         "plugin:@typescript-eslint/recommended"
     ],
+    "parser": "@typescript-eslint/parser",
     "overrides": [],
-    "parser": "vue-eslint-parser",
     "parserOptions": {
-        "parser": {
-            "ts": "@typescript-eslint/parser",
-            "js": "@typescript-eslint/parser",
-            "<template>": "espree"
+        "ecmaFeatures": {
+            "jsx": true
         },
         "ecmaVersion": "latest",
-        "sourceType": "module",
-        "extraFileExtensions": [".vue"]
+        "sourceType": "module"
     },
     "plugins": [
-        "vue",
-        "@typescript-eslint"
+        "react",
+        "@typescript-eslint",
+        "jsx-a11y"
     ],
+    "settings": {
+        "react": {
+            "pragma": "React",
+            "version": "detect"
+        },
+        "import/resolver": {
+            "typescript": {
+                "directory": "./tsconfig.json"
+            }
+        }
+    },
     "rules": {
-        "semi": ["error", "always"],
-        "indent": ["error", 4],
-        "vue/multi-word-component-names": "off"
+        "semi": [
+            "error",
+            "always"
+        ],
+        "indent": [
+            "error",
+            4
+        ]
     }
 }
