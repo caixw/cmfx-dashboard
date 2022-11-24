@@ -38,11 +38,15 @@ function buildPagingData(start:number, size: number):Array<PagingDataType> {
 export function mock(){
     fetchMock.config.overwriteRoutes = true;
 
-    fetchMock.post(/.+login/i, {
-        access_token: 'access',
-        refresh_token: 'refresh',
-        expires: 3600
+    fetchMock.post(/.+login/i, async()=>{
+        await sleep(1000);
+        return {
+            access_token: 'access',
+            refresh_token: 'refresh',
+            expires: 3600
+        };
     });
+
     fetchMock.delete(/.+login/i, 204);
 
     fetchMock.get(/.+info/i, {

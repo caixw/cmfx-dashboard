@@ -12,7 +12,7 @@ export function LogoutAction(props: {locale: Locale}) {
     const nav = useNavigate();
 
     useEffect(()=>{
-        ctx.title = props.locale.common.login;
+        ctx.title = props.locale.common.logout;
 
         ctx.del('/login').catch((reason)=>{console.error(reason);});
 
@@ -25,7 +25,7 @@ export function LogoutAction(props: {locale: Locale}) {
 export function Logout() {
     return <LocaleConsumer>
         {
-            (locale) => LogoutAction({locale})
+            (locale) => <LogoutAction locale={locale} />
         }
     </LocaleConsumer>;
 }

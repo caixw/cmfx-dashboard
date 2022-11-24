@@ -3,78 +3,97 @@
 import React from 'react';
 import { get } from 'lodash-es';
 import { Route } from "@douyinfe/semi-foundation/lib/es/breadcrumb/itemFoundation";
+import { DropDownMenuItem } from '@douyinfe/semi-ui/lib/es/dropdown';
 
 import { Locale } from '@dashboard/locales';
 
 export interface MenuItem {
     textKey: string
-    text?: string
     itemKey: string
     icon?: React.ReactNode
     items?: Array<MenuItem>
+}
+
+// 菜单项上的一些额外数据
+export interface AdditionalMenuItem {
+    itemKey?: string
     breadcrumb?: Array<Route>
 }
 
-export interface UserMenuItem {
+type NavMenuItem = {
+    text: string
+    icon?: React.ReactNode
+    items?: Array<NavMenuItem>
+} & AdditionalMenuItem;
+
+export type UserMenuItem = {
     itemKey: string
     icon?: React.ReactNode
-    items?: Array<UserMenuItem>
-    breadcrumb?: Array<Route>
+    textKey: string
+    node: 'item'
+} | { node: 'divider' }
 
-    textKey: string // textKey 如果为 --- 也表示 divider
-    name?: string // 作为用户菜单时的标题
-    node: 'divider' | 'title' | 'item' // 节点类型 divider 或是为空
-}
+export type UserDropdownMenuItem = DropDownMenuItem & AdditionalMenuItem;
 
-export function checkMenuKey(keys: Array<string>, menus: Array<MenuItem>) {
-    for(const m of menus) {
-        if (keys.find((v)=>{return v==m.itemKey;})) {
-            throw `存在同名的 itemKey: ${m.itemKey}`;
-        }
-        if (m.itemKey) {
-            keys.push(m.itemKey);
-        }
+type UserMenuClick = (data: UserDropdownMenuItem) => void;
 
-        if (m.items) {
-            checkMenuKey(keys, m.items);
-        }
-    }
-}
-
-export function buildMenus(parent: Array<Route>, menus: Array<MenuItem>, locale: Locale) {
+export function buildMenus(parent: Array<Route>, menus: Array<MenuItem>, locale: Locale): Array<NavMenuItem> {
+    const ret: Array<NavMenuItem> = [];
     for(const item of menus) {
-        item.text = get(locale, item.textKey) ?? item.textKey;
-        const routes = Object.assign([], parent);
-        routes.push({
+        const text = get(locale, item.textKey) ?? item.textKey;
+
+        const breadcrumb = Object.assign([], parent);
+        breadcrumb.push({
             path: item.itemKey as string,
             icon: item.icon,
-            name: item.text as string
+            name: text as string
         });
-        item.breadcrumb = routes;
 
+        const sub: NavMenuItem ={
+            text: text,
+            itemKey: item.itemKey,
+            icon: item.icon,
+            breadcrumb: breadcrumb,
+        };
         if (item.items) {
-            buildMenus(routes, item.items, locale);
+            sub.items = buildMenus(breadcrumb, item.items, locale);
         }
+
+        ret.push(sub);
     }
+
+    return ret;
 }
 
-export function buildUserMenus(parent: Array<Route>, menus: Array<UserMenuItem>, locale: Locale) {
+// click 表示点击用户菜单项时需要执行的操作；
+export function buildUserMenus(parent: Array<Route>, click: UserMenuClick, menus: Array<UserMenuItem>, locale: Locale): Array<UserDropdownMenuItem> {
+    const ret: Array<UserDropdownMenuItem> = [];
     for(const item of menus) {
         if (item.node === 'divider') {
+            ret.push({node: 'divider'});
             continue;
         }
 
-        item.name = get(locale, item.textKey) ?? item.textKey;
-        const routes = Object.assign([], parent);
-        routes.push({
-            path: item.itemKey as string,
+        const name = get(locale, item.textKey) ?? item.textKey;
+        const breadcrumb = Object.assign([], parent);
+        breadcrumb.push({
+            path: item.itemKey,
             icon: item.icon,
-            name: item.name as string
+            name: name as string
         });
-        item.breadcrumb = routes;
 
-        if (item.items) {
-            buildUserMenus(routes, item.items, locale);
-        }
+
+        const sub:UserDropdownMenuItem = {
+            name: name,
+            breadcrumb: breadcrumb,
+            icon: item.icon,
+            node: 'item',
+            itemKey: item.itemKey,
+        };
+        sub.onClick = ()=>click(sub);
+
+        ret.push(sub);
     }
+
+    return ret;
 }

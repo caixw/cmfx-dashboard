@@ -2,7 +2,7 @@
 
 import { RouteObject } from 'react-router-dom';
 
-import { checkMenuKey, MenuItem, UserMenuItem } from './menu';
+import { MenuItem, UserMenuItem } from './menu';
 import { checkRoutes } from './route';
 
 // 初始化应用的选项
@@ -32,6 +32,5 @@ export const presetOptions = {
 
 export function buildOptions(o: Options): Required<Options> {
     checkRoutes('', [], o.routes);
-    checkMenuKey([], o.menus);
     return Object.assign({}, presetOptions, o);
 }

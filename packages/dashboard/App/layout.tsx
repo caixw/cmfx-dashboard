@@ -10,29 +10,31 @@ import { Route } from "@douyinfe/semi-foundation/lib/es/breadcrumb/itemFoundatio
 import { AppSetting } from "@dashboard/AppSetting";
 import { AppContext, Context } from "./context";
 import { Locale, LocaleConsumer } from "@dashboard/locales";
-import { buildMenus, buildUserMenus, MenuItem } from "./options/menu";
+import { buildMenus, buildUserMenus, AdditionalMenuItem, UserDropdownMenuItem } from "./options/menu";
 
 export function Layout() {
     const [visible, setVisible] = useState(false);
     const [routes, setRoutes] = useState<Array<Route>>([]);
     const [collapsed, setCollapsed] = useState(false);
+    const nav = useNavigate();
     const ctx = useContext(AppContext);
 
     const collapseChange = (screen: string, broken: boolean) => {
         setCollapsed(!broken);
     };
 
+    const clickUserMenuItem = (data: UserDropdownMenuItem) => {
+        if ('name' in data) {
+            ctx.title = data.name as string;
+        }
+        setRoutes(data.breadcrumb as Array<Route>);
+        nav(data.itemKey as string);
+    };
+
     return <>
         <SLayout hasSider style={{height:'100vh', overflowY:'hidden'}}>
             <SLayout.Sider breakpoint={['md']} onBreakpoint={collapseChange}>
-                <LocaleConsumer>
-                    {
-                        (l:Locale) => {
-                            buildMenus([], ctx.options.menus, l);
-                            return <Aside ctx={ctx} setRoutes={setRoutes} collapsed={collapsed} setCollapsed={setCollapsed} />;
-                        }
-                    }
-                </LocaleConsumer>
+                <Aside ctx={ctx} setRoutes={setRoutes} collapsed={collapsed} setCollapsed={setCollapsed} />
             </SLayout.Sider>
 
             <SLayout>
@@ -46,8 +48,8 @@ export function Layout() {
                                 <LocaleConsumer>
                                     {
                                         (l: Locale) => {
-                                            buildUserMenus([], ctx.options.userMenus, l);
-                                            return <Dropdown menu={ctx.options.userMenus}>
+                                            const menus = buildUserMenus([], clickUserMenuItem, ctx.options.userMenus, l);
+                                            return <Dropdown menu={menus}>
                                                 <Button theme="borderless" icon={<IconUserCircle />}>bbbbbbb</Button>
                                             </Dropdown>;
                                         }
@@ -94,7 +96,7 @@ function Aside(props:{ctx: Context, setRoutes:RoutesSetter, collapsed: boolean, 
         const key = e.itemKey as string;
 
         setSelectedKeys([key]);
-        props.setRoutes((item as MenuItem).breadcrumb as Array<Route>);
+        props.setRoutes((item as AdditionalMenuItem).breadcrumb as Array<Route>);
         props.ctx.title = item.text as string;
         nav(key);
     };
@@ -105,19 +107,31 @@ function Aside(props:{ctx: Context, setRoutes:RoutesSetter, collapsed: boolean, 
         setBodyHeight(`calc(100vh - ${hh}px - ${fh}px)`);
     });
 
-    return <Nav
-        bodyStyle={{overflowY: 'scroll', height: bodyHeight}}
-        items={props.ctx.options.menus}
-        isCollapsed={props.collapsed}
-        onCollapseChange={(c: boolean)=>{props.setCollapsed(c);}}
-        onOpenChange={opened}
-        openKeys={openedKeys}
-        onSelect={selected}
-        selectedKeys={selectedKeys}
-    >
-        <Nav.Header className="nav-header" style={{borderBottom: '1px solid var(--semi-color-border)'}} text={props.ctx.options.name} logo={<img src={props.ctx.options.logo} />}  />
-        <Nav.Footer className="nav-footer" collapseButton={true} />
-    </Nav>;
+    return <LocaleConsumer>
+        {
+            (l: Locale) => {
+                const menus = buildMenus([], props.ctx.options.menus, l);
+                return <Nav
+                    bodyStyle={{overflowY: 'scroll', height: bodyHeight}}
+                    items={menus}
+                    isCollapsed={props.collapsed}
+                    onCollapseChange={(c: boolean)=>{props.setCollapsed(c);}}
+                    onOpenChange={opened}
+                    openKeys={openedKeys}
+                    onSelect={selected}
+                    selectedKeys={selectedKeys}
+                >
+                    <Nav.Header
+                        className="nav-header"
+                        style={{borderBottom: '1px solid var(--semi-color-border)'}}
+                        text={props.ctx.options.name}
+                        logo={<img src={props.ctx.options.logo} />}
+                    />
+                    <Nav.Footer className="nav-footer" collapseButton={true} />
+                </Nav>;
+            }
+        }
+    </LocaleConsumer>;
 }
 
 export function Fullscreen() {

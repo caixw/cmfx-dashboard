@@ -56,7 +56,12 @@ function SubmitForm(props: {locale: Locale}) {
             <Divider margin={15} />
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
                 <Button type='tertiary' htmlType='reset' icon={<IconRedoStroked />}>{props.locale.common.reset}</Button>
-                <Button type='primary' htmlType='submit' icon={<IconDownloadStroked rotate={270} />} iconPosition='right'>{props.locale.common.login}</Button>
+                <Button
+                    type='primary'
+                    htmlType='submit'
+                    icon={<IconDownloadStroked rotate={270} />}
+                    iconPosition='right'
+                >{props.locale.common.login}</Button>
             </div>
         </Form>
         <AppSetting visible={visible} onCancel={()=>setVisible(false)} />

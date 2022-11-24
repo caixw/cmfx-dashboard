@@ -12,5 +12,7 @@ export { LocaleConsumer, install } from './locales';
 
 export { Login } from './Login';
 export { Logout } from './Logout';
+export { ConfirmButton } from './ConfirmButton';
+export { AsyncButton } from './AsyncButton';
 
 export { sleep } from './utils';

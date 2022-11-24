@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { IconAscend, IconButtonStroked, IconHome } from '@douyinfe/semi-icons';
 
 import {
     UnauthRoute, AuthRoute, Options,
@@ -9,13 +10,12 @@ import {
 } from 'cmfx-dashboard';
 
 import { Home } from './Home';
-import { Page } from './Page';
+import { Buttons } from './Buttons';
 import { Page2 } from './Page2';
 import { Table } from './Table';
 import Logo from '@/assets/react.svg';
 import { mock } from './mock';
 import './style.css';
-import { IconAscend, IconHome } from '@douyinfe/semi-icons';
 
 install('zh-CN', {
     demo: {
@@ -54,8 +54,8 @@ const options: Options = {
                     element: <Home />
                 },
                 {
-                    path: 'page',
-                    element: <Page />
+                    path: 'buttons',
+                    element: <Buttons />
                 },
                 {
                     path: 'page2',
@@ -72,12 +72,13 @@ const options: Options = {
     menus: [
         {
             itemKey: '/home',
-            textKey: 'custom.demo.button',
+            textKey: 'home',
             icon: <IconHome />
         },
         {
-            itemKey: '/page',
-            textKey: 'abc'
+            itemKey: '/buttons',
+            textKey: 'custom.demo.button',
+            icon: <IconButtonStroked />
         },
 
         {
@@ -112,13 +113,11 @@ const options: Options = {
             node: 'item'
         },
         {
-            itemKey: '-',
-            textKey: '---',
             node: 'divider'
         },
         {
-            itemKey: '/exit',
-            textKey: 'exit',
+            itemKey: '/logout',
+            textKey: 'common.logout',
             node: 'item',
             icon: <IconHome />
         },
