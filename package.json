@@ -17,8 +17,8 @@
         "packages/*"
     ],
     "dependencies": {
-        "@douyinfe/semi-icons": "^2.23.7",
-        "@douyinfe/semi-ui": "^2.23.7",
+        "@douyinfe/semi-icons": "^2.24.1",
+        "@douyinfe/semi-ui": "^2.24.1",
         "@semi-bot/semi-theme-a11y": "^1.0.0",
         "eslint-plugin-json": "^3.1.0",
         "react": "^18.2.0",

@@ -2,7 +2,7 @@
 
 import React from "react";
 import {
-    IconPrint, IconRefresh, IconLineHeight, IconAlignJustify, IconAlignLeft, IconAlignRight, IconAlignCenter, IconHandle
+    IconPrint, IconRefresh, IconLineHeight, IconAlignJustify, IconAlignLeft, IconAlignRight, IconAlignCenter
 } from "@douyinfe/semi-icons";
 import { ColumnProps } from "@douyinfe/semi-ui/lib/es/table";
 import { Button, ButtonGroup, Dropdown, Popover, Tooltip } from "@douyinfe/semi-ui";
@@ -61,7 +61,6 @@ export function Toolbar<T extends RecordType>(props: Props<T>) {
 
                 const popItems = cols.map((v, index)=>
                     <div key={index} style={{display: 'flex', justifyContent: 'right', alignItems: 'center'}}>
-                        <div style={{cursor: 'move'}}><IconHandle /></div>
                         <div style={{marginRight: 'auto', marginLeft: '5px'}}>
                             { (typeof(v.title) === 'function') ? v.title() : v.title }
                         </div>

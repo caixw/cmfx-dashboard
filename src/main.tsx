@@ -6,7 +6,7 @@ import { IconAscend, IconButtonStroked, IconHome } from '@douyinfe/semi-icons';
 
 import {
     UnauthRoute, AuthRoute, Options,
-    App, Layout, Login, Logout, install
+    App, Layout, Login, Logout, install, SecurityLog
 } from 'cmfx-dashboard';
 
 import { Home } from './Home';
@@ -14,6 +14,7 @@ import { Buttons } from './Buttons';
 import { Paging } from './Paging';
 import { Table } from './Table';
 import Logo from '@/assets/react.svg';
+import BG from '@/assets/login-bg.svg';
 import { mock } from './mock';
 import './style.css';
 
@@ -30,8 +31,9 @@ install('zh-TW', {
 });
 
 const options: Options = {
-    name: 'cmfx',
+    name: 'cmfx 后台管理系统',
     logo: Logo,
+    loginBG: BG,
 
     loginPath: '/login',
     homePath: '/home',
@@ -64,6 +66,10 @@ const options: Options = {
                 {
                     path: 'table',
                     element: <Table />
+                },
+                {
+                    path: 'security-log',
+                    element: <SecurityLog url='/security-log' />
                 },
             ]
         },
@@ -102,6 +108,11 @@ const options: Options = {
             itemKey: '/home',
             textKey: 'custom.demo.button',
             icon: <IconHome />,
+            node: 'item'
+        },
+        {
+            itemKey: '/security-log',
+            textKey: 'common.security_log',
             node: 'item'
         },
         {

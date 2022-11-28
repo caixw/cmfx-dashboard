@@ -75,7 +75,7 @@ export function mock(){
         return buildPagingData(0, 50);
     });
 
-    fetchMock.get(/.+security-log/i, async ()=>{ // 分页信息
+    fetchMock.get(/.+security-log/i, async ()=>{ // 安全日志
         return {
             count: 10,
             more: true,

@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 
-import React, { useContext, useEffect, useState } from 'react';
-import {Button, Card, Row, Col, Form, Divider } from '@douyinfe/semi-ui';
+import React, { CSSProperties, useContext, useEffect, useState } from 'react';
+import {Button, Typography, Avatar, Card, Form, Divider } from '@douyinfe/semi-ui';
 import { useLocation, useNavigate } from "react-router-dom";
-import { IconSetting, IconDownloadStroked, IconRedoStroked } from '@douyinfe/semi-icons';
+import { IconSetting, IconExit } from '@douyinfe/semi-icons';
 
 import { Locale, LocaleConsumer } from '@dashboard/locales';
 import { AppSetting } from '@dashboard/AppSetting';
-import { AppContext } from '@dashboard/App/context';
+import { AppContext, Context } from '@dashboard/App/context';
 import { Token, writeToken } from '@dashboard/App/context/token';
 
 interface Account {
@@ -16,50 +16,70 @@ interface Account {
 }
 
 export function Login() {
-    return <Row align='middle' justify='center' type='flex' style={{marginTop: '100px'}}>
-        <Col xxl={8} xl={10} lg={12} sm={16} xs={24}>
+    const ctx = useContext(AppContext);
+    const style: CSSProperties = {
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        backgroundSize: 'cover',
+        backgroundImage: `url(${ctx.options.loginBG})`
+    };
+
+    return <div style={style}>
+        <div style={{display: 'flex', justifyContent: 'space-around'}}>
             <LocaleConsumer>
                 {
-                    (locale:  Locale) => { return <SubmitForm locale={locale} />; }
+                    (locale:  Locale) => { return <SubmitForm locale={locale} ctx={ctx} />; }
                 }
             </LocaleConsumer>
-        </Col>
-    </Row>;
+        </div>
+    </div>;
 }
 
-function SubmitForm(props: {locale: Locale}) {
+function SubmitForm(props: {locale: Locale, ctx: Context}) {
     const [visible, setVisible] = useState(false);
-    const ctx = useContext(AppContext);
     const nav = useNavigate();
     const loc = useLocation();
 
     useEffect(()=>{
-        ctx.title = props.locale.common.login;
+        props.ctx.title = props.locale.common.login;
     });
 
     const submit = async (value: Account) => {
-        const r = await ctx.post('/login', value);
+        const r = await props.ctx.post('/login', value);
         if (!r.ok) {
             console.log(r.problem);
             return;
         }
 
         writeToken(r.body as Token);
-        nav(nextPage(ctx.options.homePath, loc.search));
+        nav(nextPage(props.ctx.options.homePath, loc.search));
     };
 
-    return <Card title={props.locale.common.login}
-        headerExtraContent={<IconSetting onClick={()=>setVisible(true)} style={{cursor: 'pointer'}} />}>
+    return <Card
+        style={{padding: '8px 20px', width: '500px'}}
+        header={
+            <span style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                <span style={{display: 'flex', alignItems: 'center'}}>
+                    <Avatar src={props.ctx.options.logo} />
+                    <Typography.Title heading={2} style={{marginLeft: '20px', display: 'inline'}}>{props.ctx.options.name}</Typography.Title>
+                </span>
+                <IconSetting style={{cursor: 'pointer'}} onClick={()=>setVisible(true)} />
+            </span>
+        }
+    >
         <Form labelPosition='inset' initValues={{}} onSubmit={submit}>
-            <Form.Input field='username' label={props.locale.common.username} />
-            <Form.Input field='password' label={props.locale.common.password} mode='password' />
+            <Form.Input size='large' field='username' label={props.locale.common.username} />
+            <Form.Input size='large' field='password' label={props.locale.common.password} mode='password' />
             <Divider margin={15} />
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                <Button type='tertiary' htmlType='reset' icon={<IconRedoStroked />}>{props.locale.common.reset}</Button>
                 <Button
+                    block
+                    size='large'
                     type='primary'
                     htmlType='submit'
-                    icon={<IconDownloadStroked rotate={270} />}
+                    icon={<IconExit />}
                     iconPosition='right'
                 >{props.locale.common.login}</Button>
             </div>
