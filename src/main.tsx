@@ -8,15 +8,15 @@ import {
     UnauthRoute, AuthRoute, Options,
     App, Layout, Login, Logout, install, SecurityLog
 } from 'cmfx-dashboard';
+import 'cmfx-dashboard/style.css';
 
 import { Home } from './Home';
 import { Buttons } from './Buttons';
 import { Paging } from './Paging';
 import { Table } from './Table';
 import Logo from '@/assets/react.svg';
-import BG from '@/assets/login-bg.svg';
+// import BG from '@/assets/login-bg.svg';
 import { mock } from './mock';
-import './style.css';
 
 install('zh-CN', {
     demo: {
@@ -33,7 +33,7 @@ install('zh-TW', {
 const options: Options = {
     name: 'cmfx 后台管理系统',
     logo: Logo,
-    loginBG: BG,
+    // loginBG: BG,
 
     loginPath: '/login',
     homePath: '/home',
@@ -41,7 +41,7 @@ const options: Options = {
     routes: [
         {
             path: 'login',
-            element: <UnauthRoute><Login /></UnauthRoute>
+            element: <UnauthRoute><Login footer={<div>&copy; by caixw</div>} /></UnauthRoute>
         },
         {
             path: '/',

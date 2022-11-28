@@ -143,7 +143,7 @@ export function Paging<T extends RecordType>(props: Props<T>) {
                     setStrip={(n: number)=>{setStrip(n);}}
                     lineHeight={lineHeight}
                     setLineHeight={(s: LineHeight)=>setLineHeight((s))}
-                    print={useReactToPrint({content:()=>printable.current})} />
+                    print={useReactToPrint({content:()=>printable.current, documentTitle: ctx.title})} />
             </div>
         </div>
         <Divider style={{marginTop: '5px'}} />

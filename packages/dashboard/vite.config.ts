@@ -1,10 +1,19 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [react()],
+    plugins: [
+        react(),
+        viteStaticCopy({
+            targets: [{
+                src: 'style.css',
+                dest: './'
+            }]
+        })
+    ],
     resolve: {
         alias: {
             '@dashboard': __dirname,
@@ -15,7 +24,7 @@ export default defineConfig({
         target: 'esnext',
         lib: {
             entry: path.resolve(__dirname, './index.ts'),
-            formats: ['es'],
+            formats: ['es', 'cjs'],
             name: 'cmfx-dashboard',
             fileName: (format) =>`cmfx-dashboard.${format}.js`
         },

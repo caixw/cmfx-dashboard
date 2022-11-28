@@ -29,6 +29,9 @@
             "@dashboard": [
                 "./packages/dashboard"
             ],
+            "cmfx-dashboard/style.css": [
+                "./packages/dashboard/style.css"
+            ],
             "cmfx-dashboard": [
                 "./packages/dashboard/index.ts"
             ],

@@ -13,6 +13,7 @@ export default defineConfig({
             '@dashboard': path.resolve(__dirname, './packages/dashboard'),
 
             // 对子包的真正引用，需要指定入口文件，这样 import 时才不会出错。
+            'cmfx-dashboard/style.css': path.resolve(__dirname, './packages/dashboard/style.css'),
             'cmfx-dashboard': path.resolve(__dirname, './packages/dashboard/index.ts')
         },
     }

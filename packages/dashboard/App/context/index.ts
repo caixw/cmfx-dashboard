@@ -70,6 +70,8 @@ export const AppContext = React.createContext(new Context(
         name: '',
         logo: '',
         titleSeparator: '|',
+        pageSizes: [],
+        loginBG: '',
 
         loginPath: '',
         homePath: '',

@@ -6,7 +6,9 @@
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",
-        "lint": "eslint --ext .ts --ext .tsx --ext .json src && stylelint **/*.css",
+        "lint:ts": "eslint --ext .ts --ext .tsx --ext .json packages/ src/",
+        "lint:style": "stylelint src/**/*.css packages/**/*.css",
+        "lint": "npm run lint:ts && npm run lint:style",
         "preview": "vite preview"
     },
     "pre-commit": [

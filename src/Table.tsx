@@ -13,7 +13,7 @@ export function Table() {
         {title: 'NO', dataIndex: 'no'},
         {title: '名称', dataIndex: 'name'},
         {title: '账号', dataIndex: 'username'},
-        {title: '性别', dataIndex: 'sex', render(text: string){
+        {title: '性别(不打印)', className: 'no-print', dataIndex: 'sex', render(text: string){
             switch (text) {
             case 'male':
                 return '男';

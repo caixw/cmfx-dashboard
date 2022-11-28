@@ -23,14 +23,12 @@
         "jsx": "react-jsx",
         "baseUrl": ".",
         "paths": {
-                "@dashboard/*": [
-                    "./*"
-                ],
-            },
+                "@dashboard/*": ["./*"]
+            }
         },
     "include": [
         "**/*.ts",
-        "**/*.tsx",
+        "**/*.tsx"
     ],
     "references": [
         {

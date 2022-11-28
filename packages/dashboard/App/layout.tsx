@@ -8,18 +8,10 @@ import { OnSelectedData } from "@douyinfe/semi-ui/lib/es/navigation";
 import { Route } from "@douyinfe/semi-foundation/lib/es/breadcrumb/itemFoundation";
 
 import { AppSetting } from "@dashboard/AppSetting";
-import { AppContext, Context } from "./context";
 import { Locale, LocaleConsumer } from "@dashboard/locales";
+import { AppContext, Context } from "./context";
 import { buildMenus, buildUserMenus, AdditionalMenuItem, UserDropdownMenuItem } from "./options/menu";
-import { Admin } from './admin';
-
-async function getInfo(ctx: Context): Promise<Admin> {
-    const r = await ctx.get('/info');
-    if (!r.ok) {
-        console.error(r.problem);
-    }
-    return r.body as Admin;
-}
+import { Admin, getInfo } from './admin';
 
 export function Layout() {
     const [visible, setVisible] = useState(false);
@@ -42,9 +34,7 @@ export function Layout() {
     };
 
     useEffect(()=>{
-        getInfo(ctx).then((i)=>{
-            setInfo(i);
-        });
+        getInfo(ctx).then((i)=>{setInfo(i);});
     }, []);
 
     return <>

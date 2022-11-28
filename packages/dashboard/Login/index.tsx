@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 import React, { CSSProperties, useContext, useEffect, useState } from 'react';
-import {Button, Typography, Avatar, Card, Form, Divider } from '@douyinfe/semi-ui';
+import {Button, Typography, Avatar, Card, Form } from '@douyinfe/semi-ui';
 import { useLocation, useNavigate } from "react-router-dom";
 import { IconSetting, IconExit } from '@douyinfe/semi-icons';
 
@@ -15,7 +15,7 @@ interface Account {
     password?: string
 }
 
-export function Login() {
+export function Login(props: {footer?: React.ReactNode}) {
     const ctx = useContext(AppContext);
     const style: CSSProperties = {
         height: '100vh',
@@ -23,21 +23,21 @@ export function Login() {
         flexDirection: 'column',
         justifyContent: 'space-around',
         backgroundSize: 'cover',
-        backgroundImage: `url(${ctx.options.loginBG})`
+        backgroundImage: `url('${ctx.options.loginBG}')`
     };
 
     return <div style={style}>
         <div style={{display: 'flex', justifyContent: 'space-around'}}>
             <LocaleConsumer>
                 {
-                    (locale:  Locale) => { return <SubmitForm locale={locale} ctx={ctx} />; }
+                    (locale:  Locale) => { return <SubmitForm locale={locale} ctx={ctx} footer={props.footer} />; }
                 }
             </LocaleConsumer>
         </div>
     </div>;
 }
 
-function SubmitForm(props: {locale: Locale, ctx: Context}) {
+function SubmitForm(props: {locale: Locale, ctx: Context, footer?: React.ReactNode}) {
     const [visible, setVisible] = useState(false);
     const nav = useNavigate();
     const loc = useLocation();
@@ -58,6 +58,8 @@ function SubmitForm(props: {locale: Locale, ctx: Context}) {
     };
 
     return <Card
+        footer={props.footer}
+        footerLine={props.footer ? true : false}
         style={{padding: '8px 20px', width: '500px'}}
         header={
             <span style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
@@ -72,17 +74,15 @@ function SubmitForm(props: {locale: Locale, ctx: Context}) {
         <Form labelPosition='inset' initValues={{}} onSubmit={submit}>
             <Form.Input size='large' field='username' label={props.locale.common.username} />
             <Form.Input size='large' field='password' label={props.locale.common.password} mode='password' />
-            <Divider margin={15} />
-            <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                <Button
-                    block
-                    size='large'
-                    type='primary'
-                    htmlType='submit'
-                    icon={<IconExit />}
-                    iconPosition='right'
-                >{props.locale.common.login}</Button>
-            </div>
+            <Button
+                style={{marginTop: '20px'}}
+                block
+                size='large'
+                type='primary'
+                htmlType='submit'
+                icon={<IconExit />}
+                iconPosition='right'
+            >{props.locale.common.login}</Button>
         </Form>
         <AppSetting visible={visible} onCancel={()=>setVisible(false)} />
     </Card>;
