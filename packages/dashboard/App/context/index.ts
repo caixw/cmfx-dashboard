@@ -75,6 +75,7 @@ export const AppContext = React.createContext(new Context(
         homePath: '',
 
         menus: [],
+        userMenus: [],
 
         urlPrefix: ''
     },

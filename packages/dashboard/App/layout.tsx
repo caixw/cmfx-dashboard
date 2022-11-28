@@ -11,11 +11,21 @@ import { AppSetting } from "@dashboard/AppSetting";
 import { AppContext, Context } from "./context";
 import { Locale, LocaleConsumer } from "@dashboard/locales";
 import { buildMenus, buildUserMenus, AdditionalMenuItem, UserDropdownMenuItem } from "./options/menu";
+import { Admin } from './admin';
+
+async function getInfo(ctx: Context): Promise<Admin> {
+    const r = await ctx.get('/info');
+    if (!r.ok) {
+        console.error(r.problem);
+    }
+    return r.body as Admin;
+}
 
 export function Layout() {
     const [visible, setVisible] = useState(false);
     const [routes, setRoutes] = useState<Array<Route>>([]);
     const [collapsed, setCollapsed] = useState(false);
+    const [info, setInfo] = useState<Admin>({});
     const nav = useNavigate();
     const ctx = useContext(AppContext);
 
@@ -31,6 +41,12 @@ export function Layout() {
         nav(data.itemKey as string);
     };
 
+    useEffect(()=>{
+        getInfo(ctx).then((i)=>{
+            setInfo(i);
+        });
+    }, []);
+
     return <>
         <SLayout hasSider style={{height:'100vh', overflowY:'hidden'}}>
             <SLayout.Sider breakpoint={['md']} onBreakpoint={collapseChange}>
@@ -44,13 +60,13 @@ export function Layout() {
                         <Nav.Footer>
                             <>
                                 <Fullscreen />
-                                <Button theme="borderless" icon={<IconSetting />} onClick={()=>setVisible(true)} />
+                                <Button theme="borderless" icon={<IconSetting size='large' />} onClick={()=>setVisible(true)} />
                                 <LocaleConsumer>
                                     {
                                         (l: Locale) => {
                                             const menus = buildUserMenus([], clickUserMenuItem, ctx.options.userMenus, l);
                                             return <Dropdown menu={menus}>
-                                                <Button theme="borderless" icon={<IconUserCircle />}>bbbbbbb</Button>
+                                                <Button theme="borderless" icon={<IconUserCircle size='large' />}>{info.name}</Button>
                                             </Dropdown>;
                                         }
                                     }
@@ -146,5 +162,5 @@ export function Fullscreen() {
         setFullscreen(!fullscreen);
     };
 
-    return <Button role='button' onClick={change} theme="borderless" icon={fullscreen ? <IconMinimize /> : <IconMaximize />} />;
+    return <Button role='button' onClick={change} theme="borderless" icon={fullscreen ? <IconMinimize size='large' /> : <IconMaximize size='large' />} />;
 }

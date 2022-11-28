@@ -4,10 +4,9 @@ import fetchMock from 'fetch-mock';
 
 import { sleep } from 'cmfx-dashboard';
 
-function getQuery(url: string, key: string): string | undefined {
-    const p = new URLSearchParams(url);
-    const ps = Object.fromEntries(p.entries());
-    return ps[key];
+function getQuery(url: string, key: string, def: string): string {
+    const u = new URL(url);
+    return u.searchParams.get(key) ?? def;
 }
 
 export interface PagingDataType {
@@ -50,18 +49,18 @@ export function mock(){
     fetchMock.delete(/.+login/i, 204);
 
     fetchMock.get(/.+info/i, {
-        name: 'name',
-        nickname: 'nickname',
-        username: 'username',
+        name: '姓名',
+        nickname: '昵称',
+        username: '账号',
         sex: 'female',
         state: 'normal'
     });
 
     fetchMock.get(/.+paging/i, async (url: string)=>{ // 分页信息
         await sleep(1000);
-        console.log('mock:', url);
-        const page = parseInt(getQuery(url, 'page') ?? '0');
-        const size = parseInt(getQuery(url, 'size') ?? '20');
+        const page = parseInt(getQuery(url, 'page', '0'));
+        const size = parseInt(getQuery(url, 'size', '33'));
+        console.log('mock:', url, page, size);
 
         const start = page * size;
         return {

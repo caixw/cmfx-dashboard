@@ -11,7 +11,7 @@ import {
 
 import { Home } from './Home';
 import { Buttons } from './Buttons';
-import { Page2 } from './Page2';
+import { Paging } from './Paging';
 import { Table } from './Table';
 import Logo from '@/assets/react.svg';
 import { mock } from './mock';
@@ -58,8 +58,8 @@ const options: Options = {
                     element: <Buttons />
                 },
                 {
-                    path: 'page2',
-                    element: <Page2 />
+                    path: 'paging',
+                    element: <Paging />
                 },
                 {
                     path: 'table',
@@ -88,22 +88,14 @@ const options: Options = {
             items: [
                 {
                     itemKey: '/table',
-                    textKey: 'abc'
+                    textKey: '无分页表格'
+                },
+                {
+                    itemKey: '/paging',
+                    textKey: '分页表格'
                 },
             ]
         },
-
-        {
-            itemKey: '/p2',
-            textKey: 'page',
-            icon: <IconAscend />,
-            items: [
-                {
-                    itemKey: '/page2',
-                    textKey: 'abc'
-                },
-            ]
-        }
     ],
     userMenus: [
         {

@@ -13,6 +13,7 @@ type Item = Record<string, string>;
 export interface Locale<T extends Record<string, unknown>=Record<string,unknown>> {
     locale: Item
     common: Item
+    paging: Item
     appSetting: Item
 
     // 用户自定义的数据添加在此处

@@ -31,6 +31,26 @@ export const zhCN = {
         yes: '是'
     },
 
+    paging: {
+        row_setting: '表设置',
+        column_setting: '列设置',
+        line_height: '行高',
+        small_size: '紧凑',
+        middle_size: '中等',
+        default_size: '默认',
+        striped: '班马线',
+        striped_none: '无',
+        striped_2: '隔行',
+        striped_3: '每隔 3 行',
+        striped_5: '每隔 5 行',
+        fixed_left: '固定在左侧',
+        fixed_right: '固定在右侧',
+        fixed_none: '无固定',
+        align_left: '左对齐',
+        align_right: '右对齐',
+        align_center: '居中对齐',
+    },
+
     appSetting: {
         appSetting: '应用设置',
         theme_dark: '深色模式',

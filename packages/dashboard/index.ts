@@ -15,4 +15,6 @@ export { Logout } from './Logout';
 export { ConfirmButton } from './ConfirmButton';
 export { AsyncButton } from './AsyncButton';
 
+export { Paging } from './Paging';
+
 export { sleep } from './utils';

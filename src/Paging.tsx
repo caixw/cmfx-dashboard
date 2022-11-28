@@ -2,12 +2,12 @@
 
 import React from "react";
 import { ColumnProps } from "@douyinfe/semi-ui/lib/es/table";
+import { Form } from "@douyinfe/semi-ui";
 
-import { Paging } from "cmfx-dashboard";
+import { Paging as P} from "cmfx-dashboard";
 import { PagingDataType } from "./mock";
-import { Button } from "@douyinfe/semi-ui";
 
-export function Table() {
+export function Paging() {
     const columns: Array<ColumnProps<PagingDataType>> = [
         {title: '#', dataIndex: 'id'},
         {title: 'NO', dataIndex: 'no'},
@@ -25,11 +25,10 @@ export function Table() {
         }},
     ];
     return <div style={{padding: '8px'}}>
-        <Paging
-            url='/table'
-            paging={false}
-            columns={columns}
-            toolbar={<><Button>新建</Button>&#160;&#160;<Button type="tertiary">删除</Button></>}
-        />
+        <P
+            queries={<Form.Input field="age" width={200} />}
+            url='/paging'
+            paging={true}
+            columns={columns} />
     </div>;
 }

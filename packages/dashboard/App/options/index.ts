@@ -10,6 +10,7 @@ export interface Options {
     name: string // 应用名称，将显示在标题和左侧菜单栏顶部。
     logo: string // 应用图标，显示在左侧菜单栏顶部。
     titleSeparator?: string // 标题与子标题之间的分隔符，默认为 |
+    pageSizes?: Array<number>
 
     // 登录页和登录后的默认页地址
     loginPath: string
@@ -28,6 +29,7 @@ export interface Options {
 
 export const presetOptions = {
     titleSeparator: ' | ',
+    pageSizes: [20, 50, 100, 200]
 };
 
 export function buildOptions(o: Options): Required<Options> {
