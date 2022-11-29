@@ -17,5 +17,6 @@ export { AsyncButton } from './AsyncButton';
 export { AsyncForm } from './AsyncForm';
 export { Paging } from './Paging';
 export { SecurityLog } from './SecurityLog';
+export { ErrorPage } from './ErrorPage';
 
 export { sleep } from './utils';

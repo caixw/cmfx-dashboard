@@ -2,10 +2,10 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { IconAscend, IconButtonStroked, IconHome } from '@douyinfe/semi-icons';
+import { IconAlertCircle, IconAscend, IconButtonStroked, IconGridSquare, IconHome } from '@douyinfe/semi-icons';
 
 import {
-    UnauthRoute, AuthRoute, Options,
+    UnauthRoute, AuthRoute, Options, ErrorPage,
     App, Layout, Login, Logout, install, SecurityLog
 } from 'cmfx-dashboard';
 import 'cmfx-dashboard/style.css';
@@ -73,6 +73,14 @@ const options: Options = {
                     element: <AsyncFormDemo />
                 },
                 {
+                    path: 'error-page-404',
+                    element: <ErrorPage code={404} title='page not found' />
+                },
+                {
+                    path: 'error-page-403',
+                    element: <ErrorPage code={403} />
+                },
+                {
                     path: 'security-log',
                     element: <SecurityLog url='/security-log' />
                 },
@@ -94,7 +102,22 @@ const options: Options = {
         {
             itemKey: '/async-form',
             textKey: 'async-form',
-            icon: <IconButtonStroked />
+            icon: <IconGridSquare />
+        },
+        {
+            itemKey: '/error-page',
+            textKey: 'error-page',
+            icon: <IconAlertCircle />,
+            items: [
+                {
+                    itemKey: '/error-page-404',
+                    textKey: '404'
+                },
+                {
+                    itemKey: '/error-page-403',
+                    textKey: '403'
+                }
+            ]
         },
 
         {

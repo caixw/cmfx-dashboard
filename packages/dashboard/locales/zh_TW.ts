@@ -13,6 +13,7 @@ export const zhTW = {
         content: '內容',
         created_time: '創建時間',
         default: '默認',
+        home: '首页',
         ip: 'IP',
         login: '登錄',
         logout: '退出',
@@ -29,6 +30,11 @@ export const zhTW = {
         ua: 'UA',
         username: '賬號',
         yes: '是'
+    },
+
+    errorPage: {
+        back_home: '返回首页',
+        back_prev_page: '返回上一页',
     },
 
     paging: {

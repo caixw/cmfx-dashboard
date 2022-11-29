@@ -31,6 +31,11 @@ export const zhCN = {
         yes: '是'
     },
 
+    errorPage: {
+        back_home: '返回首页',
+        back_prev_page: '返回上一页',
+    },
+
     paging: {
         row_setting: '表设置',
         column_setting: '列设置',
