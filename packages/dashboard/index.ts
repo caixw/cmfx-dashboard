@@ -14,6 +14,7 @@ export { Login } from './Login';
 export { Logout } from './Logout';
 export { ConfirmButton } from './ConfirmButton';
 export { AsyncButton } from './AsyncButton';
+export { AsyncForm } from './AsyncForm';
 export { Paging } from './Paging';
 export { SecurityLog } from './SecurityLog';
 

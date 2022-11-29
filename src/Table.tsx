@@ -7,7 +7,7 @@ import { Paging } from "cmfx-dashboard";
 import { PagingDataType } from "./mock";
 import { Button } from "@douyinfe/semi-ui";
 
-export function Table() {
+export function TableDemo() {
     const columns: Array<ColumnProps<PagingDataType>> = [
         {title: '#', dataIndex: 'id'},
         {title: 'NO', dataIndex: 'no'},

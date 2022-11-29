@@ -7,7 +7,7 @@ import { Form } from "@douyinfe/semi-ui";
 import { Paging as P} from "cmfx-dashboard";
 import { PagingDataType } from "./mock";
 
-export function Paging() {
+export function PagingDemo() {
     const columns: Array<ColumnProps<PagingDataType>> = [
         {title: '#', dataIndex: 'id'},
         {title: 'NO', dataIndex: 'no'},

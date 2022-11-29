@@ -11,9 +11,10 @@ import {
 import 'cmfx-dashboard/style.css';
 
 import { Home } from './Home';
-import { Buttons } from './Buttons';
-import { Paging } from './Paging';
-import { Table } from './Table';
+import { ButtonsDemo } from './Buttons';
+import { PagingDemo } from './Paging';
+import { TableDemo } from './Table';
+import { AsyncFormDemo } from './AsyncForm';
 import Logo from '@/assets/react.svg';
 // import BG from '@/assets/login-bg.svg';
 import { mock } from './mock';
@@ -57,15 +58,19 @@ const options: Options = {
                 },
                 {
                     path: 'buttons',
-                    element: <Buttons />
+                    element: <ButtonsDemo />
                 },
                 {
                     path: 'paging',
-                    element: <Paging />
+                    element: <PagingDemo />
                 },
                 {
                     path: 'table',
-                    element: <Table />
+                    element: <TableDemo />
+                },
+                {
+                    path: 'async-form',
+                    element: <AsyncFormDemo />
                 },
                 {
                     path: 'security-log',
@@ -84,6 +89,11 @@ const options: Options = {
         {
             itemKey: '/buttons',
             textKey: 'custom.demo.button',
+            icon: <IconButtonStroked />
+        },
+        {
+            itemKey: '/async-form',
+            textKey: 'async-form',
             icon: <IconButtonStroked />
         },
 

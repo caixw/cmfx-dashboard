@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { IconSetting, IconExit } from '@douyinfe/semi-icons';
 
 import { Locale, LocaleConsumer } from '@dashboard/locales';
+import { AsyncForm } from '@dashboard/AsyncForm';
 import { AppSetting } from '@dashboard/AppSetting';
 import { AppContext, Context } from '@dashboard/App/context';
 import { Token, writeToken } from '@dashboard/App/context/token';
@@ -71,7 +72,7 @@ function SubmitForm(props: {locale: Locale, ctx: Context, footer?: React.ReactNo
             </span>
         }
     >
-        <Form labelPosition='inset' initValues={{}} onSubmit={submit}>
+        <AsyncForm labelPosition='inset' initValues={{}} onSubmit={submit}>
             <Form.Input size='large' field='username' label={props.locale.common.username} />
             <Form.Input size='large' field='password' label={props.locale.common.password} mode='password' />
             <Button
@@ -83,7 +84,7 @@ function SubmitForm(props: {locale: Locale, ctx: Context, footer?: React.ReactNo
                 icon={<IconExit />}
                 iconPosition='right'
             >{props.locale.common.login}</Button>
-        </Form>
+        </AsyncForm>
         <AppSetting visible={visible} onCancel={()=>setVisible(false)} />
     </Card>;
 }

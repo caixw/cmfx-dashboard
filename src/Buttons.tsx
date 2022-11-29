@@ -6,7 +6,7 @@ import { Divider, Toast } from "@douyinfe/semi-ui";
 import { ConfirmButton, AsyncButton, sleep } from 'cmfx-dashboard';
 import { IconAlarm } from "@douyinfe/semi-icons";
 
-export function Buttons() {
+export function ButtonsDemo() {
     return <div style={{padding: '10px'}}>
         <Divider>AsyncButton</Divider>
         <br />
