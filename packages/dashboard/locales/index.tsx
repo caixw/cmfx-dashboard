@@ -16,7 +16,7 @@ type CustomType = Record<string, any>;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface Locale<T extends CustomType = any> {
     locale: Item
-    common: Item
+    common: Item // 一些通用的本地化内容
     errorPage: Item
     paging: Item
     appSetting: Item

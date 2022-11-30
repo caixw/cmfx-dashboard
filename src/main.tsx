@@ -2,11 +2,14 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { IconAlertCircle, IconAscend, IconButtonStroked, IconGridSquare, IconHome } from '@douyinfe/semi-icons';
+import {
+    IconAlertCircle, IconAscend, IconButtonStroked, IconGridSquare, IconHome, IconUserGroup
+} from '@douyinfe/semi-icons';
 
 import {
-    UnauthRoute, AuthRoute, Options, ErrorPage, Locale,
-    App, Layout, Login, Logout, install, SecurityLog, LocaleConsumer
+    UnauthRoute, AuthRoute, Options, ErrorPage, Locale, TODO,
+    App, Layout, Login, Logout, install, SecurityLog, LocaleConsumer,
+    Groups
 } from 'cmfx-dashboard';
 import 'cmfx-dashboard/style.css';
 
@@ -72,9 +75,24 @@ const options: Options = {
                     element: <Home />
                 },
                 {
+                    path: 'error-page-403',
+                    element: <ErrorPage code={403} />
+                },
+                {
                     path: 'buttons',
                     element: <ButtonsDemo />
                 },
+                {
+                    path: 'async-form',
+                    element: <AsyncFormDemo />
+                },
+                {
+                    path: 'security-log',
+                    element: <SecurityLog url='/security-log' />
+                },
+
+                // 分页
+
                 {
                     path: 'paging',
                     element: <PagingDemo />
@@ -83,10 +101,9 @@ const options: Options = {
                     path: 'table',
                     element: <TableDemo />
                 },
-                {
-                    path: 'async-form',
-                    element: <AsyncFormDemo />
-                },
+
+                // error page
+
                 {
                     path: 'error-page-404',
                     element: <LocaleConsumer>
@@ -97,13 +114,16 @@ const options: Options = {
                         }
                     </LocaleConsumer>
                 },
+
+                // admins
+
                 {
-                    path: 'error-page-403',
-                    element: <ErrorPage code={403} />
+                    path: 'groups',
+                    element: <Groups />
                 },
                 {
-                    path: 'security-log',
-                    element: <SecurityLog url='/security-log' />
+                    path: 'admins',
+                    element: <TODO />
                 },
             ]
         },
@@ -125,6 +145,20 @@ const options: Options = {
             textKey: 'async-form',
             icon: <IconGridSquare />
         },
+
+        {
+            itemKey: '/admin-groups',
+            textKey: '管理员',
+            icon: <IconUserGroup />,
+            items: [
+                {
+                    itemKey: '/groups',
+                    textKey: '管理员'
+                }
+            ]
+        },
+
+
         {
             itemKey: '/error-page',
             textKey: 'error-page',

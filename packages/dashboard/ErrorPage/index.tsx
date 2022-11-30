@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT
 
+import React, { useContext, CSSProperties } from "react";
 import { Button } from "@douyinfe/semi-ui";
-import React, { useContext } from "react";
-import { CSSProperties } from "react";
 
 import { AppContext } from "@dashboard/App/context";
 import { LocaleConsumer } from "cmfx-dashboard";
