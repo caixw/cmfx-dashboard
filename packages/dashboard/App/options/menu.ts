@@ -20,7 +20,7 @@ export interface AdditionalMenuItem {
     breadcrumb?: Array<Route>
 }
 
-type NavMenuItem = {
+export type NavMenuItem = {
     text: string
     icon?: React.ReactNode
     items?: Array<NavMenuItem>
@@ -63,6 +63,23 @@ export function buildMenus(parent: Array<Route>, menus: Array<MenuItem>, locale:
     }
 
     return ret;
+}
+
+export function findMenuByKey(items: Array<NavMenuItem>, key: string): NavMenuItem | null{
+    for(const item of items) {
+        if (item.itemKey === key) {
+            return item;
+        }
+
+        if (item.items) {
+            const data =findMenuByKey(item.items, key);
+            if (data) {
+                return data;
+            }
+        }
+    }
+
+    return null;
 }
 
 // click 表示点击用户菜单项时需要执行的操作；

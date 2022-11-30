@@ -18,11 +18,11 @@ function Wrapper(props: {options: Required<ContextOptions>}) {
 
     init();
 
-    return <AppContext.Provider value={ctx}>
-        <ConfigProvider locale={locale}>
+    return <ConfigProvider locale={locale}>
+        <AppContext.Provider value={ctx}>
             <Outlet />
-        </ConfigProvider>
-    </AppContext.Provider>;
+        </AppContext.Provider>
+    </ConfigProvider>;
 }
 
 export function App(props: {options: Options}) {

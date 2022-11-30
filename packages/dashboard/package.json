@@ -2,9 +2,11 @@
     "name": "cmfx-dashboard",
     "version": "1.0.0",
     "type": "module",
+    "main": "./lib/cmfx-dashboard.cjs.js",
     "module": "./lib/cmfx-dashboard.es.js",
     "exports": {
         ".": {
+            "require": "./lib/cmfx-dashboard.cjs.js",
             "import": "./lib/cmfx-dashboard.es.js"
         }
     },

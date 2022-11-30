@@ -8,14 +8,17 @@ export { AuthRoute, UnauthRoute } from './App/context/token';
 export { AppContext } from './App/context';
 export type { Options } from './App/options';
 
-export { LocaleConsumer, install } from './locales';
+export { LocaleConsumer, install, useLocale } from './locales';
+export type { Locale } from './locales';
+
+export { Paging } from './Paging';
+export type { ColumnProps } from './Paging';
 
 export { Login } from './Login';
 export { Logout } from './Logout';
 export { ConfirmButton } from './ConfirmButton';
 export { AsyncButton } from './AsyncButton';
 export { AsyncForm } from './AsyncForm';
-export { Paging } from './Paging';
 export { SecurityLog } from './SecurityLog';
 export { ErrorPage } from './ErrorPage';
 

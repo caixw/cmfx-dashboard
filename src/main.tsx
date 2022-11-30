@@ -5,8 +5,8 @@ import ReactDOM from 'react-dom/client';
 import { IconAlertCircle, IconAscend, IconButtonStroked, IconGridSquare, IconHome } from '@douyinfe/semi-icons';
 
 import {
-    UnauthRoute, AuthRoute, Options, ErrorPage,
-    App, Layout, Login, Logout, install, SecurityLog
+    UnauthRoute, AuthRoute, Options, ErrorPage, Locale,
+    App, Layout, Login, Logout, install, SecurityLog, LocaleConsumer
 } from 'cmfx-dashboard';
 import 'cmfx-dashboard/style.css';
 
@@ -19,15 +19,30 @@ import Logo from '@/assets/react.svg';
 // import BG from '@/assets/login-bg.svg';
 import { mock } from './mock';
 
+interface CustomType {
+    demo: {
+        button: string,
+        errpage: {
+            p404: string
+        }
+    }
+}
+
 install('zh-CN', {
     demo: {
-        button: '按钮'
+        button: '按钮',
+        errpage: {
+            p404: '404 页面翻译项'
+        }
     }
 });
 
 install('zh-TW', {
     demo: {
-        button: '按钮_TW'
+        button: '按钮_TW',
+        errpage: {
+            p404: '404 页面翻译项_TW'
+        }
     }
 });
 
@@ -74,7 +89,13 @@ const options: Options = {
                 },
                 {
                     path: 'error-page-404',
-                    element: <ErrorPage code={404} title='page not found' />
+                    element: <LocaleConsumer>
+                        {
+                            (l: Locale<CustomType>)=>{
+                                return <ErrorPage code={404} title={l.custom.demo.errpage.p404} />;
+                            }
+                        }
+                    </LocaleConsumer>
                 },
                 {
                     path: 'error-page-403',

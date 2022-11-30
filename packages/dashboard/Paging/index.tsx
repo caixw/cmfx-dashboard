@@ -18,6 +18,8 @@ const defaultPage = 1; // 默认页码
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type RecordType = Record<string, any>;
 
+export type { ColumnProps };
+
 export type LineHeight = 'default'|'middle'|'small';
 
 export interface Props<T extends RecordType> {

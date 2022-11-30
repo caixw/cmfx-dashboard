@@ -10,7 +10,11 @@ import { zhTW } from './zh_TW';
 
 type Item = Record<string, string>;
 
-export interface Locale<T extends Record<string, unknown>=Record<string,unknown>> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type CustomType = Record<string, any>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface Locale<T extends CustomType = any> {
     locale: Item
     common: Item
     errorPage: Item
@@ -21,12 +25,13 @@ export interface Locale<T extends Record<string, unknown>=Record<string,unknown>
     custom: T
 }
 
-interface Props<T extends Record<string, unknown> = Record<string, unknown>> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface Props<T extends CustomType = any> {
     children: (l: Locale<T>) => React.ReactNode
 }
 
 // 返回自定义的本地化数据
-export function LocaleConsumer<T extends Record<string, unknown>>(props: Props) {
+export function LocaleConsumer<T extends CustomType>(props: Props) {
     return <SLocaleConsumer componentName='Cmfx'>
         {
             (l: Locale<T>) => {
@@ -44,7 +49,7 @@ export const locales = new Map<string, typeof zh_CN & {Cmfx:Locale}>([
 /**
  * 添加自定义的本地化信息
  */
-export function install<T extends Record<string, unknown>>(code: string, obj: T): void {
+export function install<T extends CustomType>(code: string, obj: T): void {
     const l = locales.get(code);
     if (!l) {
         throw `不支持 ${code} 的本地化`;
@@ -68,4 +73,8 @@ export function getLocale(code: string) {
         throw `无效的本地化代码：${code}`;
     }
     return l;
+}
+
+export function useLocale(): Locale{
+    return getLocale(getLocaleCode()).Cmfx;
 }

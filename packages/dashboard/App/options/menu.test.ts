@@ -4,7 +4,7 @@ import { test, expect, describe } from 'vitest';
 
 import { zhCN } from '@dashboard/locales/zh_CN';
 import { zhTW } from '@dashboard/locales/zh_TW';
-import { buildMenus } from './menu';
+import { buildMenus, findMenuByKey, NavMenuItem } from './menu';
 
 describe('buildMenuItems', ()=>{
     test('一维', ()=>{
@@ -77,5 +77,31 @@ describe('buildMenuItems', ()=>{
                 ]
             },
         ]);
+    });
+});
+
+describe('findMenuByKey', ()=>{
+    const data: Array<NavMenuItem> = [
+        {
+            itemKey: '/p1',
+            text: 'p1'
+        },
+        {
+            itemKey: '/p2',
+            text: 'p2',
+            items: [
+                {
+                    itemKey: '/p21',
+                    text: 'p21'
+                },
+            ]
+        },
+    ];
+    test('found', ()=>{
+        expect(findMenuByKey(data, '/p21')).toEqual({itemKey: '/p21', text:'p21'});
+    });
+
+    test('not found', ()=>{
+        expect(findMenuByKey(data, 'not-exists')).toBeNull();
     });
 });
