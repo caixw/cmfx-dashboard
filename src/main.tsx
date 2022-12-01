@@ -13,11 +13,10 @@ import {
 } from 'cmfx-dashboard';
 import 'cmfx-dashboard/style.css';
 
-import { Home } from './Home';
-import { ButtonsDemo } from './Buttons';
-import { PagingDemo } from './Paging';
-import { TableDemo } from './Table';
-import { AsyncFormDemo } from './AsyncForm';
+import { Home } from './demo/Home';
+import { ButtonsDemo } from './demo/Buttons';
+import { PagingDemo, TableDemo } from './demo/Paging';
+import { AsyncFormDemo } from './demo/AsyncForm';
 import Logo from '@/assets/react.svg';
 // import BG from '@/assets/login-bg.svg';
 import { mock } from './mock';

@@ -2,9 +2,9 @@
 
 import React from "react";
 import { Divider, Toast } from "@douyinfe/semi-ui";
+import { IconAlarm } from "@douyinfe/semi-icons";
 
 import { ConfirmButton, AsyncButton, sleep } from 'cmfx-dashboard';
-import { IconAlarm } from "@douyinfe/semi-icons";
 
 export function ButtonsDemo() {
     return <div style={{padding: '10px'}}>
