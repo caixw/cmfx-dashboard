@@ -14,6 +14,7 @@ const groups: Array<Group> = [
     {id:2, name: '权限组2', description: '权限组2的描述信息', parent: 0},
     {id:3, name: '子权限组2', description: '子权限组2的描述信息', parent: 2},
 ];
+let groupsIndex = groups.length;
 
 export function adminMock() {
     fetchMock.get('path:/admin/groups', async(url)=>{
@@ -23,7 +24,10 @@ export function adminMock() {
 
     fetchMock.post('path:/admin/groups', async (url, opt) => {
         console.debug('post', url);
-        groups.push(opt.body as unknown as Group);
+        groupsIndex++;
+        const obj = JSON.parse(opt.body as string) as Group;
+        obj.id = groupsIndex;
+        groups.push(obj);
         return 201;
     }, {delay: 500});
 
@@ -39,7 +43,9 @@ export function adminMock() {
         const id = getID(url);
         console.debug('put', url, id);
         const index = groups.findIndex((v)=>{return v.id === id;});
-        groups[index] = opt.body as unknown as Group;
+        const obj = JSON.parse(opt.body as string) as Group;
+        obj.id = id;
+        groups[index] = obj;
         return 204;
     }, {delay:500});
 

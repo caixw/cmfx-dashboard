@@ -31,7 +31,7 @@ export function PagingDemo() {
         return <Paging url='/paging'
             queries={<Form.Input field="age" width={200} />}
             paging={true}
-            columns={columns} />;
+            columns={columns} />
     </div>;
 }
 

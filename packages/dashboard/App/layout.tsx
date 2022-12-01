@@ -16,7 +16,7 @@ import { Aside } from "./aside";
 export function Layout() {
     const [visible, setVisible] = useState(false);
     const [routes, setRoutes] = useState<Array<Route>>([]);
-    const [info, setInfo] = useState<Admin>({});
+    const [info, setInfo] = useState<Partial<Admin>>({});
     const nav = useNavigate();
     const ctx = useContext(AppContext);
 

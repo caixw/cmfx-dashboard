@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { ColumnProps } from "@douyinfe/semi-ui/lib/es/table";
 import { RowSelectionProps } from "@douyinfe/semi-ui/lib/es/table";
 import { Button, Form, Divider, Table } from "@douyinfe/semi-ui";
@@ -34,11 +34,25 @@ export interface Props<T extends RecordType> {
     rowSelection?: RowSelectionProps<T>
 }
 
+export interface Ref {
+    load: ()=>Promise<void>
+}
+
+export const Paging = React.forwardRef(PagingInner) as <T extends RecordType>(
+    props: Props<T> & { ref?: React.ForwardedRef<Ref> }
+) => ReturnType<typeof PagingInner>;
+
 // 分页表格
 // T 表示数据类型
-export function Paging<T extends RecordType>(props: Props<T>) {
+function PagingInner<T extends RecordType>(props: Props<T>, ref: React.ForwardedRef<Ref>) {
     const ctx = useContext(AppContext);
     const loc = useLocation();
+
+    useImperativeHandle(ref, ()=>{
+        return {
+            load: load
+        };
+    });
 
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState<Array<T>>([]);

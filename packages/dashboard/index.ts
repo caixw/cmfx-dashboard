@@ -12,7 +12,7 @@ export { LocaleConsumer, install, useLocale } from './locales';
 export type { Locale } from './locales';
 
 export { Paging } from './Paging';
-export type { ColumnProps } from './Paging';
+export type { ColumnProps as PagingColumnProps, Ref as PagingRef } from './Paging';
 
 export { Login } from './Login';
 export { Logout } from './Logout';
