@@ -152,6 +152,10 @@ const options: Options = {
             items: [
                 {
                     itemKey: '/groups',
+                    textKey: '权限组'
+                },
+                {
+                    itemKey: '/admins',
                     textKey: '管理员'
                 }
             ]
