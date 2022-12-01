@@ -24,5 +24,4 @@ export { ErrorPage } from './ErrorPage';
 export { TODO } from './TODO';
 
 export { Groups } from './Admin/group';
-
-export { sleep } from './utils';
+export { Admins } from './Admin/admin';

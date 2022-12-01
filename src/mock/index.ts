@@ -2,7 +2,6 @@
 
 import fetchMock from 'fetch-mock';
 
-import { sleep } from 'cmfx-dashboard';
 import { pagingMock } from './paging';
 import { adminMock } from './admin';
 
@@ -10,13 +9,12 @@ export function mock(){
     fetchMock.config.overwriteRoutes = true;
 
     fetchMock.post(/.+login/i, async()=>{
-        await sleep(1000);
         return {
             access_token: 'access',
             refresh_token: 'refresh',
             expires: 3600
         };
-    });
+    }, {delay: 1000});
 
     fetchMock.delete(/.+login/i, 204);
 

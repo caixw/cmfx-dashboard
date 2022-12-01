@@ -103,6 +103,13 @@ export function Toolbar<T extends RecordType>(props: Props<T>) {
                         <Button type="tertiary" theme="borderless" onClick={props.print} icon={<IconPrint />} />
                     </Tooltip>
 
+                    <Popover trigger='click' content={popPanel}>
+                        <div style={{display: 'inline-block'}}>
+                            <Tooltip content={l.paging.column_setting}>
+                                <Button type="tertiary" theme="borderless" icon={<IconAlignJustify rotate={90} />} />
+                            </Tooltip>
+                        </div>
+                    </Popover>
 
                     <Dropdown showTick menu={menu} trigger='click'>
                         <div style={{display: 'inline-block'}}>
@@ -111,14 +118,6 @@ export function Toolbar<T extends RecordType>(props: Props<T>) {
                             </Tooltip>
                         </div>
                     </Dropdown>
-
-                    <Popover trigger='click' content={popPanel}>
-                        <div style={{display: 'inline-block'}}>
-                            <Tooltip content={l.paging.column_setting}>
-                                <Button type="tertiary" theme="borderless" icon={<IconAlignJustify rotate={90} />} />
-                            </Tooltip>
-                        </div>
-                    </Popover>
                 </>;
             }
         }

@@ -5,15 +5,13 @@ import { ColumnProps } from "@douyinfe/semi-ui/lib/es/table";
 import { RowSelectionProps } from "@douyinfe/semi-ui/lib/es/table";
 import { Button, Form, Divider, Table } from "@douyinfe/semi-ui";
 import { useReactToPrint } from 'react-to-print';
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 import { AppContext } from "@dashboard/App/context";
 import { LocaleConsumer } from "@dashboard/locales";
 import { Locale } from "@dashboard/locales";
-import { Page, encodeQuery, parseQuery } from "./types";
+import { Page, encodeQuery, parseQueryForClient } from "./types";
 import { Toolbar } from "./toolbar";
-
-const defaultPage = 1; // 默认页码
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type RecordType = Record<string, any>;
@@ -38,15 +36,28 @@ export interface Ref {
     load: ()=>Promise<void>
 }
 
+// 分页表格
+// T 表示数据类型
 export const Paging = React.forwardRef(PagingInner) as <T extends RecordType>(
     props: Props<T> & { ref?: React.ForwardedRef<Ref> }
 ) => ReturnType<typeof PagingInner>;
 
-// 分页表格
-// T 表示数据类型
 function PagingInner<T extends RecordType>(props: Props<T>, ref: React.ForwardedRef<Ref>) {
     const ctx = useContext(AppContext);
     const loc = useLocation();
+    const q = parseQueryForClient(loc.search, 1, ctx.options.pageSizes[0]);
+
+    const [loading, setLoading] = useState(false);
+    const [data, setData] = useState<Array<T>>([]);
+    const [page, setPage] = useState(q.page);
+    const [size, setSize] = useState(q.size);
+    const [total, setTotal] = useState(0);
+    const [lineHeight, setLineHeight] = useState<LineHeight>('default');
+    const [strip, setStrip] = useState(0);
+    const [columns, setColumns] = useState(props.columns);
+    const [, setSearch] = useSearchParams(loc.search);
+    const printable = useRef(null);
+    const queryForm = useRef(null);
 
     useImperativeHandle(ref, ()=>{
         return {
@@ -54,32 +65,28 @@ function PagingInner<T extends RecordType>(props: Props<T>, ref: React.Forwarded
         };
     });
 
-    const [loading, setLoading] = useState(false);
-    const [data, setData] = useState<Array<T>>([]);
-    const [page, setPage] = useState(defaultPage);
-    const [size, setSize] = useState(ctx.options.pageSizes[0]);
-    const [total, setTotal] = useState(0);
-    const [lineHeight, setLineHeight] = useState<LineHeight>('default');
-    const [manualCount, setManualCount] = useState(0); // 手动加载的次数，用于刷新数据
-    const [strip, setStrip] = useState(0);
-    const [columns, setColumns] = useState(props.columns);
-    const printable = useRef(null);
-    const queryForm = useRef(null);
-
     // 加载远程数据
     const load = async()=>{
         setLoading(true);
 
-        let url = props.url+'?';
+        let sq = '';
+        let cq = '';
         if (props.paging) {
-            url += `page=${page-1}&size=${size}`;
+            sq += `page=${page-1}&size=${size}`;
+            cq += `page=${page}&size=${size}`;
         }
         if (props.queries) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const vals = (queryForm.current as any).formApi.getValues();
-            url += encodeQuery(vals);
+            sq += encodeQuery(vals);
+            cq += encodeQuery(vals, true);
         }
 
+        let url = props.url;
+        if (sq) {
+            url += '?' + sq;
+            setSearch(cq);
+        }
         const r = await ctx.get(url);
         if (!r.ok) {
             setLoading(false);
@@ -106,28 +113,15 @@ function PagingInner<T extends RecordType>(props: Props<T>, ref: React.Forwarded
     };
 
     useEffect(()=>{
-        const q = parseQuery(loc.search, defaultPage, ctx.options.pageSizes[0]);
-        if (props.queries) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (queryForm.current as any).formApi.setValues(q.q);
-        }
-
-        if (props.paging) {
-            setSize(q.size);
-            setPage(q.page);
-        }
-    }, []);
-
-    useEffect(()=>{
         load();
-    }, [page, size, manualCount]);
+    }, [page, size]);
 
     // 生成查询组件
     let search: React.ReactNode = null;
     if (props.queries) {
         search = <>
-            <Form
-                ref={queryForm}
+            <Form ref={queryForm}
+                initValues={q.q}
                 style={{display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', gap: '10px'}}
                 layout='horizontal'
                 labelPosition='inset'
@@ -136,7 +130,7 @@ function PagingInner<T extends RecordType>(props: Props<T>, ref: React.Forwarded
                 <LocaleConsumer>
                     {
                         (l: Locale) => {
-                            return <Button onClick={()=>setManualCount(manualCount+1)} style={{marginLeft: 'auto'}}>{l.common.search}</Button>;
+                            return <Button onClick={load} style={{marginLeft: 'auto'}}>{l.common.search}</Button>;
                         }
                     }
                 </LocaleConsumer>
@@ -154,7 +148,7 @@ function PagingInner<T extends RecordType>(props: Props<T>, ref: React.Forwarded
                 <Toolbar
                     columns={props.columns}
                     setColumns={setColumns}
-                    reload={()=>setManualCount(manualCount+1)}
+                    reload={load}
                     stripeNumber={strip}
                     setStrip={(n: number)=>{setStrip(n);}}
                     lineHeight={lineHeight}
@@ -164,8 +158,7 @@ function PagingInner<T extends RecordType>(props: Props<T>, ref: React.Forwarded
         </div>
         <Divider style={{marginTop: '5px'}} />
 
-        <Table
-            ref={printable}
+        <Table ref={printable}
             size={lineHeight}
             onRow={(r, i)=>{
                 i = (i ?? 0) + 1;

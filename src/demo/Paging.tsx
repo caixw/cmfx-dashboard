@@ -28,7 +28,7 @@ export function PagingDemo() {
     ];
 
     return <div style={{padding: '8px'}}>
-        return <Paging url='/paging'
+        <Paging url='/paging'
             queries={<Form.Input field="age" width={200} />}
             paging={true}
             columns={columns} />

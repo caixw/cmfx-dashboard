@@ -59,7 +59,7 @@ export function Layout() {
                     </Nav>
                 </SLayout.Header>
 
-                <SLayout.Content style={{overflow: 'scroll'}}>
+                <SLayout.Content style={{overflow: 'scroll', padding: '20px'}}>
                     <Outlet />
                 </SLayout.Content>
             </SLayout>

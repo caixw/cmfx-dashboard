@@ -4,7 +4,11 @@ import React from "react";
 import { Divider, Toast } from "@douyinfe/semi-ui";
 import { IconAlarm } from "@douyinfe/semi-icons";
 
-import { ConfirmButton, AsyncButton, sleep } from 'cmfx-dashboard';
+import { ConfirmButton, AsyncButton } from 'cmfx-dashboard';
+
+function sleep(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+}
 
 export function ButtonsDemo() {
     return <div style={{padding: '10px'}}>

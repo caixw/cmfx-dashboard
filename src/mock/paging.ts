@@ -2,7 +2,6 @@
 
 import fetchMock from 'fetch-mock';
 
-import { sleep } from 'cmfx-dashboard';
 import { getQuery } from './utils';
 
 export interface PagingDataType {
@@ -32,7 +31,6 @@ function buildPagingData(start:number, size: number):Array<PagingDataType> {
 
 export function pagingMock() {
     fetchMock.get(/.+paging/i, async (url: string)=>{ // 分页信息
-        await sleep(1000);
         const page = parseInt(getQuery(url, 'page', '0'));
         const size = parseInt(getQuery(url, 'size', '33'));
         console.log('mock:', url, page, size);
@@ -43,12 +41,11 @@ export function pagingMock() {
             more: (page*(size+1)) < maxPagingSize,
             count: maxPagingSize
         };
-    });
+    }, {delay: 1000});
 
     fetchMock.get(/.+table/i, async ()=>{ // 分页信息
-        await sleep(500);
         return buildPagingData(0, 50);
-    });
+    }, {delay: 500});
 
 
 }
