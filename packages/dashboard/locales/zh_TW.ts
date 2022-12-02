@@ -12,6 +12,7 @@ export const zhTW = {
         actions: '操作',
         avatar: '頭像',
         apply: '應用',
+        back: '返回',
         confirm_delete_title: '確定要刪除嗎',
         confirm_delete_detail: '此操作不可恢復，請謹慎操作！',
         content: '內容',
@@ -36,6 +37,7 @@ export const zhTW = {
         print: '打印',
         refresh: '刷新',
         required: '不能為空',
+        save: '保存',
         reset: '重置',
         search: '搜索',
         search_content: '搜索內容',
@@ -47,6 +49,11 @@ export const zhTW = {
         unknown_sex: '未知',
         username: '賬號',
         yes: '是'
+    },
+
+    admin : {
+        permission: '權限',
+        group: '權限組'
     },
 
     errorPage: {

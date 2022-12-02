@@ -12,6 +12,7 @@ export const zhCN = {
         actions: '操作',
         avatar: '头像',
         apply: '应用',
+        back: '返回',
         confirm_delete_title: '确定要删除吗',
         confirm_delete_detail: '此操作不可恢复，请谨慎操作！',
         content: '内容',
@@ -36,6 +37,7 @@ export const zhCN = {
         print: '打印',
         refresh: '刷新',
         required: '不能为空',
+        save: '保存',
         reset: '重置',
         search: '搜索',
         search_content: '搜索内容',
@@ -47,6 +49,11 @@ export const zhCN = {
         unknown_sex: '未知',
         username: '账号',
         yes: '是'
+    },
+
+    admin : {
+        permission: '权限',
+        group: '权限组'
     },
 
     errorPage: {

@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: MIT
 
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { ColumnProps } from "@douyinfe/semi-ui/lib/es/table";
-import { RowSelectionProps } from "@douyinfe/semi-ui/lib/es/table";
-import { Button, Form, Divider, Table } from "@douyinfe/semi-ui";
+import { ColumnProps, RowSelectionProps } from "@douyinfe/semi-ui/lib/es/table";
+import { Button, Form, Spin, Divider, Table } from "@douyinfe/semi-ui";
 import { useReactToPrint } from 'react-to-print';
 import { useLocation, useSearchParams } from "react-router-dom";
 
@@ -139,7 +138,7 @@ function PagingInner<T extends RecordType>(props: Props<T>, ref: React.Forwarded
         </>;
     }
 
-    return <div>
+    return <Spin spinning={loading} size='large'>
         {search}
 
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
@@ -168,7 +167,6 @@ function PagingInner<T extends RecordType>(props: Props<T>, ref: React.Forwarded
             rowSelection={props.rowSelection}
             columns={columns}
             rowKey={props.rowKey}
-            loading={loading}
             dataSource={data}
             pagination={props.paging ? {
                 pageSizeOpts: ctx.options.pageSizes,
@@ -182,5 +180,5 @@ function PagingInner<T extends RecordType>(props: Props<T>, ref: React.Forwarded
                 },
             } : false }
         />
-    </div>;
+    </Spin>;
 }

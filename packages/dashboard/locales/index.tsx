@@ -17,6 +17,7 @@ type CustomType = Record<string, any>;
 export interface Locale<T extends CustomType = any> {
     locale: Item
     common: Item // 一些通用的本地化内容
+    admin: Item
     errorPage: Item
     paging: Item
     appSetting: Item

@@ -6,7 +6,7 @@ export interface Page<T> {
     current: Array<T>
 }
 
-export type Query = Record<string, unknown>;
+type Query = Record<string, unknown>;
 
 /**
  * 将一个普通对象转换成查询字符串

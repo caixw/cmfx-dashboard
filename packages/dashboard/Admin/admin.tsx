@@ -2,13 +2,14 @@
 
 import React, { useContext, useRef } from 'react';
 import { Button, Form, Avatar, Typography } from '@douyinfe/semi-ui';
+import { useNavigate } from 'react-router-dom';
 
 import { Paging, ColumnProps, Ref as PagingRef } from '@dashboard/Paging';
 import { Admin, getSexes, getStates, Sex } from './types';
 import { useLocale } from '@dashboard/locales';
 import { ConfirmButton } from '@dashboard/ConfirmButton';
 import { AppContext } from '@dashboard/App/context';
-import { OptionProps } from '@douyinfe/semi-ui/lib/es/select';
+import { mapToSelectOptions } from '@dashboard/utils';
 
 export function Admins() {
     const ctx = useContext(AppContext);
@@ -16,6 +17,7 @@ export function Admins() {
     const sexes = getSexes(locale);
     const states = getStates(locale);
     const paging = useRef<PagingRef>(null);
+    const nav = useNavigate();
 
     const renderActions = (key: number, record: Admin) => {
         const del = async()=>{
@@ -30,9 +32,9 @@ export function Admins() {
                 content={locale.common.confirm_delete_detail}
                 onConfirm={del}
                 type='danger'
-            >删除</ConfirmButton>&#160;
-            <Button>编辑</Button>&#160;
-            <Button>权限</Button>&#160;
+            >{locale.common.delete}</ConfirmButton>&#160;
+            <Button onClick={()=>nav(`/admins/${record.id}`)}>{locale.common.edit}</Button>&#160;
+            <Button onClick={()=>nav(`/admins/${record.id}/access`)}>{locale.admin.permission}</Button>&#160;
         </>;
     };
 
@@ -63,17 +65,13 @@ export function Admins() {
     ];
 
     const toolbar = <>
-        <Button type='primary'>{locale.common.new}</Button>
+        <Button type='primary' onClick={()=>nav('/admins/0')}>{locale.common.new}</Button>
     </>;
 
-    const sexesList: Array<OptionProps> = [];
-    sexes.forEach((val, key)=>sexesList.push({value: key, label: val}));
-    const statesList: Array<OptionProps> = [];
-    states.forEach((val, key)=>statesList.push({value: key, label: val}));
     const queries = <>
         <Form.Input label={locale.common.search_content} field='text' />
-        <Form.Select multiple label={locale.common.state} field='state' optionList={statesList} />
-        <Form.Select multiple label={locale.common.sex} field='sex' optionList={sexesList} />
+        <Form.Select multiple label={locale.common.state} field='state' optionList={mapToSelectOptions(states)} />
+        <Form.Select multiple label={locale.common.sex} field='sex' optionList={mapToSelectOptions(sexes)} />
     </>;
 
     return <Paging paging
@@ -83,12 +81,4 @@ export function Admins() {
         queries={queries}
         columns={columns}
     />;
-}
-
-export function AdminEdit() {
-    // TODO
-}
-
-export function Access() {
-    // TODO
 }

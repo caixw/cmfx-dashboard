@@ -24,4 +24,6 @@ export { ErrorPage } from './ErrorPage';
 export { TODO } from './TODO';
 
 export { Groups } from './Admin/group';
-export { Admins } from './Admin/admin';
+export { AdminsRoute } from './Admin';
+
+export * from './utils';
