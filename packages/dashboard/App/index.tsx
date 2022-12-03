@@ -25,7 +25,12 @@ function Wrapper(props: {options: Required<ContextOptions>}) {
     </ConfigProvider>;
 }
 
-export function App(props: {options: Options}) {
+/**
+ * 最外层的组件
+ * @param props 包含了以下属性：
+ *  - options 用户提供的配置项
+ */
+export function App(props: {options: Options}): JSX.Element {
     const o = buildOptions(props.options);
     const routes = [
         {

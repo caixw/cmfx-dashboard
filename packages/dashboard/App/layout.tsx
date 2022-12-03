@@ -13,7 +13,7 @@ import { buildUserMenus, UserDropdownMenuItem } from "./options/menu";
 import { Admin, getInfo } from './admin';
 import { Aside } from "./aside";
 
-export function Layout() {
+export function Layout(): JSX.Element {
     const [visible, setVisible] = useState(false);
     const [routes, setRoutes] = useState<Array<Route>>([]);
     const [info, setInfo] = useState<Partial<Admin>>({});
@@ -68,7 +68,7 @@ export function Layout() {
     </>;
 }
 
-export function Fullscreen() {
+export function Fullscreen(): JSX.Element {
     const [fullscreen, setFullscreen] = useState(document.fullscreenElement ? true : false);
 
     const change = ()=>{

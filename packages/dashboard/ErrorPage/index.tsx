@@ -4,7 +4,7 @@ import React, { useContext, CSSProperties } from "react";
 import { Button } from "@douyinfe/semi-ui";
 
 import { AppContext } from "@dashboard/App/context";
-import { LocaleConsumer } from "cmfx-dashboard";
+import { LocaleConsumer } from "@dashboard/locales";
 import { useNavigate } from "react-router-dom";
 
 export interface Props {

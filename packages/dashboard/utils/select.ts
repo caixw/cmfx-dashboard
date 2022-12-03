@@ -11,7 +11,8 @@ export function mapToSelectOptions(m: Map<string|number, string>) {
     return opts;
 }
 
-export function objectsToSelectOptions(objs: Array<Record<string, unknown>>, label: string, value: string) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function objectsToSelectOptions(objs: Array<Record<string, any>>, label: string, value: string) {
     const opts: Array<OptionProps> = [];
     objs.forEach((obj)=>{
         const v = obj[value];

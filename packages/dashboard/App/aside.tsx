@@ -11,7 +11,7 @@ import { buildMenus, findMenuByKey, AdditionalMenuItem, NavMenuItem } from "./op
 
 type RoutesSetter = React.Dispatch<React.SetStateAction<Array<Route>>>;
 
-export function Aside(props:{ctx: Context, setRoutes: RoutesSetter}) {
+export function Aside(props:{ctx: Context, setRoutes: RoutesSetter}): JSX.Element {
     const nav = useNavigate();
     const loc = useLocation();
     const locale = useLocale();
