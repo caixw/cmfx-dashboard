@@ -1,8 +1,11 @@
 name: NPM-PUBLISH
 
 on:
-  release:
-    types: [created]
+  create:
+    tags:
+    - 'v*'
+    - '!v*-alpha'
+    - '!v*-beta'
 
 jobs:
   build:
