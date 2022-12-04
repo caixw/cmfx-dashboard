@@ -16,7 +16,10 @@ interface Account {
     password?: string
 }
 
-export function Login(props: {footer?: React.ReactNode}) {
+/**
+ * 登录页面组件
+ */
+export function Login(props: {footer?: React.ReactNode}): JSX.Element {
     const ctx = useContext(AppContext);
     const style: CSSProperties = {
         height: '100vh',

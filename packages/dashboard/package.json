@@ -1,6 +1,6 @@
 {
     "name": "cmfx-dashboard",
-    "version": "0.1.0",
+    "version": "0.5.0",
     "type": "module",
     "description": "适用于 cmfx 的后台管理框架",
     "types": "./lib/index.d.ts",

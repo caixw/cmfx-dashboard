@@ -16,8 +16,10 @@ export function init() {
     initTheme();
 }
 
-// 应用设置组件
-export function AppSetting(props: Pick<SideSheetProps, 'visible' | 'onCancel'>) {
+/**
+ * 应用设置组件
+ */
+export function AppSetting(props: Pick<SideSheetProps, 'visible' | 'onCancel'>): JSX.Element {
     return <LocaleConsumer>
         {
             (l: Locale) => {

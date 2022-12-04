@@ -31,8 +31,10 @@ interface Props<T extends CustomType = any> {
     children: (l: Locale<T>) => React.ReactNode
 }
 
-// 返回自定义的本地化数据
-export function LocaleConsumer<T extends CustomType>(props: Props) {
+/**
+ * 返回自定义的本地化数据
+ */
+export function LocaleConsumer<T extends CustomType>(props: Props): JSX.Element {
     return <SLocaleConsumer componentName='Cmfx'>
         {
             (l: Locale<T>) => {
@@ -76,6 +78,6 @@ export function getLocale(code: string) {
     return l;
 }
 
-export function useLocale(): Locale{
+export function useLocale(): Locale {
     return getLocale(getLocaleCode()).Cmfx;
 }

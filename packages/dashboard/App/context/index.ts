@@ -10,7 +10,9 @@ type LocaleCodeSetter = (code: string) => void;
 
 export type ContextOptions = Omit<Options, 'routes'>;
 
-// AppContext 的实际类型
+/**
+ * AppContext 的实际类型
+ */
 export class Context {
     #title = '';
     #options: Required<ContextOptions>;

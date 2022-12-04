@@ -8,11 +8,13 @@ export type Props = Omit<ButtonProps, 'onClick'> & {
     onClick: (e: React.MouseEvent) => Promise<void>
 }
 
-// 异步按钮
-//
-// 对 click 事件作了调整，返回 Promise<void> 对象，
-// 在 Promise 没正确返回前，按钮将一直处于 loading 或是禁用状态。
-export function AsyncButton(props: Props) {
+/**
+ * 异步按钮
+ *
+ * 对 click 事件作了调整，返回 Promise<void> 对象，
+ * 在 Promise 没正确返回前，按钮将一直处于 loading 或是禁用状态。
+ */
+export function AsyncButton(props: Props): JSX.Element {
     const [loading, setLoading] = React.useState(false);
 
     const click = async (e: React.MouseEvent) => {

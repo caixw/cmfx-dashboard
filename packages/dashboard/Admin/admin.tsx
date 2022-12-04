@@ -11,7 +11,10 @@ import { ConfirmButton } from '@dashboard/ConfirmButton';
 import { AppContext } from '@dashboard/App/context';
 import { mapToSelectOptions } from '@dashboard/utils';
 
-export function Admins() {
+/**
+ * 管理员列表页组件
+ */
+export function Admins(): JSX.Element {
     const ctx = useContext(AppContext);
     const locale = useLocale();
     const sexes = getSexes(locale);

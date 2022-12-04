@@ -4,7 +4,7 @@ import React, { useContext, CSSProperties } from "react";
 import { Button } from "@douyinfe/semi-ui";
 
 import { AppContext } from "@dashboard/App/context";
-import { LocaleConsumer } from "@dashboard/locales";
+import { Locale, LocaleConsumer } from "@dashboard/locales";
 import { useNavigate } from "react-router-dom";
 
 export interface Props {
@@ -12,7 +12,10 @@ export interface Props {
     title?: string
 }
 
-export function ErrorPage(props: Props) {
+/**
+ * 错误页面
+ */
+export function ErrorPage(props: Props): JSX.Element {
     const ctx = useContext(AppContext);
     const nav = useNavigate();
 
@@ -40,7 +43,7 @@ export function ErrorPage(props: Props) {
             <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '30px'}}>
                 <LocaleConsumer>
                     {
-                        (l)=>{
+                        (l: Locale)=>{
                             return <>
                                 <Button type='primary' onClick={backHome}>{l.errorPage.back_home}</Button>
                                 <Button type='primary' onClick={backPrevPage}>{l.errorPage.back_prev_page}</Button>

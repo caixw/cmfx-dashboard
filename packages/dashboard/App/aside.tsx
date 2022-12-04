@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { Nav, Layout } from '@douyinfe/semi-ui';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Route } from "@douyinfe/semi-foundation/lib/es/breadcrumb/itemFoundation";
+import { ResponsiveMap } from "@douyinfe/semi-ui/lib/es/layout";
+import { OnSelectedData } from "@douyinfe/semi-ui/lib/es/navigation";
 
 import { Context } from './context';
 import { useLocale } from "@dashboard/locales";
@@ -56,14 +58,14 @@ export function Aside(props:{ctx: Context, setRoutes: RoutesSetter}): JSX.Elemen
         selected(findMenuByKey(menus, loc.pathname));
     }, [loc.pathname, locale]); // locale 用于触发 breadcrumb 组件中的内容改变
 
-    return <Layout.Sider breakpoint={['md']} onBreakpoint={(screen, broken)=>setCollapsed(!broken)}>
+    return <Layout.Sider breakpoint={['md']} onBreakpoint={(screen: keyof ResponsiveMap, broken: boolean)=>setCollapsed(!broken)}>
         <Nav bodyStyle={{overflowY: 'scroll', height: bodyHeight}}
             items={menus}
             isCollapsed={collapsed}
             onCollapseChange={(c: boolean)=>{setCollapsed(c);}}
             onOpenChange={opened}
             openKeys={openedKeys}
-            onSelect={(e)=>nav(e.itemKey as string)}
+            onSelect={(e: OnSelectedData)=>nav(e.itemKey as string)}
             selectedKeys={selectedKeys}
         >
             <Nav.Header

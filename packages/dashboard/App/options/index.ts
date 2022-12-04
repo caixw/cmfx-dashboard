@@ -5,7 +5,9 @@ import { RouteObject } from 'react-router-dom';
 import { MenuItem, UserMenuItem } from './menu';
 import { checkRoutes } from './route';
 
-// 初始化应用的选项
+/**
+ * 初始化应用的选项
+ */
 export interface Options {
     name: string // 应用名称，将显示在标题和左侧菜单栏顶部。
     logo: string // 应用图标，显示在左侧菜单栏顶部。

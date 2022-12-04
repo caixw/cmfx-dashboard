@@ -5,14 +5,18 @@ import { useNavigate } from "react-router-dom";
 
 import { AppContext } from "@dashboard/App/context";
 import { delToken } from "@dashboard/App/context/token";
-import { Locale, LocaleConsumer } from "@dashboard/locales";
+import { useLocale } from "@dashboard/locales";
 
-export function LogoutAction(props: {locale: Locale}) {
+/**
+ * 注销登录的组件
+ */
+export function Logout(): JSX.Element {
+    const locale = useLocale();
     const ctx = useContext(AppContext);
     const nav = useNavigate();
 
     useEffect(()=>{
-        ctx.title = props.locale.common.logout;
+        ctx.title = locale.common.logout;
 
         ctx.del('/login').catch((reason)=>{console.error(reason);});
 
@@ -20,12 +24,4 @@ export function LogoutAction(props: {locale: Locale}) {
         nav(ctx.options.loginPath);
     });
     return <></>;
-}
-
-export function Logout() {
-    return <LocaleConsumer>
-        {
-            (locale) => <LogoutAction locale={locale} />
-        }
-    </LocaleConsumer>;
 }

@@ -13,6 +13,11 @@ import { buildUserMenus, UserDropdownMenuItem } from "./options/menu";
 import { Admin, getInfo } from './admin';
 import { Aside } from "./aside";
 
+/**
+ * 已登录页面的布局样式
+ *
+ * NOTE: 所有已登录的页面都应该在注册在此页面之下。
+ */
 export function Layout(): JSX.Element {
     const [visible, setVisible] = useState(false);
     const [routes, setRoutes] = useState<Array<Route>>([]);

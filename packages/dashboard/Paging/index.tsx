@@ -35,13 +35,16 @@ export interface Ref {
     load: ()=>Promise<void>
 }
 
-// 分页表格
-// T 表示数据类型
+/**
+ * 分页表格
+ *
+ * T 表示数据类型
+ */
 export const Paging = React.forwardRef(PagingInner) as <T extends RecordType>(
     props: Props<T> & { ref?: React.ForwardedRef<Ref> }
 ) => ReturnType<typeof PagingInner>;
 
-function PagingInner<T extends RecordType>(props: Props<T>, ref: React.ForwardedRef<Ref>) {
+function PagingInner<T extends RecordType>(props: Props<T>, ref: React.ForwardedRef<Ref>): JSX.Element {
     const ctx = useContext(AppContext);
     const loc = useLocation();
     const q = parseQueryForClient(loc.search, 1, ctx.options.pageSizes[0]);
@@ -159,7 +162,7 @@ function PagingInner<T extends RecordType>(props: Props<T>, ref: React.Forwarded
 
         <Table ref={printable}
             size={lineHeight}
-            onRow={(r, i)=>{
+            onRow={(r: T|undefined, i: number|undefined)=>{
                 i = (i ?? 0) + 1;
                 if (!strip || i%strip !== 0) { return {}; }
                 return {style:{background: 'var(--semi-color-fill-0)'}};
@@ -174,7 +177,7 @@ function PagingInner<T extends RecordType>(props: Props<T>, ref: React.Forwarded
                 pageSize: size,
                 total: total,
                 showSizeChanger: true,
-                onChange: (p, s) => {
+                onChange: (p: number, s: number) => {
                     setPage(p);
                     setSize(s);
                 },

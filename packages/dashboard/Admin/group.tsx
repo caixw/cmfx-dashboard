@@ -11,8 +11,10 @@ import { useLocale } from '@dashboard/locales';
 import { Return } from '@dashboard/App/context/api';
 import { Group } from './types';
 
-// 权限组列表
-export function Groups() {
+/**
+ * 权限组列表
+ */
+export function Groups(): JSX.Element {
     const loc = useLocale();
     const ctx = useContext(AppContext);
     const [g, setG] = useState<Group>({ id:0, name: '', description: '' });

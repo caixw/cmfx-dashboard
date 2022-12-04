@@ -7,7 +7,7 @@ import { RadioChangeEvent } from '@douyinfe/semi-ui/lib/es/radio';
 import a11y from '@semi-bot/semi-theme-a11y/semi.min.css?inline';
 import { CheckboxEvent } from '@douyinfe/semi-ui/lib/es/checkbox';
 
-import { Locale, LocaleConsumer } from '@dashboard/locales';
+import { useLocale } from '@dashboard/locales';
 
 const themeStyleID = 'cmfx-theme-style-id';
 
@@ -96,6 +96,7 @@ export function initTheme() {
 export function ThemeSelectorUI() {
     const a11yEnabled = window.localStorage.getItem(a11yKey) ? true : false;
     const [a11y, enabledA11y] = useState<boolean | undefined>(a11yEnabled);
+    const locale = useLocale();
 
     const [colorName, setColorName] = useState(window.localStorage.getItem(colorKey) || colors[0]);
 
@@ -109,22 +110,20 @@ export function ThemeSelectorUI() {
         setA11y(e.target.checked);
     };
 
-    return <LocaleConsumer>
-        {
-            (l: Locale)=> {
-                return <>
-                    <RadioGroup disabled={a11y} aria-label={l.appSetting.theme} type="pureCard" value={colorName} onChange={changeColor}>
-                        {
-                            colors.map((t)=>
-                                <Radio key={t} value={t} style={{marginRight: '0', padding: '0'}}>
-                                    <IconStop size='extra-large' style={{color:buildColor(t, 5)}} />
-                                </Radio>
-                            )
-                        }
-                    </RadioGroup>
-                    <Checkbox defaultChecked={a11y} onChange={changeA11y} style={{marginTop: '20px'}} extra={l.appSetting.a11y_detail}>{l.appSetting.a11y}</Checkbox>
-                </>;
+    return <>
+        <RadioGroup disabled={a11y} aria-label={locale.appSetting.theme} type="pureCard" value={colorName} onChange={changeColor}>
+            {
+                colors.map((t)=>
+                    <Radio key={t} value={t} style={{marginRight: '0', padding: '0'}}>
+                        <IconStop size='extra-large' style={{color:buildColor(t, 5)}} />
+                    </Radio>
+                )
             }
-        }
-    </LocaleConsumer>;
+        </RadioGroup>
+        <Checkbox defaultChecked={a11y}
+            onChange={changeA11y}
+            style={{marginTop: '20px'}}
+            extra={locale.appSetting.a11y_detail}
+        >{locale.appSetting.a11y}</Checkbox>
+    </>;
 }

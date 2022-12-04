@@ -8,8 +8,10 @@ import { Popconfirm, Button } from "@douyinfe/semi-ui";
 export type Props = Pick<PopconfirmProps, 'title' | 'content' | 'onConfirm'> &
     Omit<ButtonProps, 'onClick' | 'onMouseDown' | 'onMouseEnter' | 'onMouseLeave'>;
 
-// 需要确定操作的按钮
-export function ConfirmButton(props: Props) {
+/**
+ * 需要再一次确定操作的按钮
+ */
+export function ConfirmButton(props: Props): JSX.Element {
     const [loading, setLoading] = React.useState(false);
 
     const confirm = async (e: React.MouseEvent) => {
