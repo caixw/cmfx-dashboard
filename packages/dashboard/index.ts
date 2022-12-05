@@ -7,7 +7,7 @@ export { Layout } from './App/layout';
 export { AuthRoute, UnauthRoute } from './App/context/token';
 export { AppContext } from './App/context';
 export type { Options } from './App/options';
-export type { Return } from './App/context/api';
+export type { Return, Problem } from './App/context/api';
 
 export { LocaleConsumer, install, useLocale } from './locales';
 export type { Locale } from './locales';
@@ -19,16 +19,12 @@ export { Login } from './Login';
 export { Logout } from './Logout';
 export { ConfirmButton } from './ConfirmButton';
 export { AsyncButton } from './AsyncButton';
-
 export { AsyncForm } from './AsyncForm';
-export type { ValuesType as FormValuesType } from './AsyncForm';
-
 export { AsyncSelect, AsyncFormSelect } from './AsyncSelect';
 export { SecurityLog } from './SecurityLog';
 export { ErrorPage } from './ErrorPage';
 export { TODO } from './TODO';
 
-export { Groups } from './Admin/group';
-export { AdminsRoute } from './Admin';
+export { AdminsRoute, GroupsRoute } from './Admin';
 
 export * from './utils';

@@ -31,15 +31,14 @@ export function Admins(): JSX.Element {
             }
             paging.current?.load();
         };
-        return <>
+        return <div className='cmfx-table-actions'>
             <ConfirmButton title={locale.common.confirm_delete_title}
                 content={locale.common.confirm_delete_detail}
                 onConfirm={del}
                 type='danger'
-            >{locale.common.delete}</ConfirmButton>&#160;
-            <Button onClick={()=>nav(`/admins/${record.id}`)}>{locale.common.edit}</Button>&#160;
-            <Button onClick={()=>nav(`/admins/${record.id}/access`)}>{locale.admin.permission}</Button>&#160;
-        </>;
+            >{locale.common.delete}</ConfirmButton>
+            <Button onClick={()=>nav(`/admins/${record.id}`)}>{locale.common.edit}</Button>
+        </div>;
     };
 
     const renderState = (key: string) => {
@@ -65,7 +64,7 @@ export function Admins(): JSX.Element {
         {title: locale.common.nickname, dataIndex: 'nickname'},
         {title: locale.common.sex, dataIndex: 'sex', render: (key: Sex)=>{ return sexes.get(key); }},
         {title: locale.common.state, dataIndex: 'state', render: renderState},
-        {title: locale.common.actions, render: renderActions},
+        {title: locale.common.actions, className: 'no-print', render: renderActions},
     ];
 
     const toolbar = <>

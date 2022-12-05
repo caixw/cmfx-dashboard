@@ -9,7 +9,7 @@ import {
 import {
     UnauthRoute, AuthRoute, Options, ErrorPage, Locale, TODO,
     App, Layout, Login, Logout, install, SecurityLog, LocaleConsumer,
-    Groups
+    AdminsRoute, GroupsRoute
 } from 'cmfx-dashboard';
 import 'cmfx-dashboard/style.css';
 
@@ -124,6 +124,11 @@ const options: Options = {
                     path: 'admins',
                     element: <TODO />
                 },
+
+                // admins
+
+                ...GroupsRoute('groups'),
+                ...AdminsRoute('admins'),
             ]
         },
     ],

@@ -24,7 +24,8 @@ function buildAdmins(size: number): Array<Admin> {
         let state = 'normal';
         let sex = 'unknown';
         let avatar = '';
-        switch (i%3) {
+        const v = i%3;
+        switch (v) {
         case 0:
             break;
         case 1:
@@ -36,7 +37,7 @@ function buildAdmins(size: number): Array<Admin> {
             sex = 'male';
             avatar = Avatar;
         }
-        admins.push({id: i, name: `管理员${i}`, username: `admin${i}`, nickname: `管理员昵称${i}`, state, sex, avatar});
+        admins.push({id: i, name: `管理员${i}`, username: `admin${i}`, nickname: `管理员昵称${i}`, state, sex, avatar, group: v+1});
     }
     return admins;
 }
@@ -94,7 +95,7 @@ export function adminMock() {
     }, {delay: 500});
 
     fetchMock.post('path:/admin/admins', (url, opt) => {
-        console.debug('post', url);
+        console.debug('post', url, opt.body);
         adminsIndex++;
         const obj = JSON.parse(opt.body as string) as Admin;
         obj.id = adminsIndex;
@@ -118,10 +119,11 @@ export function adminMock() {
 
     fetchMock.patch('express:/admin/admins/:id',(url, opt) => {
         const id = getID(url);
-        console.debug('patch', url, id);
+        console.debug('patch', url, opt.body);
         const index = admins.findIndex((v)=>{return v.id === id;});
         const obj = JSON.parse(opt.body as string) as Admin;
         obj.id = id;
+        obj.username = admins[index].username;
         admins[index] = obj;
         return 204;
     }, {delay:500});

@@ -17,8 +17,17 @@ body {
     min-width: 100px;
 }
 
+.cmfx-table-actions {
+    display: flex;
+    gap: 5px;
+}
+
 @media print {
     .no-print {
+        display: none !important;
+    }
+
+    .cmfx-table-actions {
         display: none !important;
     }
 }

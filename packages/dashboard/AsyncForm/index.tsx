@@ -6,22 +6,24 @@ import { BaseFormProps } from "@douyinfe/semi-ui/lib/es/form";
 
 import { Problem } from '@dashboard/App/context/api';
 
-export type ValuesType = Record<string, unknown>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ValuesType = Record<string, any>;
 
-type Props = Omit<BaseFormProps, 'onSubmit'> & {
+type Props<T extends ValuesType> = Omit<BaseFormProps, 'onSubmit'> & {
     /**
      * 异步初始化表单的方法
      *
      * NOTE: 如果此值不为空，那么 initValues 将不会起实际作用。
+     * @returns 返回用于初始化表单的对象
      */
-    onInit?:()=>Promise<ValuesType>
+    onInit?:()=>Promise<T>
 
     /**
      * 用户提交表单所执行的操作
      *
      * @returns 有错误返回错误没有错误不返回内容。
      */
-    onSubmit: (v: ValuesType)=>Promise<Problem|undefined>
+    onSubmit: (v: T)=>Promise<Problem|undefined>
 }
 
 /**
@@ -30,7 +32,7 @@ type Props = Omit<BaseFormProps, 'onSubmit'> & {
  * 与普通表单的区别在于：onSubmit 是 async 类型的函数，
  * 在函数返回前，整个表单处于 loading 状态。
  */
-export function AsyncForm(props: Props): JSX.Element {
+export function AsyncForm<T extends ValuesType>(props: Props<T>): JSX.Element {
     const [loading, setLoading] = useState(false);
     const table = useRef<Form>(null);
     const fa = table.current?.formApi;
@@ -41,7 +43,7 @@ export function AsyncForm(props: Props): JSX.Element {
         }
 
         setLoading(true);
-        props.onInit().then((v: ValuesType)=>{
+        props.onInit().then((v: T)=>{
             fa?.setValues(v);
         }).catch((reason)=>{
             console.error(reason);
@@ -50,7 +52,7 @@ export function AsyncForm(props: Props): JSX.Element {
         });
     }, [fa]);
 
-    const submit = (v: ValuesType)=> {
+    const submit = (v: T)=> {
         setLoading(true);
         props.onSubmit(v).then((p?:Problem)=>{
             p?.params?.forEach((f)=>{

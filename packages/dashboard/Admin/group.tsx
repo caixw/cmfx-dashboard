@@ -3,6 +3,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import { Button, Form, Modal } from '@douyinfe/semi-ui';
 import { FormApi } from '@douyinfe/semi-ui/lib/es/form';
+import { useNavigate } from 'react-router-dom';
 
 import { Paging, ColumnProps, Ref as PagingRef } from '@dashboard/Paging';
 import { ConfirmButton } from '@dashboard/ConfirmButton';
@@ -21,6 +22,7 @@ export function Groups(): JSX.Element {
     const [modalVisible, setModalVisible] = useState(false);
     const form = useRef(null);
     const table = useRef<PagingRef>(null);
+    const nav = useNavigate();
 
     const editGroup = (g: Group)=> {
         setG(g);
@@ -57,15 +59,15 @@ export function Groups(): JSX.Element {
             table.current?.load();
         };
 
-        return <>
+        return <div className='cmfx-table-actions'>
             <ConfirmButton type='danger'
                 onConfirm={delItem}
                 title={loc.common.confirm_delete_title}
                 content={loc.common.confirm_delete_detail}
             >{loc.common.delete}</ConfirmButton>
-            &#160;
             <Button onClick={()=>editGroup(record)}>{loc.common.edit}</Button>
-        </>;
+            <Button onClick={()=>nav(`/groups/${record.id}/access`)}>{loc.admin.permission}</Button>
+        </div>;
     };
 
     const cols: Array<ColumnProps<Group>> = [
