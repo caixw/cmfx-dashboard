@@ -5,11 +5,9 @@ import { Form, Spin } from '@douyinfe/semi-ui';
 import { BaseFormProps } from "@douyinfe/semi-ui/lib/es/form";
 
 import { Problem } from '@dashboard/App/context/api';
+import { ObjectType } from '@dashboard/utils';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ValuesType = Record<string, any>;
-
-type Props<T extends ValuesType> = Omit<BaseFormProps, 'onSubmit'> & {
+type Props<T extends ObjectType> = Omit<BaseFormProps, 'onSubmit'> & {
     /**
      * 异步初始化表单的方法
      *
@@ -32,10 +30,10 @@ type Props<T extends ValuesType> = Omit<BaseFormProps, 'onSubmit'> & {
  * 与普通表单的区别在于：onSubmit 是 async 类型的函数，
  * 在函数返回前，整个表单处于 loading 状态。
  */
-export function AsyncForm<T extends ValuesType>(props: Props<T>): JSX.Element {
+export function AsyncForm<T extends ObjectType>(props: Props<T>): JSX.Element {
     const [loading, setLoading] = useState(false);
-    const table = useRef<Form>(null);
-    const fa = table.current?.formApi;
+    const form = useRef<Form>(null);
+    const fa = form.current?.formApi;
 
     useEffect(()=>{
         if (!props.onInit) {
@@ -69,7 +67,7 @@ export function AsyncForm<T extends ValuesType>(props: Props<T>): JSX.Element {
     const {onInit, ...p} = props;
 
     return <Spin spinning={loading} size='large'>
-        <Form {...p} onSubmit={submit} ref={table}>
+        <Form {...p} onSubmit={submit} ref={form}>
             {props.children}
         </Form>
     </Spin>;

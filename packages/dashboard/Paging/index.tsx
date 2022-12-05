@@ -9,17 +9,15 @@ import { useLocation, useSearchParams } from "react-router-dom";
 import { AppContext } from "@dashboard/App/context";
 import { LocaleConsumer } from "@dashboard/locales";
 import { Locale } from "@dashboard/locales";
+import { ObjectType } from '@dashboard/utils';
 import { Page, encodeQuery, parseQueryForClient } from "./types";
 import { Toolbar } from "./toolbar";
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type RecordType = Record<string, any>;
 
 export type { ColumnProps };
 
 export type LineHeight = 'default'|'middle'|'small';
 
-export interface Props<T extends RecordType> {
+export interface Props<T extends ObjectType> {
     url: string // 表格数据请求的地址
     columns: Array<ColumnProps<T>>
     rowKey?: string // 每一行的唯一字段的字段名
@@ -40,11 +38,11 @@ export interface Ref {
  *
  * T 表示数据类型
  */
-export const Paging = React.forwardRef(PagingInner) as <T extends RecordType>(
+export const Paging = React.forwardRef(PagingInner) as <T extends ObjectType>(
     props: Props<T> & { ref?: React.ForwardedRef<Ref> }
 ) => ReturnType<typeof PagingInner>;
 
-function PagingInner<T extends RecordType>(props: Props<T>, ref: React.ForwardedRef<Ref>): JSX.Element {
+function PagingInner<T extends ObjectType>(props: Props<T>, ref: React.ForwardedRef<Ref>): JSX.Element {
     const ctx = useContext(AppContext);
     const loc = useLocation();
     const q = parseQueryForClient(loc.search, 1, ctx.options.pageSizes[0]);
@@ -59,7 +57,7 @@ function PagingInner<T extends RecordType>(props: Props<T>, ref: React.Forwarded
     const [columns, setColumns] = useState(props.columns);
     const [, setSearch] = useSearchParams(loc.search);
     const printable = useRef(null);
-    const queryForm = useRef(null);
+    const queryForm = useRef<Form>(null);
 
     useImperativeHandle(ref, ()=>{
         return {
@@ -78,8 +76,7 @@ function PagingInner<T extends RecordType>(props: Props<T>, ref: React.Forwarded
             cq += `page=${page}&size=${size}`;
         }
         if (props.queries) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const vals = (queryForm.current as any).formApi.getValues();
+            const vals = queryForm.current?.formApi.getValues();
             sq += encodeQuery(vals);
             cq += encodeQuery(vals, true);
         }

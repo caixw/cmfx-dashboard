@@ -5,16 +5,14 @@ import { LocaleConsumer as SLocaleConsumer } from '@douyinfe/semi-ui';
 import zh_CN from '@douyinfe/semi-ui/lib/es/locale/source/zh_CN';
 import zh_TW from '@douyinfe/semi-ui/lib/es/locale/source/zh_TW';
 
+import { ObjectType } from '@dashboard/utils';
 import { zhCN } from './zh_CN';
 import { zhTW } from './zh_TW';
 
 type Item = Record<string, string>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type CustomType = Record<string, any>;
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface Locale<T extends CustomType = any> {
+export interface Locale<T extends ObjectType = any> {
     locale: Item
     common: Item // 一些通用的本地化内容
     admin: Item
@@ -27,14 +25,14 @@ export interface Locale<T extends CustomType = any> {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-interface Props<T extends CustomType = any> {
+interface Props<T extends ObjectType = any> {
     children: (l: Locale<T>) => React.ReactNode
 }
 
 /**
  * 返回自定义的本地化数据
  */
-export function LocaleConsumer<T extends CustomType>(props: Props): JSX.Element {
+export function LocaleConsumer<T extends ObjectType>(props: Props): JSX.Element {
     return <SLocaleConsumer componentName='Cmfx'>
         {
             (l: Locale<T>) => {
@@ -52,7 +50,7 @@ export const locales = new Map<string, typeof zh_CN & {Cmfx:Locale}>([
 /**
  * 添加自定义的本地化信息
  */
-export function install<T extends CustomType>(code: string, obj: T): void {
+export function install<T extends ObjectType>(code: string, obj: T): void {
     const l = locales.get(code);
     if (!l) {
         throw `不支持 ${code} 的本地化`;
