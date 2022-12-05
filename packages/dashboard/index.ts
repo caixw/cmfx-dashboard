@@ -19,6 +19,7 @@ export { Logout } from './Logout';
 export { ConfirmButton } from './ConfirmButton';
 export { AsyncButton } from './AsyncButton';
 export { AsyncForm } from './AsyncForm';
+export { AsyncSelect, AsyncFormSelect } from './AsyncSelect';
 export { SecurityLog } from './SecurityLog';
 export { ErrorPage } from './ErrorPage';
 export { TODO } from './TODO';

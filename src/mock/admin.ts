@@ -102,6 +102,12 @@ export function adminMock() {
         return 201;
     }, {delay: 500});
 
+    fetchMock.get('express:/admin/admins/:id', async(url)=>{
+        const id = getID(url);
+        console.debug('get:', url, id);
+        return admins.find((v)=>{return v.id === id;});
+    }, {delay: 500});
+
     fetchMock.delete('express:/admin/admins/:id', async(url)=>{
         const id = getID(url);
         console.debug('delete:', url, id);

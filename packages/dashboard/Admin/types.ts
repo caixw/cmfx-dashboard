@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: MIT
 
+import { OptionProps } from '@douyinfe/semi-ui/lib/es/select';
+
 import type { Admin as a, Sex } from '@dashboard/App/admin';
+import { Context } from '@dashboard/App/context';
 import type { Locale } from '@dashboard/locales';
+import { objectsToSelectOptions } from '@dashboard/utils/select';
 
 export { Sex };
 
@@ -28,4 +32,13 @@ export function getStates(l: Locale): Map<string, string> {
         ['locked', l.common.locked_state],
         ['left', l.common.left_state],
     ]);
+}
+
+export async function loadGroupsSelectOptions(ctx: Context): Promise<Array<OptionProps>> {
+    const r = await ctx.get('/groups');
+    if (!r.ok) {
+        console.error(r.problem);
+        return [];
+    }
+    return objectsToSelectOptions(r.body as Array<Group>, 'name', 'id');
 }

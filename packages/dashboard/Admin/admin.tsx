@@ -1,15 +1,16 @@
 // SPDX-License-Identifier: MIT
 
 import React, { useContext, useRef } from 'react';
-import { Button, Form, Avatar, Typography } from '@douyinfe/semi-ui';
 import { useNavigate } from 'react-router-dom';
+import { Button, Form, Avatar, Typography } from '@douyinfe/semi-ui';
 
 import { Paging, ColumnProps, Ref as PagingRef } from '@dashboard/Paging';
-import { Admin, getSexes, getStates, Sex } from './types';
+import { Admin, getSexes, getStates, loadGroupsSelectOptions, Sex } from './types';
 import { useLocale } from '@dashboard/locales';
 import { ConfirmButton } from '@dashboard/ConfirmButton';
 import { AppContext } from '@dashboard/App/context';
 import { mapToSelectOptions } from '@dashboard/utils';
+import { AsyncFormSelect } from '@dashboard/AsyncSelect';
 
 /**
  * 管理员列表页组件
@@ -75,6 +76,7 @@ export function Admins(): JSX.Element {
         <Form.Input label={locale.common.search_content} field='text' />
         <Form.Select multiple label={locale.common.state} field='state' optionList={mapToSelectOptions(states)} />
         <Form.Select multiple label={locale.common.sex} field='sex' optionList={mapToSelectOptions(sexes)} />
+        <AsyncFormSelect multiple label={locale.admin.group} field='group' loadOptions={async ()=>await loadGroupsSelectOptions(ctx)} />
     </>;
 
     return <Paging paging

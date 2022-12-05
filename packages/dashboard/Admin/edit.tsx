@@ -8,8 +8,8 @@ import { OptionProps } from "@douyinfe/semi-ui/lib/es/select";
 import { AppContext } from "@dashboard/App/context";
 import { useLocale } from "@dashboard/locales";
 import { AsyncForm } from "@dashboard/AsyncForm";
-import { Admin, getSexes, getStates, Group } from './types';
 import { sleep, mapToSelectOptions, objectsToSelectOptions } from "@dashboard/utils";
+import { Admin, getSexes, getStates, Group } from './types';
 
 export function Edit() {
     const ctx = useContext(AppContext);
