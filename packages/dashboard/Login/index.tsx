@@ -53,8 +53,7 @@ function SubmitForm(props: {locale: Locale, ctx: Context, footer?: React.ReactNo
     const submit = async (value: Account) => {
         const r = await props.ctx.post('/login', value);
         if (!r.ok) {
-            console.log(r.problem);
-            return;
+            return r.problem;
         }
 
         writeToken(r.body as Token);
