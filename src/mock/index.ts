@@ -4,11 +4,12 @@ import fetchMock from 'fetch-mock';
 
 import { pagingMock } from './paging';
 import { adminMock } from './admin';
+import { asyncMock } from './async';
 
 export function mock(){
     fetchMock.config.overwriteRoutes = true;
 
-    fetchMock.post(/.+login/i, async()=>{
+    fetchMock.post(/.+login/i, ()=>{
         return {
             access_token: 'access',
             refresh_token: 'refresh',
@@ -26,7 +27,7 @@ export function mock(){
         state: 'normal'
     });
 
-    fetchMock.get(/.+security-log/i, async ()=>{ // 安全日志
+    fetchMock.get(/.+security-log/i, ()=>{ // 安全日志
         return {
             count: 10,
             more: true,
@@ -40,6 +41,7 @@ export function mock(){
 
     adminMock();
     pagingMock();
+    asyncMock();
 }
 
 export function restore() {

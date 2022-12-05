@@ -30,7 +30,7 @@ function buildPagingData(start:number, size: number):Array<PagingDataType> {
 }
 
 export function pagingMock() {
-    fetchMock.get(/.+paging/i, async (url: string)=>{ // 分页信息
+    fetchMock.get(/.+paging/i, (url: string)=>{ // 分页信息
         const page = parseInt(getQuery(url, 'page', '0'));
         const size = parseInt(getQuery(url, 'size', '33'));
         console.log('mock:', url, page, size);
@@ -43,9 +43,7 @@ export function pagingMock() {
         };
     }, {delay: 1000});
 
-    fetchMock.get(/.+table/i, async ()=>{ // 分页信息
+    fetchMock.get(/.+table/i, ()=>{ // 分页信息
         return buildPagingData(0, 50);
     }, {delay: 500});
-
-
 }

@@ -1,13 +1,10 @@
 // SPDX-License-Identifier: MIT
 
 import React, { useContext } from "react";
-import { Button, Divider, Form } from "@douyinfe/semi-ui";
+import { Button, Divider, Form, Notification } from "@douyinfe/semi-ui";
 
-
-import { AppContext, AsyncForm, AsyncFormSelect } from "cmfx-dashboard";
+import { AppContext, AsyncForm, AsyncFormSelect, FormValuesType } from "cmfx-dashboard";
 import { objectsToSelectOptions } from "cmfx-dashboard";
-
-
 
 export function AsyncFormDemo() {
     const ctx = useContext(AppContext);
@@ -21,11 +18,22 @@ export function AsyncFormDemo() {
         return objectsToSelectOptions(r.body as Array<Record<string, unknown>>, 'name', 'id');
     };
 
-    return <AsyncForm style={{padding: '20px'}} onSubmit={async()=>{await ctx.get('/paging');}} initValues={{group: 1}}>
-        <Form.Input field="abc" />
-        <Form.Input field="def" label="DEF" />
+    return <AsyncForm layout='vertical'
+        labelPosition="inset"
+        onInit={async()=>{
+            return (await ctx.get('/async-data')).body as FormValuesType;
+        }}
+        onSubmit={async()=>{return await ctx.post('/async-invalid-data', null);}}
+        afterSubmit={(ok:boolean)=>{
+            Notification.info({title: 'after submit', content: ok ? 'ok':'invalid'});
+        }}
+        initValues={{group: 1}}
+    >
+        <Form.InputNumber field="num" label='数值' />
+        <Form.Input field="str" label="字符" />
+        <Form.Checkbox field="bool" label="Bool" />
 
-        <AsyncFormSelect labelPosition="inset" label='async-select' field='group' loadOptions={async()=>await groupsToSelectOptions()} />
+        <AsyncFormSelect label='async-select' field='group' loadOptions={async()=>await groupsToSelectOptions()} />
 
         <Divider />
         <br />

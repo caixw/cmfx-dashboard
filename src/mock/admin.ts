@@ -45,12 +45,12 @@ const admins = buildAdmins(50);
 let adminsIndex = admins.length;
 
 export function adminMock() {
-    fetchMock.get('path:/admin/groups', async(url)=>{
+    fetchMock.get('path:/admin/groups', (url)=>{
         console.debug('get', url);
         return groups;
     }, {delay: 500});
 
-    fetchMock.post('path:/admin/groups', async (url, opt) => {
+    fetchMock.post('path:/admin/groups', (url, opt) => {
         console.debug('post', url);
         groupsIndex++;
         const obj = JSON.parse(opt.body as string) as Group;
@@ -59,7 +59,7 @@ export function adminMock() {
         return 201;
     }, {delay: 500});
 
-    fetchMock.delete('express:/admin/groups/:id', async(url)=>{
+    fetchMock.delete('express:/admin/groups/:id', (url)=>{
         const id = getID(url);
         console.debug('delete:', url, id);
         const index = groups.findIndex((v)=>{return v.id === id;});
@@ -67,7 +67,7 @@ export function adminMock() {
         return 204;
     }, {delay: 500});
 
-    fetchMock.put('express:/admin/groups/:id',async (url, opt) => {
+    fetchMock.put('express:/admin/groups/:id',(url, opt) => {
         const id = getID(url);
         console.debug('put', url, id);
         const index = groups.findIndex((v)=>{return v.id === id;});
@@ -77,7 +77,7 @@ export function adminMock() {
         return 204;
     }, {delay:500});
 
-    fetchMock.get('path:/admin/admins', async(url)=>{
+    fetchMock.get('path:/admin/admins', (url)=>{
         console.debug(url);
         const page = parseInt(getQuery(url, 'page', '0'));
         const size = parseInt(getQuery(url, 'size', '33'));
@@ -93,7 +93,7 @@ export function adminMock() {
         };
     }, {delay: 500});
 
-    fetchMock.post('path:/admin/admins', async (url, opt) => {
+    fetchMock.post('path:/admin/admins', (url, opt) => {
         console.debug('post', url);
         adminsIndex++;
         const obj = JSON.parse(opt.body as string) as Admin;
@@ -102,13 +102,13 @@ export function adminMock() {
         return 201;
     }, {delay: 500});
 
-    fetchMock.get('express:/admin/admins/:id', async(url)=>{
+    fetchMock.get('express:/admin/admins/:id', (url)=>{
         const id = getID(url);
         console.debug('get:', url, id);
         return admins.find((v)=>{return v.id === id;});
     }, {delay: 500});
 
-    fetchMock.delete('express:/admin/admins/:id', async(url)=>{
+    fetchMock.delete('express:/admin/admins/:id', (url)=>{
         const id = getID(url);
         console.debug('delete:', url, id);
         const index = admins.findIndex((v)=>{return v.id === id;});
@@ -116,7 +116,7 @@ export function adminMock() {
         return 204;
     }, {delay: 500});
 
-    fetchMock.patch('express:/admin/admins/:id',async (url, opt) => {
+    fetchMock.patch('express:/admin/admins/:id',(url, opt) => {
         const id = getID(url);
         console.debug('patch', url, id);
         const index = admins.findIndex((v)=>{return v.id === id;});

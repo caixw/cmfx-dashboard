@@ -41,7 +41,7 @@ export class Context {
         this.#setLocaleCode(code);
     }
 
-    post(url: string, body: unknown): Promise<Return> {
+    post(url: string, body?: unknown): Promise<Return> {
         return f(this, 'POST', url, body);
     }
 
