@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { Form, Spin } from '@douyinfe/semi-ui';
-import { BaseFormProps } from "@douyinfe/semi-ui/lib/es/form";
+import { BaseFormProps, FormApi } from "@douyinfe/semi-ui/lib/es/form";
 
 import { Problem } from '@dashboard/App/context/api';
 import { ObjectType } from '@dashboard/utils';
@@ -32,8 +32,7 @@ type Props<T extends ObjectType> = Omit<BaseFormProps, 'onSubmit'> & {
  */
 export function AsyncForm<T extends ObjectType>(props: Props<T>): JSX.Element {
     const [loading, setLoading] = useState(false);
-    const form = useRef<Form>(null);
-    const fa = form.current?.formApi;
+    const api = useRef<FormApi>();
 
     useEffect(()=>{
         if (!props.onInit) {
@@ -42,19 +41,20 @@ export function AsyncForm<T extends ObjectType>(props: Props<T>): JSX.Element {
 
         setLoading(true);
         props.onInit().then((v: T)=>{
-            fa?.setValues(v);
+            console.log(v);
+            api.current?.setValues(v);
         }).catch((reason)=>{
             console.error(reason);
         }).finally(()=>{
             setLoading(false);
         });
-    }, [fa]);
+    }, []);
 
     const submit = (v: T)=> {
         setLoading(true);
         props.onSubmit(v).then((p?:Problem)=>{
             p?.params?.forEach((f)=>{
-                fa?.setError(f.name, f.message);
+                api.current?.setError(f.name, f.message);
             });
         }).catch((reason)=>{
             console.error(reason);
@@ -67,7 +67,7 @@ export function AsyncForm<T extends ObjectType>(props: Props<T>): JSX.Element {
     const {onInit, ...p} = props;
 
     return <Spin spinning={loading} size='large'>
-        <Form {...p} onSubmit={submit} ref={form}>
+        <Form {...p} onSubmit={submit} getFormApi={(formApi: FormApi)=>api.current = formApi}>
             {props.children}
         </Form>
     </Spin>;

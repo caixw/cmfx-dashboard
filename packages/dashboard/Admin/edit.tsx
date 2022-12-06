@@ -60,7 +60,6 @@ export function Edit() {
             <Form.Select label={locale.common.state} field='state' optionList={mapToSelectOptions(states)} />
             <Form.Select label={locale.common.sex} field='sex' optionList={mapToSelectOptions(sexes)} />
             <AsyncFormSelect label={locale.admin.group} field='group' loadOptions={()=>loadGroupsSelectOptions(ctx)} />
-            <Form.Input label={locale.common.avatar} field='avatar' />
 
             <Divider style={{margin: '10px 0'}} />
             <div className="cmfx-actions">
