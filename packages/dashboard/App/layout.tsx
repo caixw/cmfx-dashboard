@@ -5,6 +5,7 @@ import { Nav, Layout as SLayout, Button, Breadcrumb, Dropdown } from '@douyinfe/
 import { IconSetting, IconMaximize, IconMinimize, IconUserCircle } from "@douyinfe/semi-icons";
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Route } from "@douyinfe/semi-foundation/lib/es/breadcrumb/itemFoundation";
+import { ErrorBoundary } from 'react-error-boundary';
 
 import { AppSetting } from "@dashboard/AppSetting";
 import { Locale, LocaleConsumer } from "@dashboard/locales";
@@ -65,12 +66,22 @@ export function Layout(): JSX.Element {
                 </SLayout.Header>
 
                 <SLayout.Content style={{overflow: 'scroll', padding: '20px'}}>
-                    <Outlet />
+                    <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <Outlet />
+                    </ErrorBoundary>
                 </SLayout.Content>
             </SLayout>
         </SLayout>
         <AppSetting visible={visible} onCancel={()=>setVisible(false)} />
     </>;
+}
+
+function ErrorFallback(props: {error: Error, resetErrorBoundary: (...args: Array<unknown>) => void}): JSX.Element {
+    return <div role="alert">
+        <pre>{props.error.message}</pre>
+        <br />
+        <pre>{props.error.stack}</pre>
+    </div>;
 }
 
 export function Fullscreen(): JSX.Element {

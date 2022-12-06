@@ -7,7 +7,7 @@ import {
 } from '@douyinfe/semi-icons';
 
 import {
-    UnauthRoute, AuthRoute, Options, ErrorPage, Locale, TODO,
+    UnauthRoute, AuthRoute, Options, ErrorPage, Locale,
     App, Layout, Login, Logout, install, SecurityLog, LocaleConsumer,
     AdminsRoute, GroupsRoute
 } from 'cmfx-dashboard';
@@ -16,6 +16,7 @@ import 'cmfx-dashboard/style.css';
 import { Home } from './demo/Home';
 import { ButtonsDemo } from './demo/Buttons';
 import { PagingDemo, TableDemo } from './demo/Paging';
+import { ErrorBoundaryDemo } from './demo/ErrorBoundary';
 import { AsyncFormDemo } from './demo/AsyncForm';
 import Logo from '@/assets/react.svg';
 // import BG from '@/assets/login-bg.svg';
@@ -65,6 +66,10 @@ const options: Options = {
             path: '/',
             element: <AuthRoute><Layout /></AuthRoute>,
             children: [
+                {
+                    path: 'error-boundary',
+                    element: <ErrorBoundaryDemo />
+                },
                 {
                     path: 'logout',
                     element: <Logout />
@@ -172,6 +177,10 @@ const options: Options = {
             textKey: 'error-page',
             icon: <IconAlertCircle />,
             items: [
+                {
+                    itemKey:  '/error-boundary',
+                    textKey: '错误边界',
+                },
                 {
                     itemKey: '/error-page-404',
                     textKey: '404'
