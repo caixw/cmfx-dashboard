@@ -12,7 +12,7 @@ export type { Return, Problem } from './App/context/api';
 export { LocaleConsumer, install, useLocale } from './locales';
 export type { Locale } from './locales';
 
-export { AsyncTable as Paging } from './AsyncTable';
+export { AsyncTable } from './AsyncTable';
 export { DeleteAction } from './AsyncTable/actions';
 export type { ColumnProps, Ref as AsyncTableRef } from './AsyncTable';
 

@@ -38,11 +38,11 @@ export interface Ref {
  *
  * T 表示数据类型
  */
-export const AsyncTable = React.forwardRef(PagingInner) as <T extends ObjectType>(
+export const AsyncTable = React.forwardRef(AsyncTableInner) as <T extends ObjectType>(
     props: Props<T> & { ref?: React.ForwardedRef<Ref> }
-) => ReturnType<typeof PagingInner>;
+) => ReturnType<typeof AsyncTableInner>;
 
-function PagingInner<T extends ObjectType>(props: Props<T>, ref: React.ForwardedRef<Ref>): JSX.Element {
+function AsyncTableInner<T extends ObjectType>(props: Props<T>, ref: React.ForwardedRef<Ref>): JSX.Element {
     const ctx = useContext(AppContext);
     const loc = useLocation();
     const q = parseQueryForClient(loc.search, 1, ctx.options.pageSizes[0]);

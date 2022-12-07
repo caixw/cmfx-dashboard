@@ -5,7 +5,7 @@ import { Button, Form, Modal } from '@douyinfe/semi-ui';
 import { FormApi } from '@douyinfe/semi-ui/lib/es/form';
 import { useNavigate } from 'react-router-dom';
 
-import { AsyncTable, ColumnProps, Ref as PagingRef } from '@dashboard/AsyncTable';
+import { AsyncTable, ColumnProps, Ref as AsyncTableRef } from '@dashboard/AsyncTable';
 import { DeleteAction } from '@dashboard/AsyncTable/actions';
 import { AppContext } from '@dashboard/App/context';
 import { useLocale } from '@dashboard/locales';
@@ -22,7 +22,7 @@ export function Groups(): JSX.Element {
     const [g, setG] = useState<Group>({ id:0, name: '', description: '' });
     const [modalVisible, setModalVisible] = useState(false);
     const form = useRef(null);
-    const table = useRef<PagingRef>(null);
+    const table = useRef<AsyncTableRef>(null);
     const nav = useNavigate();
 
     const editGroup = (g: Group)=> {

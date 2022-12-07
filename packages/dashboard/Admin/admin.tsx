@@ -6,7 +6,7 @@ import { Button, Form, Avatar, Typography, Tooltip } from '@douyinfe/semi-ui';
 import { IconShield } from '@douyinfe/semi-icons';
 import { TypographyBaseType } from '@douyinfe/semi-ui/lib/es/typography';
 
-import { AsyncTable, ColumnProps, Ref as PagingRef } from '@dashboard/AsyncTable';
+import { AsyncTable, ColumnProps, Ref as AsyncTableRef } from '@dashboard/AsyncTable';
 import { DeleteAction } from '@dashboard/AsyncTable/actions';
 import { useLocale } from '@dashboard/locales';
 import { AppContext } from '@dashboard/App/context';
@@ -24,7 +24,7 @@ export function Admins(): JSX.Element {
     const locale = useLocale();
     const sexes = getSexes(locale);
     const states = getStates(locale);
-    const paging = useRef<PagingRef>(null);
+    const paging = useRef<AsyncTableRef>(null);
     const nav = useNavigate();
 
     const renderActions = (key: number, record: Admin) => {
