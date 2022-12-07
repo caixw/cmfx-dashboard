@@ -5,8 +5,8 @@ import { Button, Form, Modal } from '@douyinfe/semi-ui';
 import { FormApi } from '@douyinfe/semi-ui/lib/es/form';
 import { useNavigate } from 'react-router-dom';
 
-import { Paging, ColumnProps, Ref as PagingRef } from '@dashboard/Paging';
-import { DeleteAction } from '@dashboard/Paging/actions';
+import { AsyncTable, ColumnProps, Ref as PagingRef } from '@dashboard/AsyncTable';
+import { DeleteAction } from '@dashboard/AsyncTable/actions';
 import { AppContext } from '@dashboard/App/context';
 import { useLocale } from '@dashboard/locales';
 import { Return } from '@dashboard/App/context/api';
@@ -73,7 +73,7 @@ export function Groups(): JSX.Element {
     </>;
 
     return <>
-        <Paging url='/groups'
+        <AsyncTable url='/groups'
             ref={table}
             queries={queries}
             toolbar={toolbar}

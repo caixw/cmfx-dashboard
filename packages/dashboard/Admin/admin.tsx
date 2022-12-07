@@ -6,8 +6,8 @@ import { Button, Form, Avatar, Typography, Tooltip } from '@douyinfe/semi-ui';
 import { IconShield } from '@douyinfe/semi-icons';
 import { TypographyBaseType } from '@douyinfe/semi-ui/lib/es/typography';
 
-import { Paging, ColumnProps, Ref as PagingRef } from '@dashboard/Paging';
-import { DeleteAction } from '@dashboard/Paging/actions';
+import { AsyncTable, ColumnProps, Ref as PagingRef } from '@dashboard/AsyncTable';
+import { DeleteAction } from '@dashboard/AsyncTable/actions';
 import { useLocale } from '@dashboard/locales';
 import { AppContext } from '@dashboard/App/context';
 import { mapToSelectOptions } from '@dashboard/utils';
@@ -80,7 +80,7 @@ export function Admins(): JSX.Element {
         <AsyncFormSelect multiple label={locale.admin.group} field='group' loadOptions={async ()=>await loadGroupsSelectOptions(ctx)} />
     </>;
 
-    return <Paging paging
+    return <AsyncTable paging
         ref={paging}
         url='/admins'
         toolbar={toolbar}

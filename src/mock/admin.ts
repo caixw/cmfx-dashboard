@@ -37,9 +37,15 @@ function buildAdmins(size: number): Array<Admin> {
             sex = 'male';
             avatar = Avatar;
         }
-        admins.push({id: i, name: `管理员${i}`, username: `admin${i}`, nickname: `管理员昵称${i}`, state, sex, avatar, group: v+1});
+        admins.push({
+            id: i,
+            name: `管理员${i}`,
+            username: `admin${i}`,
+            nickname: `管理员昵称${i}`,
+            group: v+1,
+            super: i === 1,
+            state, sex, avatar});
     }
-    admins[0].supper = true;
     return admins;
 }
 

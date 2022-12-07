@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 import React from "react";
-import { Paging } from "@dashboard/Paging";
+import { AsyncTable } from "@dashboard/AsyncTable";
 import { ColumnProps } from "@douyinfe/semi-ui/lib/es/table";
 
 import { useLocale } from "@dashboard/locales";
@@ -31,5 +31,5 @@ export function SecurityLog(props: Props): JSX.Element {
         {dataIndex: 'content', title: l.common.content},
     ];
 
-    return <Paging url={props.url} columns={columns} paging={true} />;
+    return <AsyncTable url={props.url} columns={columns} paging={true} />;
 }

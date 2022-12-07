@@ -2,14 +2,14 @@
 
 import fetchMock from 'fetch-mock';
 
-import { pagingMock } from './paging';
+import { pagingMock } from './table';
 import { adminMock } from './admin';
 import { asyncMock } from './async';
 
 export function mock(){
     fetchMock.config.overwriteRoutes = true;
 
-    fetchMock.post(/.+login/i, ()=>{
+    fetchMock.post('path:/admin/login', ()=>{
         return {
             access_token: 'access',
             refresh_token: 'refresh',
@@ -17,9 +17,9 @@ export function mock(){
         };
     }, {delay: 1000});
 
-    fetchMock.delete(/.+login/i, 204);
+    fetchMock.delete('path:/admin/login', 204);
 
-    fetchMock.get(/.+info/i, {
+    fetchMock.get('path:/admin/info', {
         name: '姓名',
         nickname: '昵称',
         username: '账号',

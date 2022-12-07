@@ -12,9 +12,9 @@ export type { Return, Problem } from './App/context/api';
 export { LocaleConsumer, install, useLocale } from './locales';
 export type { Locale } from './locales';
 
-export { Paging } from './Paging';
-export { DeleteAction } from './Paging/actions';
-export type { ColumnProps as PagingColumnProps, Ref as PagingRef } from './Paging';
+export { AsyncTable as Paging } from './AsyncTable';
+export { DeleteAction } from './AsyncTable/actions';
+export type { ColumnProps, Ref as AsyncTableRef } from './AsyncTable';
 
 export { Actions } from './Actions';
 export { Login } from './Login';

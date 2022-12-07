@@ -38,7 +38,7 @@ export interface Ref {
  *
  * T 表示数据类型
  */
-export const Paging = React.forwardRef(PagingInner) as <T extends ObjectType>(
+export const AsyncTable = React.forwardRef(PagingInner) as <T extends ObjectType>(
     props: Props<T> & { ref?: React.ForwardedRef<Ref> }
 ) => ReturnType<typeof PagingInner>;
 

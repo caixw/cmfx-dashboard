@@ -4,13 +4,13 @@ import React from "react";
 import { ColumnProps } from "@douyinfe/semi-ui/lib/es/table";
 import { Form, Button } from "@douyinfe/semi-ui";
 
-import { Paging, useLocale } from "cmfx-dashboard";
-import { PagingDataType } from "@/mock/paging";
+import { AsyncTable, useLocale } from "cmfx-dashboard";
+import { AsyncTableDataType } from "@/mock/table";
 
 export function PagingDemo() {
     const loc = useLocale();
 
-    const columns: Array<ColumnProps<PagingDataType>> = [
+    const columns: Array<ColumnProps<AsyncTableDataType>> = [
         {title: '#', dataIndex: 'id'},
         {title: 'NO', dataIndex: 'no'},
         {title: '名称', dataIndex: 'name'},
@@ -28,7 +28,7 @@ export function PagingDemo() {
     ];
 
     return <div style={{padding: '8px'}}>
-        <Paging url='/paging'
+        <AsyncTable url='/paging'
             queries={<Form.Input field="age" width={200} />}
             paging={true}
             columns={columns} />
@@ -36,7 +36,7 @@ export function PagingDemo() {
 }
 
 export function TableDemo() {
-    const columns: Array<ColumnProps<PagingDataType>> = [
+    const columns: Array<ColumnProps<AsyncTableDataType>> = [
         {title: '#', dataIndex: 'id'},
         {title: 'NO', dataIndex: 'no'},
         {title: '名称', dataIndex: 'name'},
@@ -53,7 +53,7 @@ export function TableDemo() {
         }},
     ];
     return <div style={{padding: '8px'}}>
-        <Paging
+        <AsyncTable
             url='/table'
             paging={false}
             columns={columns}

@@ -4,7 +4,7 @@ import fetchMock from 'fetch-mock';
 
 import { getQuery } from './utils';
 
-export interface PagingDataType {
+export interface AsyncTableDataType {
     id:number
     no: string
     name: string
@@ -13,8 +13,8 @@ export interface PagingDataType {
 }
 const maxPagingSize = 500;
 
-function buildPagingData(start:number, size: number):Array<PagingDataType> {
-    const data:Array<PagingDataType> = [];
+function buildPagingData(start:number, size: number):Array<AsyncTableDataType> {
+    const data:Array<AsyncTableDataType> = [];
     for(let i=1;i<=size;i++) {
         const id = start+i;
         data.push({

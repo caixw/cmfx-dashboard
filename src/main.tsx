@@ -15,7 +15,7 @@ import 'cmfx-dashboard/style.css';
 
 import { Home } from './demo/Home';
 import { ButtonsDemo } from './demo/Buttons';
-import { PagingDemo, TableDemo } from './demo/Paging';
+import { PagingDemo, TableDemo } from './demo/AsyncTable';
 import { ErrorBoundaryDemo } from './demo/ErrorBoundary';
 import { AsyncFormDemo } from './demo/AsyncForm';
 import Logo from '@/assets/react.svg';
