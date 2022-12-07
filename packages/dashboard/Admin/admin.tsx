@@ -2,16 +2,19 @@
 
 import React, { useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Form, Avatar, Typography } from '@douyinfe/semi-ui';
+import { Button, Form, Avatar, Typography, Tooltip } from '@douyinfe/semi-ui';
+import { IconShield } from '@douyinfe/semi-icons';
+import { TypographyBaseType } from '@douyinfe/semi-ui/lib/es/typography';
 
 import { Paging, ColumnProps, Ref as PagingRef } from '@dashboard/Paging';
 import { DeleteAction } from '@dashboard/Paging/actions';
-import { Admin, getSexes, getStates, loadGroupsSelectOptions, Sex } from './types';
 import { useLocale } from '@dashboard/locales';
 import { AppContext } from '@dashboard/App/context';
 import { mapToSelectOptions } from '@dashboard/utils';
 import { AsyncFormSelect } from '@dashboard/AsyncSelect';
 import { Actions } from '@dashboard/Actions';
+
+import { Admin, getSexes, getStates, loadGroupsSelectOptions, Sex } from './types';
 
 /**
  * 管理员列表页组件
@@ -31,17 +34,26 @@ export function Admins(): JSX.Element {
         </Actions>;
     };
 
-    const renderState = (key: string) => {
+    const renderState = (key: string, record: Admin) => {
+        let type:TypographyBaseType|undefined = undefined;
         switch (key) {
         case 'normal':
-            return <Typography.Text>{states.get(key)}</Typography.Text>;
+            break;
         case 'locked':
-            return <Typography.Text type='warning'>{states.get(key)}</Typography.Text>;
         case 'left':
-            return <Typography.Text type='warning'>{states.get(key)}</Typography.Text>;
+            type = 'warning';
+            break;
         default:
             throw `无效的状态 ${key}`;
         }
+
+        if (!record.super) {
+            return <Typography.Text type={type}>{states.get(key)}</Typography.Text>;
+        }
+        return <div style={{display: 'flex', alignItems: 'center'}}>
+            <Typography.Text type={type}>{states.get(key)}</Typography.Text>&#160;
+            <Tooltip content={locale.admin.super_tooltip}><IconShield /></Tooltip>
+        </div>;
     };
 
     const columns: Array<ColumnProps<Admin>> = [

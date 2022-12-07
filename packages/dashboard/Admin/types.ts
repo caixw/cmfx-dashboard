@@ -16,7 +16,9 @@ export interface Group {
     parent?: number
 }
 
-export type Admin = a & {group: number};
+export type Admin = a & {
+    group: number
+};
 
 export function getSexes(l: Locale): Map<Sex, string> {
     return new Map<Sex, string>([

@@ -59,6 +59,7 @@ export const zhTW = {
     errorPage: {
         back_home: '返回首頁',
         back_prev_page: '返回上一頁',
+        super_tooltip: '超級管理員'
     },
 
     paging: {
@@ -71,14 +72,14 @@ export const zhTW = {
         striped: '班馬線',
         striped_none: '無',
         striped_2: '隔行',
-        striped_3: '每隔 3 行',
-        striped_5: '每隔 5 行',
+        striped_3: '每隔 2 行',
         fixed_left: '固定在左側',
         fixed_right: '固定在右側',
         fixed_none: '無固定',
         align_left: '左對齊',
         align_right: '右對齊',
         align_center: '居中對齊',
+        sticky_header: '固定表頭',
     },
 
     appSetting: {

@@ -10,6 +10,7 @@ export interface Admin {
     state: 'normal' | 'locked' | 'left'
     avatar?: string
     sex: Sex
+    super?: boolean // 是否为超级管理员
 }
 
 export type Sex = 'unknown' | 'male' | 'female'

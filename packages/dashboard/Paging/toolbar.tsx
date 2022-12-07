@@ -8,10 +8,11 @@ import { ColumnProps } from "@douyinfe/semi-ui/lib/es/table";
 import { Button, ButtonGroup, Dropdown, Popover, Tooltip } from "@douyinfe/semi-ui";
 import { DropDownMenuItem } from '@douyinfe/semi-ui/lib/es/dropdown';
 
-import { LineHeight, RecordType } from './index';
+import { ObjectType } from "@dashboard/utils";
 import { useLocale } from '@dashboard/locales';
+import { LineHeight } from './index';
 
-interface Props<T extends RecordType> {
+interface Props<T extends ObjectType> {
     reload: ()=> void
     print: ()=> void
 
@@ -23,9 +24,12 @@ interface Props<T extends RecordType> {
 
     columns: Array<ColumnProps<T>>
     setColumns:(cols: Array<ColumnProps<T>>)=> void
+
+    toggleSticky: ()=>void
+    sticky: boolean
 }
 
-export function Toolbar<T extends RecordType>(props: Props<T>): JSX.Element {
+export function Toolbar<T extends ObjectType>(props: Props<T>): JSX.Element {
     const l = useLocale();
     const [count, refresh] = React.useState(0);
     const cols: Array<ColumnProps<T>> = Object.assign([], props.columns);
@@ -45,11 +49,12 @@ export function Toolbar<T extends RecordType>(props: Props<T>): JSX.Element {
     };
 
     const menu: Array<DropDownMenuItem> = [
+        {node: 'item', active: props.sticky, name: l.paging.sticky_header, onClick:()=>props.toggleSticky()},
+        {node: 'divider'},
         {node: 'title', name: l.paging.striped},
         {node: 'item', active: props.stripeNumber === 0, name: l.paging.striped_none, onClick:()=>props.setStrip(0)},
         {node: 'item', active: props.stripeNumber === 2, name: l.paging.striped_2, onClick:()=>props.setStrip(2)},
         {node: 'item', active: props.stripeNumber === 3, name: l.paging.striped_3, onClick:()=>props.setStrip(3)},
-        {node: 'item', active: props.stripeNumber === 5, name: l.paging.striped_5, onClick:()=>props.setStrip(5)},
         {node: 'divider'},
         {node: 'title', name: l.paging.line_height},
         {node: 'item', active: props.lineHeight === 'default', name: l.paging.default_size, onClick:()=>props.setLineHeight('default')},

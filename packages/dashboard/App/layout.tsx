@@ -65,7 +65,7 @@ export function Layout(): JSX.Element {
                     </Nav>
                 </SLayout.Header>
 
-                <SLayout.Content style={{overflow: 'scroll', padding: '20px'}}>
+                <SLayout.Content style={{overflow: 'scroll', margin: '20px'}}>
                     <ErrorBoundary FallbackComponent={ErrorFallback}>
                         <Outlet />
                     </ErrorBoundary>

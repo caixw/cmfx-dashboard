@@ -48,6 +48,7 @@ function PagingInner<T extends ObjectType>(props: Props<T>, ref: React.Forwarded
     const q = parseQueryForClient(loc.search, 1, ctx.options.pageSizes[0]);
 
     const [loading, setLoading] = useState(false);
+    const [sticky, setSticky] = useState(false);
     const [data, setData] = useState<Array<T>>([]);
     const [page, setPage] = useState(q.page);
     const [size, setSize] = useState(q.size);
@@ -129,7 +130,7 @@ function PagingInner<T extends ObjectType>(props: Props<T>, ref: React.Forwarded
                 <LocaleConsumer>
                     {
                         (l: Locale) => {
-                            return <Button onClick={load} style={{marginLeft: 'auto'}}>{l.common.search}</Button>;
+                            return <Button htmlType="submit" onClick={load} style={{marginLeft: 'auto'}}>{l.common.search}</Button>;
                         }
                     }
                 </LocaleConsumer>
@@ -145,6 +146,8 @@ function PagingInner<T extends ObjectType>(props: Props<T>, ref: React.Forwarded
             <div>{props.toolbar}</div>
             <div>
                 <Toolbar
+                    sticky={sticky}
+                    toggleSticky={()=>setSticky(!sticky)}
                     columns={props.columns}
                     setColumns={setColumns}
                     reload={load}
@@ -158,6 +161,7 @@ function PagingInner<T extends ObjectType>(props: Props<T>, ref: React.Forwarded
         <Divider style={{marginTop: '5px'}} />
 
         <Table ref={printable}
+            sticky={sticky ? {top: 0} : undefined}
             size={lineHeight}
             onRow={(r: T|undefined, i: number|undefined)=>{
                 i = (i ?? 0) + 1;
