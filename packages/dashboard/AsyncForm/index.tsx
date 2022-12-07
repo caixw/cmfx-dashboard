@@ -41,7 +41,6 @@ export function AsyncForm<T extends ObjectType>(props: Props<T>): JSX.Element {
 
         setLoading(true);
         props.onInit().then((v: T)=>{
-            console.log(v);
             api.current?.setValues(v);
         }).catch((reason)=>{
             console.error(reason);

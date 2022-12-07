@@ -2,12 +2,19 @@
 
 import fetchMock from "fetch-mock";
 
+export interface DataType {
+    num: number
+    str: string
+    bool: boolean
+}
+
 export function asyncMock() {
     fetchMock.get('path:/admin/async-data', ()=>{
         return {
             num: 1,
             str: 'str',
-            bool: true
+            bool: true,
+            group: 1
         };
     }, {delay: 1000});
 

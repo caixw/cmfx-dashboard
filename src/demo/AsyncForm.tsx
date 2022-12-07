@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MIT
 
 import React, { useContext } from "react";
-import { Button, Divider, Form, Notification } from "@douyinfe/semi-ui";
+import { Button, Divider, Form } from "@douyinfe/semi-ui";
 
-import { AppContext, AsyncForm, AsyncFormSelect, FormValuesType } from "cmfx-dashboard";
-import { objectsToSelectOptions } from "cmfx-dashboard";
+import { AppContext, AsyncForm, AsyncFormSelect, objectsToSelectOptions } from "cmfx-dashboard";
+import { DataType } from "@/mock/async";
+
 
 export function AsyncFormDemo() {
     const ctx = useContext(AppContext);
@@ -19,15 +20,10 @@ export function AsyncFormDemo() {
     };
 
     return <AsyncForm layout='vertical'
-        labelPosition="inset"
         onInit={async()=>{
-            return (await ctx.get('/async-data')).body as FormValuesType;
+            return (await ctx.get('/async-data')).body as DataType;
         }}
         onSubmit={async()=>{return await ctx.post('/async-invalid-data', null);}}
-        afterSubmit={(ok:boolean)=>{
-            Notification.info({title: 'after submit', content: ok ? 'ok':'invalid'});
-        }}
-        initValues={{group: 1}}
     >
         <Form.InputNumber field="num" label='数值' />
         <Form.Input field="str" label="字符" />

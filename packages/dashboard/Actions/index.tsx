@@ -31,6 +31,6 @@ function more(m: ReactNode): React.ReactNode | undefined {
     }
 
     return <Dropdown render={m}>
-        <Button theme="borderless" icon={<IconMore />} />
+        <Button theme="borderless" style={{borderRadius: '100%'}} icon={<IconMore />} />
     </Dropdown>;
 }

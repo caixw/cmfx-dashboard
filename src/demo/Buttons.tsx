@@ -19,8 +19,8 @@ export function ButtonsDemo() {
         <AsyncButton iconPosition="right" icon={<IconAlarm />} onClick={async()=>{await sleep(1000);}}>右图标 loading</AsyncButton>
         &#160;&#160;&#160;
         <AsyncButton onClick={async()=>{await sleep(1000);}}>无图标 loading</AsyncButton>
-        <br />
 
+        <br />
         <br />
         <Divider>ConfirmButton</Divider>
         <br />
@@ -35,7 +35,8 @@ export function ButtonsDemo() {
         <ConfirmButton title="title" content="abc" onConfirm={async()=>{await sleep(1000);}}>无图标 loading</ConfirmButton>
 
         <br />
-        <Divider>table Actions</Divider>
+        <br />
+        <Divider>Actions</Divider>
         <br />
         <Actions>
             <Button>b1</Button>
