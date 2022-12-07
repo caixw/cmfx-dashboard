@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 import React, { useState, useContext, useEffect } from "react";
-import { Nav, Layout as SLayout, Button, Breadcrumb, Dropdown } from '@douyinfe/semi-ui';
+import { Nav, Layout as SLayout, Button, Breadcrumb, Dropdown, BackTop } from '@douyinfe/semi-ui';
 import { IconSetting, IconMaximize, IconMinimize, IconUserCircle } from "@douyinfe/semi-icons";
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Route } from "@douyinfe/semi-foundation/lib/es/breadcrumb/itemFoundation";
@@ -49,13 +49,17 @@ export function Layout(): JSX.Element {
                         <Nav.Footer>
                             <>
                                 <Fullscreen />
-                                <Button theme="borderless" icon={<IconSetting size='large' />} onClick={()=>setVisible(true)} />
+                                <Button theme="borderless" style={{borderRadius: '100%'}}
+                                    icon={<IconSetting size='large' />} onClick={()=>setVisible(true)}
+                                />
                                 <LocaleConsumer>
                                     {
                                         (l: Locale) => {
                                             const menus = buildUserMenus([], clickUserMenuItem, ctx.options.userMenus, l);
                                             return <Dropdown menu={menus}>
-                                                <Button theme="borderless" icon={<IconUserCircle size='large' />}>{info.name}</Button>
+                                                <Button theme="borderless" style={{borderRadius: '16px'}}
+                                                    icon={<IconUserCircle size='large' />}
+                                                >{info.name}</Button>
                                             </Dropdown>;
                                         }
                                     }
@@ -65,10 +69,17 @@ export function Layout(): JSX.Element {
                     </Nav>
                 </SLayout.Header>
 
-                <SLayout.Content style={{overflow: 'scroll', margin: '20px'}}>
-                    <ErrorBoundary FallbackComponent={ErrorFallback}>
-                        <Outlet />
-                    </ErrorBoundary>
+                <SLayout.Content style={{overflowY: 'scroll'}}>
+                    <div style={{padding: '16px'}} id='__main'>
+                        <ErrorBoundary FallbackComponent={ErrorFallback}>
+                            <Outlet />
+                        </ErrorBoundary>
+                    </div>
+
+                    <BackTop className="no-print"
+                        style={{borderRadius: '100%', right: '20px', bottom: '20px'}}
+                        target={()=>document.getElementById('__main')?.parentElement}
+                    />
                 </SLayout.Content>
             </SLayout>
         </SLayout>
@@ -96,6 +107,6 @@ export function Fullscreen(): JSX.Element {
         setFullscreen(!fullscreen);
     };
 
-    return <Button role='button' onClick={change} theme="borderless"
+    return <Button role='button' onClick={change} theme="borderless" style={{borderRadius: '100%'}}
         icon={fullscreen ? <IconMinimize size='large' /> : <IconMaximize size='large' />} />;
 }
