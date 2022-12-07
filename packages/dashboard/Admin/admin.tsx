@@ -5,12 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Form, Avatar, Typography } from '@douyinfe/semi-ui';
 
 import { Paging, ColumnProps, Ref as PagingRef } from '@dashboard/Paging';
+import { DeleteAction } from '@dashboard/Paging/actions';
 import { Admin, getSexes, getStates, loadGroupsSelectOptions, Sex } from './types';
 import { useLocale } from '@dashboard/locales';
-import { ConfirmButton } from '@dashboard/ConfirmButton';
 import { AppContext } from '@dashboard/App/context';
 import { mapToSelectOptions } from '@dashboard/utils';
 import { AsyncFormSelect } from '@dashboard/AsyncSelect';
+import { Actions } from '@dashboard/Actions';
 
 /**
  * 管理员列表页组件
@@ -24,21 +25,10 @@ export function Admins(): JSX.Element {
     const nav = useNavigate();
 
     const renderActions = (key: number, record: Admin) => {
-        const del = async()=>{
-            const r = await ctx.del(`/admins/${record.id}`);
-            if (!r.ok) {
-                console.error(r.problem);
-            }
-            paging.current?.load();
-        };
-        return <div className='cmfx-table-actions'>
-            <ConfirmButton title={locale.common.confirm_delete_title}
-                content={locale.common.confirm_delete_detail}
-                onConfirm={del}
-                type='danger'
-            >{locale.common.delete}</ConfirmButton>
+        return <Actions>
+            <DeleteAction locale={locale} url={`/admins/${record.id}`} reload={()=>paging.current?.load()} />
             <Button onClick={()=>nav(`/admins/${record.id}`)}>{locale.common.edit}</Button>
-        </div>;
+        </Actions>;
     };
 
     const renderState = (key: string) => {

@@ -13,8 +13,10 @@ export { LocaleConsumer, install, useLocale } from './locales';
 export type { Locale } from './locales';
 
 export { Paging } from './Paging';
+export { DeleteAction } from './Paging/actions';
 export type { ColumnProps as PagingColumnProps, Ref as PagingRef } from './Paging';
 
+export { Actions } from './Actions';
 export { Login } from './Login';
 export { Logout } from './Logout';
 export { ConfirmButton } from './ConfirmButton';

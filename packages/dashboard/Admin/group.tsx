@@ -6,10 +6,11 @@ import { FormApi } from '@douyinfe/semi-ui/lib/es/form';
 import { useNavigate } from 'react-router-dom';
 
 import { Paging, ColumnProps, Ref as PagingRef } from '@dashboard/Paging';
-import { ConfirmButton } from '@dashboard/ConfirmButton';
+import { DeleteAction } from '@dashboard/Paging/actions';
 import { AppContext } from '@dashboard/App/context';
 import { useLocale } from '@dashboard/locales';
 import { Return } from '@dashboard/App/context/api';
+import { Actions } from '@dashboard/Actions';
 import { Group } from './types';
 
 /**
@@ -50,31 +51,17 @@ export function Groups(): JSX.Element {
         table.current?.load();
     };
 
-    const renderActions = (key: string, record: Group): React.ReactNode => {
-        const delItem = async()=>{
-            const r = await ctx.del(`/groups/${record.id}`);
-            if (!r.ok) {
-                console.error(r.problem);
-            }
-            table.current?.load();
-        };
-
-        return <div className='cmfx-table-actions'>
-            <ConfirmButton type='danger'
-                onConfirm={delItem}
-                title={loc.common.confirm_delete_title}
-                content={loc.common.confirm_delete_detail}
-            >{loc.common.delete}</ConfirmButton>
-            <Button onClick={()=>editGroup(record)}>{loc.common.edit}</Button>
-            <Button onClick={()=>nav(`/groups/${record.id}/access`)}>{loc.admin.permission}</Button>
-        </div>;
-    };
-
     const cols: Array<ColumnProps<Group>> = [
         { title: '#', dataIndex: 'id' },
         { title: loc.common.name, dataIndex: 'name' },
         { title: loc.common.description, dataIndex: 'description' },
-        { title: loc.common.actions, className: 'no-print', render: renderActions },
+        { title: loc.common.actions, className: 'no-print', render: (key: string, record: Group): React.ReactNode => {
+            return <Actions>
+                <DeleteAction locale={loc} url={`/groups/${record.id}`} reload={()=>table.current?.load()} />
+                <Button onClick={()=>editGroup(record)}>{loc.common.edit}</Button>
+                <Button onClick={()=>nav(`/groups/${record.id}/access`)}>{loc.admin.permission}</Button>
+            </Actions>; }
+        }
     ];
 
     const queries = <>

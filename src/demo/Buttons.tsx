@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 
 import React from "react";
-import { Divider, Toast } from "@douyinfe/semi-ui";
+import { Button, Divider, Dropdown, Toast } from "@douyinfe/semi-ui";
 import { IconAlarm } from "@douyinfe/semi-icons";
 
-import { ConfirmButton, AsyncButton } from 'cmfx-dashboard';
+import { ConfirmButton, AsyncButton, Actions } from 'cmfx-dashboard';
 
 function sleep(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
@@ -33,5 +33,27 @@ export function ButtonsDemo() {
         <ConfirmButton title="title" content="abc" iconPosition="right" icon={<IconAlarm />} onConfirm={async()=>{await sleep(1000);}}>右图标 loading</ConfirmButton>
         &#160;&#160;&#160;
         <ConfirmButton title="title" content="abc" onConfirm={async()=>{await sleep(1000);}}>无图标 loading</ConfirmButton>
+
+        <br />
+        <Divider>table Actions</Divider>
+        <br />
+        <Actions>
+            <Button>b1</Button>
+            <Button>b2</Button>
+        </Actions>
+
+        &#160;&#160;&#160;
+        <Actions more={
+            <Dropdown.Menu>
+                <Dropdown.Item>more1</Dropdown.Item>
+                <Dropdown.Item>more2</Dropdown.Item>
+                <Dropdown.Item>more3</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item>more4</Dropdown.Item>
+            </Dropdown.Menu>
+        }>
+            <Button>b1</Button>
+            <Button>b2</Button>
+        </Actions>
     </div>;
 }
