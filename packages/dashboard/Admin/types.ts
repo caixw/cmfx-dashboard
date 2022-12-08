@@ -3,9 +3,9 @@
 import { OptionProps } from '@douyinfe/semi-ui/lib/es/select';
 
 import type { Admin as a, Sex } from '@dashboard/App/admin';
-import { Context } from '@dashboard/App/context';
+import { Context } from '@dashboard/App';
 import type { Locale } from '@dashboard/locales';
-import { objectsToSelectOptions } from '@dashboard/utils/select';
+import { objectsToSelectOptions } from '@dashboard/utils';
 
 export { Sex };
 

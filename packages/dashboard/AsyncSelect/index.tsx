@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-import { getSelect, Props, FormProps } from "./select";
+import { getSelect, Props, FormProps } from './select';
 
 export function AsyncFormSelect(props: FormProps): JSX.Element {
     return getSelect(true, props);

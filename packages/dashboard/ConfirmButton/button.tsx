@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 
-import React from "react";
-import { ButtonProps } from "@douyinfe/semi-ui/lib/es/button";
-import { PopconfirmProps } from "@douyinfe/semi-ui/lib/es/popconfirm";
-import { Popconfirm, Button } from "@douyinfe/semi-ui";
+import React from 'react';
+import { ButtonProps } from '@douyinfe/semi-ui/lib/es/button';
+import { PopconfirmProps } from '@douyinfe/semi-ui/lib/es/popconfirm';
+import { Popconfirm, Button } from '@douyinfe/semi-ui';
 
 export type Props = Pick<PopconfirmProps, 'title' | 'content' | 'onConfirm'> &
     Omit<ButtonProps, 'onClick' | 'onMouseDown' | 'onMouseEnter' | 'onMouseLeave'>;

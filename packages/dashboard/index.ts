@@ -1,31 +1,18 @@
 // SPDX-License-Identifier: MIT
 
-// AppSetting 作为内部组件，不导出。
+// NOTE: AppSetting 作为内部组件，不导出。
 
-export { App } from './App';
-export { Layout } from './App/layout';
-export { AuthRoute, UnauthRoute } from './App/context/token';
-export { AppContext } from './App/context';
-export type { Options } from './App/options';
-export type { Return, Problem } from './App/context/api';
-
-export { LocaleConsumer, install, useLocale } from './locales';
-export type { Locale } from './locales';
-
-export { AsyncTable } from './AsyncTable';
-export { DeleteAction } from './AsyncTable/actions';
-export type { ColumnProps, Ref as AsyncTableRef } from './AsyncTable';
-
-export { Actions } from './Actions';
-export { Login } from './Login';
-export { Logout } from './Logout';
-export { ConfirmButton } from './ConfirmButton';
-export { AsyncButton } from './AsyncButton';
-export { AsyncForm } from './AsyncForm';
-export { AsyncSelect, AsyncFormSelect } from './AsyncSelect';
-export { SecurityLog } from './SecurityLog';
-export { TODO } from './TODO';
-
-export { AdminsRoute, GroupsRoute } from './Admin';
-
+export * from './Actions';
+export * from './Admin';
+export * from './App';
+export * from './AsyncButton';
+export * from './AsyncForm';
+export * from './AsyncSelect';
+export * from './AsyncTable';
+export * from './ConfirmButton';
+export * from './Login';
+export * from './Logout';
+export * from './locales';
+export * from './SecurityLog';
+export * from './TODO';
 export * from './utils';

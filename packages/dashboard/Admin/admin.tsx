@@ -1,25 +1,42 @@
 // SPDX-License-Identifier: MIT
 
 import React, { useContext, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, RouteObject } from 'react-router-dom';
 import { Button, Form, Avatar, Typography, Tooltip } from '@douyinfe/semi-ui';
 import { IconShield } from '@douyinfe/semi-icons';
 import { TypographyBaseType } from '@douyinfe/semi-ui/lib/es/typography';
 
-import { AsyncTable, ColumnProps, Ref as AsyncTableRef } from '@dashboard/AsyncTable';
-import { DeleteAction } from '@dashboard/AsyncTable/actions';
+import { AsyncTable, ColumnProps, AsyncTableRef, DeleteAction } from '@dashboard/AsyncTable';
 import { useLocale } from '@dashboard/locales';
-import { AppContext } from '@dashboard/App/context';
+import { AppContext } from '@dashboard/App';
 import { mapToSelectOptions } from '@dashboard/utils';
 import { AsyncFormSelect } from '@dashboard/AsyncSelect';
 import { Actions } from '@dashboard/Actions';
 
 import { Admin, getSexes, getStates, loadGroupsSelectOptions, Sex } from './types';
+import { Edit } from './edit';
+
+/**
+ * 返回一组与管理员操作相关的路由设定
+ * @param path 该系列路由的根路径
+ */
+export function AdminsRoute(path: string): Array<RouteObject> {
+    return [
+        {
+            path: path,
+            element: <Admins />,
+        },
+        {
+            path: path+'/:id',
+            element: <Edit />,
+        }
+    ];
+}
 
 /**
  * 管理员列表页组件
  */
-export function Admins(): JSX.Element {
+function Admins(): JSX.Element {
     const ctx = useContext(AppContext);
     const locale = useLocale();
     const sexes = getSexes(locale);

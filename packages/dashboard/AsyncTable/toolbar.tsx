@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: MIT
 
-import React from "react";
+import React from 'react';
 import {
     IconPrint, IconRefresh, IconLineHeight, IconAlignJustify, IconAlignLeft, IconAlignRight, IconAlignCenter
-} from "@douyinfe/semi-icons";
-import { ColumnProps, Size } from "@douyinfe/semi-ui/lib/es/table";
-import { Button, ButtonGroup, Dropdown, Popover, Tooltip } from "@douyinfe/semi-ui";
+} from '@douyinfe/semi-icons';
+import { ColumnProps, Size } from '@douyinfe/semi-ui/lib/es/table';
+import { Button, ButtonGroup, Dropdown, Popover, Tooltip } from '@douyinfe/semi-ui';
 import { DropDownMenuItem } from '@douyinfe/semi-ui/lib/es/dropdown';
 
-import { ObjectType } from "@dashboard/utils";
+import { ObjectType } from '@dashboard/utils';
 import { useLocale } from '@dashboard/locales';
 
 interface Props<T extends ObjectType> {
@@ -71,28 +71,28 @@ export function Toolbar<T extends ObjectType>(props: Props<T>): JSX.Element {
                     <Button onClick={()=>setFixed(v, 'left')} theme={v.fixed===true || v.fixed==='left' ? 'solid':'light'} icon={<IconAlignLeft />} />
                 </Tooltip>
                 <Tooltip content={l.paging.fixed_none}>
-                    <Button onClick={()=>setFixed(v,undefined)} theme={!v.fixed ? 'solid':'light'} icon={<IconAlignJustify />} />
+                    <Button onClick={()=>setFixed(v, undefined)} theme={!v.fixed ? 'solid':'light'} icon={<IconAlignJustify />} />
                 </Tooltip>
                 <Tooltip content={l.paging.fixed_right}>
-                    <Button onClick={()=>setFixed(v,'right')} theme={v.fixed==='right' ? 'solid':'light'} icon={<IconAlignRight />} />
+                    <Button onClick={()=>setFixed(v, 'right')} theme={v.fixed==='right' ? 'solid':'light'} icon={<IconAlignRight />} />
                 </Tooltip>
             </ButtonGroup>
 
             <ButtonGroup style={{marginLeft: '20px'}}>
                 <Tooltip content={l.paging.align_left}>
-                    <Button onClick={()=>setAlign(v,'left')} theme={v.align===undefined || v.align==='left' ? 'solid':'light'} icon={<IconAlignLeft />} />
+                    <Button onClick={()=>setAlign(v, 'left')} theme={v.align===undefined || v.align==='left' ? 'solid':'light'} icon={<IconAlignLeft />} />
                 </Tooltip>
                 <Tooltip content={l.paging.align_center}>
                     <Button onClick={()=>setAlign(v, 'center')} theme={v.align==='center' ? 'solid':'light'} icon={<IconAlignCenter />} />
                 </Tooltip>
                 <Tooltip content={l.paging.align_right}>
-                    <Button onClick={()=>setAlign(v,'right')} theme={v.align==='right' ? 'solid':'light'} icon={<IconAlignRight />} />
+                    <Button onClick={()=>setAlign(v, 'right')} theme={v.align==='right' ? 'solid':'light'} icon={<IconAlignRight />} />
                 </Tooltip>
             </ButtonGroup>
         </div>
     );
 
-    const popPanel = <div style={{display: 'flex',flexDirection: 'column', gap: '5px', padding: '10px'}}>
+    const popPanel = <div style={{display: 'flex', flexDirection: 'column', gap: '5px', padding: '10px'}}>
         {popItems}
     </div>;
 

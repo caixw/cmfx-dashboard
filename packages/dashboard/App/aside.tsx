@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: MIT
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { Nav, Layout } from '@douyinfe/semi-ui';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Route } from "@douyinfe/semi-foundation/lib/es/breadcrumb/itemFoundation";
-import { ResponsiveMap } from "@douyinfe/semi-ui/lib/es/layout";
-import { OnSelectedData } from "@douyinfe/semi-ui/lib/es/navigation";
+import { Route } from '@douyinfe/semi-foundation/lib/es/breadcrumb/itemFoundation';
+import { ResponsiveMap } from '@douyinfe/semi-ui/lib/es/layout';
+import { OnSelectedData } from '@douyinfe/semi-ui/lib/es/navigation';
 
-import { useLocale } from "@dashboard/locales";
-import { KeyType } from "@dashboard/utils";
+import { useLocale } from '@dashboard/locales';
+import { KeyType } from '@dashboard/utils';
 
 import { Context } from './context';
-import { buildMenus, findMenuByKey, AdditionalMenuItem, NavMenuItem } from "./options/menu";
+import { buildMenus, findMenuByKey, AdditionalMenuItem, NavMenuItem } from './options';
 
 type RoutesSetter = React.Dispatch<React.SetStateAction<Array<Route>>>;
 

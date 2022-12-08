@@ -4,7 +4,7 @@ import React, { ReactNode } from 'react';
 import { Empty, Button } from '@douyinfe/semi-ui';
 import { isRouteErrorResponse, useRouteError, useNavigate } from 'react-router-dom';
 
-import { AppContext } from "@dashboard/App/context";
+import { AppContext } from '@dashboard/App';
 import { Locale, useLocale } from '@dashboard/locales';
 import { illustration, ResponseError } from '@dashboard/utils';
 

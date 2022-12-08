@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 
-import React from "react";
-import { ButtonProps } from "@douyinfe/semi-ui/lib/es/button";
-import { Button } from "@douyinfe/semi-ui";
+import React from 'react';
+import { ButtonProps } from '@douyinfe/semi-ui/lib/es/button';
+import { Button } from '@douyinfe/semi-ui';
 
-export type Props = Omit<ButtonProps, 'onClick'> & {
+type Props = Omit<ButtonProps, 'onClick'> & {
     onClick: (e: React.MouseEvent) => Promise<void>
 }
 

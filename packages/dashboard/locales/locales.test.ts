@@ -3,7 +3,7 @@
 import { test, expect, describe } from 'vitest';
 import zh_CN from '@douyinfe/semi-ui/lib/es/locale/source/zh_CN';
 
-import { getLocaleCode, setLocaleCode, getLocale, install, locales } from './index';
+import { getLocaleCode, setLocaleCode, getLocale, install, locales } from './locales';
 
 describe('storage locale', ()=>{
     test('get null', ()=>{

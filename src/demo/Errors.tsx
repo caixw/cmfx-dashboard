@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-import { ResponseError } from "cmfx-dashboard";
+import { ResponseError } from 'cmfx-dashboard';
 
 export function ErrorDemo(): JSX.Element {
     throw new Error('throw new Error()');

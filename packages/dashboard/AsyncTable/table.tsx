@@ -1,22 +1,21 @@
 // SPDX-License-Identifier: MIT
 
-import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { ColumnProps, RowSelectionProps, Size } from "@douyinfe/semi-ui/lib/es/table";
-import { Button, Form, Spin, Divider, Table } from "@douyinfe/semi-ui";
+import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { ColumnProps, RowSelectionProps, Size } from '@douyinfe/semi-ui/lib/es/table';
+import { Button, Form, Spin, Divider, Table } from '@douyinfe/semi-ui';
 import { useReactToPrint } from 'react-to-print';
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from 'react-router-dom';
 
-import { AppContext } from "@dashboard/App/context";
-import { LocaleConsumer } from "@dashboard/locales";
-import { Locale } from "@dashboard/locales";
+import { AppContext } from '@dashboard/App';
+import { LocaleConsumer, Locale } from '@dashboard/locales';
 import { ObjectType } from '@dashboard/utils';
 
-import { Page, encodeQuery, parseQueryForClient } from "./types";
-import { Toolbar } from "./toolbar";
+import { Page, encodeQuery, parseQueryForClient } from './types';
+import { Toolbar } from './toolbar';
 
 export type { ColumnProps };
 
-export interface Props<T extends ObjectType> {
+interface Props<T extends ObjectType> {
     url: string // 表格数据请求的地址
     columns: Array<ColumnProps<T>>
     rowKey?: string // 每一行的唯一字段的字段名

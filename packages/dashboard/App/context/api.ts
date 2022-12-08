@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 import { delToken, getToken } from './token';
-import { Context } from './index';
+import { Context } from './context';
 
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 

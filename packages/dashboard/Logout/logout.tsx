@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 
-import React, { useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { AppContext } from "@dashboard/App/context";
-import { delToken } from "@dashboard/App/context/token";
-import { useLocale } from "@dashboard/locales";
+import { AppContext } from '@dashboard/App';
+import { delToken } from '@dashboard/App/context/token';
+import { useLocale } from '@dashboard/locales';
 
 /**
  * 注销登录的组件

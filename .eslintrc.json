@@ -43,6 +43,17 @@
         "indent": [
             "error",
             4
+        ],
+        "comma-spacing": [
+            "warn",
+            {
+                "before": false,
+                "after": true
+            }
+        ],
+        "curly": [
+            "error",
+            "all"
         ]
     }
 }

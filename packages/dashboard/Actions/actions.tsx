@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 
-import React, { ReactNode } from "react";
-import { IconMore } from "@douyinfe/semi-icons";
-import { Dropdown, Button } from "@douyinfe/semi-ui";
+import React, { ReactNode } from 'react';
+import { IconMore } from '@douyinfe/semi-icons';
+import { Dropdown, Button } from '@douyinfe/semi-ui';
 
-export interface Props {
+interface Props {
     /**
      * 次要的操作
      *

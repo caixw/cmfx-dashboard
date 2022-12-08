@@ -2,13 +2,13 @@
 
 import React, { CSSProperties, useContext, useEffect, useState } from 'react';
 import {Button, Typography, Avatar, Card, Form } from '@douyinfe/semi-ui';
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from 'react-router-dom';
 import { IconSetting, IconExit } from '@douyinfe/semi-icons';
 
 import { Locale, LocaleConsumer } from '@dashboard/locales';
 import { AsyncForm } from '@dashboard/AsyncForm';
 import { AppSetting } from '@dashboard/AppSetting';
-import { AppContext, Context } from '@dashboard/App/context';
+import { AppContext, Context } from '@dashboard/App';
 import { Token, writeToken } from '@dashboard/App/context/token';
 
 interface Account {

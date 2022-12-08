@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 
-import React, { useContext } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import React, { useContext } from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
 
-import { AppContext } from "./index";
+import { AppContext } from './context';
 
 const tokenName = 'cmfx_token';
 const s = window.localStorage;

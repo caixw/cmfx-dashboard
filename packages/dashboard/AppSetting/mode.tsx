@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 import React, { useState } from 'react';
-import { Radio, RadioGroup } from "@douyinfe/semi-ui";
+import { Radio, RadioGroup } from '@douyinfe/semi-ui';
 import { RadioChangeEvent } from '@douyinfe/semi-ui/lib/es/radio';
 
 import { Locale, LocaleConsumer } from '@dashboard/locales';

@@ -1,15 +1,14 @@
 // SPDX-License-Identifier: MIT
 
-import React, { useContext } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Button, Divider, Form } from "@douyinfe/semi-ui";
+import React, { useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Button, Divider, Form } from '@douyinfe/semi-ui';
 
-import { AppContext } from "@dashboard/App/context";
-import { useLocale } from "@dashboard/locales";
-import { AsyncForm } from "@dashboard/AsyncForm";
-import { AsyncFormSelect } from "@dashboard/AsyncSelect";
-import { mapToSelectOptions } from "@dashboard/utils";
-import { Return } from "@dashboard/App/context/api";
+import { AppContext, Return } from '@dashboard/App';
+import { useLocale } from '@dashboard/locales';
+import { AsyncForm } from '@dashboard/AsyncForm';
+import { AsyncFormSelect } from '@dashboard/AsyncSelect';
+import { mapToSelectOptions } from '@dashboard/utils';
 
 import { Admin, getSexes, getStates, loadGroupsSelectOptions } from './types';
 

@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { ConfigProvider } from '@douyinfe/semi-ui';
 import { createHashRouter, RouterProvider, Outlet, RouteObject } from 'react-router-dom';
 
-import { init } from "@dashboard/AppSetting";
-import { getLocaleCode, getLocale } from "@dashboard/locales";
+import { init } from '@dashboard/AppSetting';
+import { getLocaleCode, getLocale } from '@dashboard/locales/locales';
 
 import { Context, AppContext, ContextOptions } from "./context";
 import { buildOptions, Options } from './options';

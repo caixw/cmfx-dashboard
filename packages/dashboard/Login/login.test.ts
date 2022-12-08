@@ -2,7 +2,7 @@
 
 import {describe, expect, test} from 'vitest';
 
-import { nextPage } from './index';
+import { nextPage } from './login';
 
 describe('nextPage', ()=>{
     test('空 search', ()=>{

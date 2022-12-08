@@ -5,7 +5,7 @@ import { Radio, RadioGroup } from '@douyinfe/semi-ui';
 import { RadioChangeEvent } from '@douyinfe/semi-ui/lib/es/radio';
 
 import { useLocale, locales } from '@dashboard/locales';
-import { AppContext } from '@dashboard/App/context';
+import { AppContext } from '@dashboard/App';
 
 export function LocaleSelectorUI() {
     const l = useLocale();

@@ -1,18 +1,18 @@
 // SPDX-License-Identifier: MIT
 
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from 'react';
 import { Nav, Layout as SLayout, Button, Breadcrumb, Dropdown, BackTop } from '@douyinfe/semi-ui';
-import { IconSetting, IconMaximize, IconMinimize, IconUserCircle } from "@douyinfe/semi-icons";
+import { IconSetting, IconMaximize, IconMinimize, IconUserCircle } from '@douyinfe/semi-icons';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { Route } from "@douyinfe/semi-foundation/lib/es/breadcrumb/itemFoundation";
+import { Route } from '@douyinfe/semi-foundation/lib/es/breadcrumb/itemFoundation';
 
-import { AppSetting } from "@dashboard/AppSetting";
-import { Locale, LocaleConsumer } from "@dashboard/locales";
+import { AppSetting } from '@dashboard/AppSetting';
+import { Locale, LocaleConsumer } from '@dashboard/locales';
 
-import { AppContext } from "./context";
-import { buildUserMenus, UserDropdownMenuItem } from "./options/menu";
+import { AppContext } from './context';
+import { buildUserMenus, UserDropdownMenuItem } from './options';
 import { Admin, getInfo } from './admin';
-import { Aside } from "./aside";
+import { Aside } from './aside';
 
 /**
  * 已登录页面的布局样式

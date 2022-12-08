@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 
-import { ConfirmButton } from "@dashboard/ConfirmButton";
-import { AppContext } from "@dashboard/App/context";
-import { Locale } from "@dashboard/locales";
+import { ConfirmButton } from '@dashboard/ConfirmButton';
+import { AppContext } from '@dashboard/App';
+import { Locale } from '@dashboard/locales';
 
 interface DeleteProps {
     locale: Locale

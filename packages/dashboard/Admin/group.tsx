@@ -3,21 +3,38 @@
 import React, { useContext, useRef, useState } from 'react';
 import { Button, Form, Modal } from '@douyinfe/semi-ui';
 import { FormApi } from '@douyinfe/semi-ui/lib/es/form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, RouteObject } from 'react-router-dom';
 
-import { AsyncTable, ColumnProps, Ref as AsyncTableRef } from '@dashboard/AsyncTable';
-import { DeleteAction } from '@dashboard/AsyncTable/actions';
-import { AppContext } from '@dashboard/App/context';
+import { AsyncTable, ColumnProps, AsyncTableRef, DeleteAction } from '@dashboard/AsyncTable';
+import { AppContext, Return } from '@dashboard/App';
 import { useLocale } from '@dashboard/locales';
-import { Return } from '@dashboard/App/context/api';
 import { Actions } from '@dashboard/Actions';
 
 import { Group } from './types';
+import { GroupAccess } from './access';
+
+
+/**
+ * 返回与权限操作相关的路由设定
+ * @param path 该系列路由的根路径
+ */
+export function GroupsRoute(path: string): Array<RouteObject> {
+    return [
+        {
+            path: path,
+            element: <Groups />
+        },
+        {
+            path: path+'/:id/access',
+            element: <GroupAccess />
+        }
+    ];
+}
 
 /**
  * 权限组列表
  */
-export function Groups(): JSX.Element {
+function Groups(): JSX.Element {
     const loc = useLocale();
     const ctx = useContext(AppContext);
     const [g, setG] = useState<Group>({ id:0, name: '', description: '' });

@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: MIT
 
-import React from "react";
-import { AsyncTable } from "@dashboard/AsyncTable";
-import { ColumnProps } from "@douyinfe/semi-ui/lib/es/table";
+import React from 'react';
 
-import { useLocale } from "@dashboard/locales";
+import { AsyncTable, ColumnProps } from '@dashboard/AsyncTable';
+import { useLocale } from '@dashboard/locales';
 
-export interface Props {
+interface Props {
     url: string
 }
 

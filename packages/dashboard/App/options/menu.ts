@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { get } from 'lodash-es';
-import { Route } from "@douyinfe/semi-foundation/lib/es/breadcrumb/itemFoundation";
+import { Route } from '@douyinfe/semi-foundation/lib/es/breadcrumb/itemFoundation';
 import { DropDownMenuItem } from '@douyinfe/semi-ui/lib/es/dropdown';
 
 import { Locale } from '@dashboard/locales';
