@@ -4,20 +4,19 @@ import React from "react";
 import {
     IconPrint, IconRefresh, IconLineHeight, IconAlignJustify, IconAlignLeft, IconAlignRight, IconAlignCenter
 } from "@douyinfe/semi-icons";
-import { ColumnProps } from "@douyinfe/semi-ui/lib/es/table";
+import { ColumnProps, Size } from "@douyinfe/semi-ui/lib/es/table";
 import { Button, ButtonGroup, Dropdown, Popover, Tooltip } from "@douyinfe/semi-ui";
 import { DropDownMenuItem } from '@douyinfe/semi-ui/lib/es/dropdown';
 
 import { ObjectType } from "@dashboard/utils";
 import { useLocale } from '@dashboard/locales';
-import { LineHeight } from './index';
 
 interface Props<T extends ObjectType> {
     reload: ()=> void
     print: ()=> void
 
-    setLineHeight: (size: LineHeight)=> void
-    lineHeight: LineHeight
+    setLineHeight: (size: Size)=> void
+    lineHeight: Size
 
     stripeNumber: number
     setStrip: (n: number)=> void

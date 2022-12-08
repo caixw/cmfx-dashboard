@@ -23,8 +23,6 @@ export const zhTW = {
         edit: '編輯',
         female_sex: '女',
         ip: 'IP',
-        left_state: '離職',
-        locked_state: '鎖定',
         login: '登錄',
         logout: '退出',
         male_sex: '男',
@@ -32,7 +30,6 @@ export const zhTW = {
         nickname: '昵稱',
         new: '新建',
         no: '否',
-        normal_state: '正常',
         password: '密碼',
         print: '打印',
         refresh: '刷新',
@@ -53,13 +50,17 @@ export const zhTW = {
 
     admin : {
         permission: '權限',
-        group: '權限組'
+        group: '權限組',
+        super_tooltip: '超級管理員',
+        left_state: '離職',
+        locked_state: '鎖定',
+        normal_state: '正常'
     },
 
-    errorPage: {
+    errors: {
+        unknown_error: '未知錯誤',
         back_home: '返回首頁',
         back_prev_page: '返回上一頁',
-        super_tooltip: '超級管理員'
     },
 
     paging: {

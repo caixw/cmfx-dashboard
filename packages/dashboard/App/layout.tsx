@@ -5,10 +5,10 @@ import { Nav, Layout as SLayout, Button, Breadcrumb, Dropdown, BackTop } from '@
 import { IconSetting, IconMaximize, IconMinimize, IconUserCircle } from "@douyinfe/semi-icons";
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Route } from "@douyinfe/semi-foundation/lib/es/breadcrumb/itemFoundation";
-import { ErrorBoundary } from 'react-error-boundary';
 
 import { AppSetting } from "@dashboard/AppSetting";
 import { Locale, LocaleConsumer } from "@dashboard/locales";
+
 import { AppContext } from "./context";
 import { buildUserMenus, UserDropdownMenuItem } from "./options/menu";
 import { Admin, getInfo } from './admin';
@@ -71,9 +71,7 @@ export function Layout(): JSX.Element {
 
                 <SLayout.Content style={{overflowY: 'scroll'}}>
                     <div style={{padding: '16px'}} id='__main'>
-                        <ErrorBoundary FallbackComponent={ErrorFallback}>
-                            <Outlet />
-                        </ErrorBoundary>
+                        <Outlet />
                     </div>
 
                     <BackTop className="no-print"
@@ -85,14 +83,6 @@ export function Layout(): JSX.Element {
         </SLayout>
         <AppSetting visible={visible} onCancel={()=>setVisible(false)} />
     </>;
-}
-
-function ErrorFallback(props: {error: Error, resetErrorBoundary: (...args: Array<unknown>) => void}): JSX.Element {
-    return <div role="alert">
-        <pre>{props.error.message}</pre>
-        <br />
-        <pre>{props.error.stack}</pre>
-    </div>;
 }
 
 export function Fullscreen(): JSX.Element {

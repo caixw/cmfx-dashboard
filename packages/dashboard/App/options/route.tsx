@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 
+import React from 'react';
 import { RouteObject } from 'react-router-dom';
+
+export type { RouteObject };
 
 export function checkRoutes(parent: string, keys: Array<string>, routes: Array<RouteObject>) {
     for(const r of routes) {
@@ -23,3 +26,4 @@ export function checkRoutes(parent: string, keys: Array<string>, routes: Array<R
         }
     }
 }
+

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { ColumnProps, RowSelectionProps } from "@douyinfe/semi-ui/lib/es/table";
+import { ColumnProps, RowSelectionProps, Size } from "@douyinfe/semi-ui/lib/es/table";
 import { Button, Form, Spin, Divider, Table } from "@douyinfe/semi-ui";
 import { useReactToPrint } from 'react-to-print';
 import { useLocation, useSearchParams } from "react-router-dom";
@@ -10,12 +10,11 @@ import { AppContext } from "@dashboard/App/context";
 import { LocaleConsumer } from "@dashboard/locales";
 import { Locale } from "@dashboard/locales";
 import { ObjectType } from '@dashboard/utils';
+
 import { Page, encodeQuery, parseQueryForClient } from "./types";
 import { Toolbar } from "./toolbar";
 
 export type { ColumnProps };
-
-export type LineHeight = 'default'|'middle'|'small';
 
 export interface Props<T extends ObjectType> {
     url: string // 表格数据请求的地址
@@ -53,7 +52,7 @@ function AsyncTableInner<T extends ObjectType>(props: Props<T>, ref: React.Forwa
     const [page, setPage] = useState(q.page);
     const [size, setSize] = useState(q.size);
     const [total, setTotal] = useState(0);
-    const [lineHeight, setLineHeight] = useState<LineHeight>('default');
+    const [lineHeight, setLineHeight] = useState<Size>('default');
     const [strip, setStrip] = useState(0);
     const [columns, setColumns] = useState(props.columns);
     const [, setSearch] = useSearchParams(loc.search);
@@ -154,7 +153,7 @@ function AsyncTableInner<T extends ObjectType>(props: Props<T>, ref: React.Forwa
                     stripeNumber={strip}
                     setStrip={(n: number)=>{setStrip(n);}}
                     lineHeight={lineHeight}
-                    setLineHeight={(s: LineHeight)=>setLineHeight((s))}
+                    setLineHeight={(s: Size)=>setLineHeight((s))}
                     print={useReactToPrint({content:()=>printable.current, documentTitle: ctx.title})} />
             </div>
         </div>

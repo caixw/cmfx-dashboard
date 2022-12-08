@@ -2,12 +2,14 @@
 
 import React, { useState } from "react";
 import { ConfigProvider } from '@douyinfe/semi-ui';
-import { createHashRouter, RouterProvider, Outlet } from 'react-router-dom';
+import { createHashRouter, RouterProvider, Outlet, RouteObject } from 'react-router-dom';
 
 import { init } from "@dashboard/AppSetting";
 import { getLocaleCode, getLocale } from "@dashboard/locales";
+
 import { Context, AppContext, ContextOptions } from "./context";
 import { buildOptions, Options } from './options';
+import { ErrorBoundary } from './errors';
 
 function Wrapper(props: {options: Required<ContextOptions>}) {
     const [locale, setLocale] = useState(getLocale(getLocaleCode()));
@@ -39,6 +41,19 @@ export function App(props: {options: Options}): JSX.Element {
             children: o.routes
         }
     ];
+    buildRoutes(routes);
     const router = createHashRouter(routes);
     return <RouterProvider router={router} />;
+}
+
+function buildRoutes(routes: Array<RouteObject>) {
+    routes.forEach((r)=>{
+        if (r.errorElement) {
+            return;
+        }
+        r.errorElement = <ErrorBoundary />;
+        if (r.children && r.children.length > 0) {
+            buildRoutes(r.children);
+        }
+    });
 }

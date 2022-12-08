@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: MIT
 
-import { RouteObject } from 'react-router-dom';
-
 import { MenuItem, UserMenuItem } from './menu';
-import { checkRoutes } from './route';
+import { checkRoutes, RouteObject } from './route';
 
 /**
  * 初始化应用的选项

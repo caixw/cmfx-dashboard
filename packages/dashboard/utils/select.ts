@@ -2,7 +2,7 @@
 
 import { OptionProps } from "@douyinfe/semi-ui/lib/es/select";
 
-import { ObjectType } from "./object";
+import { ObjectType } from "./types";
 
 /**
  * 将 Map<string|number, string> 转换成 Select.optionList 可接受的类型

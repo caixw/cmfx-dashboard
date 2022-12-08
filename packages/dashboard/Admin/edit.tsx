@@ -9,8 +9,9 @@ import { useLocale } from "@dashboard/locales";
 import { AsyncForm } from "@dashboard/AsyncForm";
 import { AsyncFormSelect } from "@dashboard/AsyncSelect";
 import { mapToSelectOptions } from "@dashboard/utils";
-import { Admin, getSexes, getStates, loadGroupsSelectOptions } from './types';
 import { Return } from "@dashboard/App/context/api";
+
+import { Admin, getSexes, getStates, loadGroupsSelectOptions } from './types';
 
 export function Edit() {
     const ctx = useContext(AppContext);

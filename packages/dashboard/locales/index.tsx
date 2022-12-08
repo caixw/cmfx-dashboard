@@ -6,6 +6,7 @@ import zh_CN from '@douyinfe/semi-ui/lib/es/locale/source/zh_CN';
 import zh_TW from '@douyinfe/semi-ui/lib/es/locale/source/zh_TW';
 
 import { ObjectType } from '@dashboard/utils';
+
 import { zhCN } from './zh_CN';
 import { zhTW } from './zh_TW';
 
@@ -16,7 +17,7 @@ export interface Locale<T extends ObjectType = any> {
     locale: Item
     common: Item // 一些通用的本地化内容
     admin: Item
-    errorPage: Item
+    errors: Item
     paging: Item
     appSetting: Item
 

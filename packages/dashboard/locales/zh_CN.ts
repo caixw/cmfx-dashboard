@@ -23,8 +23,6 @@ export const zhCN = {
         edit: '编辑',
         female_sex: '女',
         ip: 'IP',
-        left_state: '离职',
-        locked_state: '锁定',
         login: '登录',
         logout: '退出',
         male_sex: '男',
@@ -32,7 +30,6 @@ export const zhCN = {
         nickname: '昵称',
         new: '新建',
         no: '否',
-        normal_state: '正常',
         password: '密码',
         print: '打印',
         refresh: '刷新',
@@ -54,10 +51,14 @@ export const zhCN = {
     admin : {
         permission: '权限',
         group: '权限组',
-        super_tooltip: '超级管理员'
+        super_tooltip: '超级管理员',
+        left_state: '离职',
+        locked_state: '锁定',
+        normal_state: '正常'
     },
 
-    errorPage: {
+    errors: {
+        unknown_error: '未知错误',
         back_home: '返回首页',
         back_prev_page: '返回上一页',
     },

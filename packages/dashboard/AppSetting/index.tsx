@@ -6,6 +6,7 @@ import { IconDuration, IconColorPalette, IconLanguage } from '@douyinfe/semi-ico
 import { SideSheetProps } from '@douyinfe/semi-foundation/lib/es/sideSheet/sideSheetFoundation';
 
 import { LocaleConsumer, Locale } from '@dashboard/locales';
+
 import { LocaleSelectorUI } from './locale';
 import { ModeSelectorUI, initThemeMode } from './mode';
 import { ThemeSelectorUI, initTheme } from './theme';

@@ -30,9 +30,9 @@ export function getSexes(l: Locale): Map<Sex, string> {
 
 export function getStates(l: Locale): Map<string, string> {
     return new Map<string, string>([
-        ['normal', l.common.normal_state],
-        ['locked', l.common.locked_state],
-        ['left', l.common.left_state],
+        ['normal', l.admin.normal_state],
+        ['locked', l.admin.locked_state],
+        ['left', l.admin.left_state],
     ]);
 }
 

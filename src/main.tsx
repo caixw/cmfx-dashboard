@@ -3,11 +3,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {
-    IconAlertCircle, IconAscend, IconButtonStroked, IconGridSquare, IconHome, IconUserGroup
+    IconAlertCircle, IconAscend, IconButtonStroked,
+    IconGridSquare, IconHome, IconUserGroup
 } from '@douyinfe/semi-icons';
 
 import {
-    UnauthRoute, AuthRoute, Options, ErrorPage, Locale,
+    UnauthRoute, AuthRoute, Options, Locale,
     App, Layout, Login, Logout, install, SecurityLog, LocaleConsumer,
     AdminsRoute, GroupsRoute
 } from 'cmfx-dashboard';
@@ -16,7 +17,7 @@ import 'cmfx-dashboard/style.css';
 import { Home } from './demo/Home';
 import { ButtonsDemo } from './demo/Buttons';
 import { PagingDemo, TableDemo } from './demo/AsyncTable';
-import { ErrorBoundaryDemo } from './demo/ErrorBoundary';
+import { ResponseErrorDemo, ErrorDemo, StringErrorDemo } from './demo/Errors';
 import { AsyncFormDemo } from './demo/AsyncForm';
 import Logo from '@/assets/react.svg';
 // import BG from '@/assets/login-bg.svg';
@@ -67,53 +68,57 @@ const options: Options = {
             element: <AuthRoute><Layout /></AuthRoute>,
             children: [
                 {
-                    path: 'error-boundary',
-                    element: <ErrorBoundaryDemo />
-                },
-                {
-                    path: 'logout',
+                    path: '/logout',
                     element: <Logout />
                 },
                 {
-                    path: 'home',
+                    path: '/home',
                     element: <Home />
                 },
                 {
-                    path: 'error-page-403',
-                    element: <ErrorPage code={403} />
-                },
-                {
-                    path: 'buttons',
+                    path: '/buttons',
                     element: <ButtonsDemo />
                 },
                 {
-                    path: 'async-form',
+                    path: '/async-form',
                     element: <AsyncFormDemo />
                 },
                 {
-                    path: 'security-log',
+                    path: '/security-log',
                     element: <SecurityLog url='/security-log' />
                 },
 
                 // 分页
 
                 {
-                    path: 'paging',
+                    path: '/paging',
                     element: <PagingDemo />
                 },
                 {
-                    path: 'table',
+                    path: '/table',
                     element: <TableDemo />
                 },
 
                 // error page
 
                 {
-                    path: 'error-page-404',
+                    path: '/error',
+                    element: <ErrorDemo />
+                },
+                {
+                    path: '/error-string',
+                    element: <StringErrorDemo />
+                },
+                {
+                    path: '/error-403',
+                    element: <ResponseErrorDemo status={403} title='403' />
+                },
+                {
+                    path: '/error-404',
                     element: <LocaleConsumer>
                         {
                             (l: Locale<CustomType>)=>{
-                                return <ErrorPage code={404} title={l.custom.demo.errpage.p404} />;
+                                return <ResponseErrorDemo status={403} title={l.custom.demo.errpage.p404} />;
                             }
                         }
                     </LocaleConsumer>
@@ -121,19 +126,8 @@ const options: Options = {
 
                 // admins
 
-                {
-                    path: 'groups',
-                    element: <Groups />
-                },
-                {
-                    path: 'admins',
-                    element: <TODO />
-                },
-
-                // admins
-
-                ...GroupsRoute('groups'),
-                ...AdminsRoute('admins'),
+                ...GroupsRoute('/groups'),
+                ...AdminsRoute('/admins'),
             ]
         },
     ],
@@ -156,7 +150,7 @@ const options: Options = {
         },
 
         {
-            itemKey: '/admin-groups',
+            itemKey: '/admin-demo',
             textKey: '管理员',
             icon: <IconUserGroup />,
             items: [
@@ -173,28 +167,32 @@ const options: Options = {
 
 
         {
-            itemKey: '/error-page',
-            textKey: 'error-page',
+            itemKey: '/error-demo',
+            textKey: '错误页',
             icon: <IconAlertCircle />,
             items: [
                 {
-                    itemKey:  '/error-boundary',
-                    textKey: '错误边界',
+                    itemKey:  '/error',
+                    textKey: 'error',
                 },
                 {
-                    itemKey: '/error-page-404',
+                    itemKey:  '/error-string',
+                    textKey: '字符串错误',
+                },
+                {
+                    itemKey: '/error-404',
                     textKey: '404'
                 },
                 {
-                    itemKey: '/error-page-403',
+                    itemKey: '/error-403',
                     textKey: '403'
                 }
             ]
         },
 
         {
-            itemKey: '/p',
-            textKey: 'table',
+            itemKey: '/table-demo',
+            textKey: '表格',
             icon: <IconAscend />,
             items: [
                 {
