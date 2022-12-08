@@ -6,7 +6,7 @@ export function ErrorDemo(): JSX.Element {
     throw new Error('throw new Error()');
 }
 
-export function ResponseErrorDemo(props: {status: number, title: string}): JSX.Element {
+export function ResponseErrorDemo(props: {status: number, title?: string}): JSX.Element {
     throw new ResponseError(props.status, props.title);
 }
 

@@ -61,6 +61,9 @@ export const zhTW = {
         unknown_error: '未知錯誤',
         back_home: '返回首頁',
         back_prev_page: '返回上一頁',
+        error_403: '當前用戶沒有權限訪問在此頁面，請聯系管理進行處理！',
+        error_404: '你訪問的頁面不存在或是當前處於不可用狀態，請與管理員進行確認！',
+        error_500: '服務器出錯，可稍後再次嘗試'
     },
 
     paging: {

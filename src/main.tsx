@@ -111,13 +111,14 @@ const options: Options = {
                 },
                 {
                     path: '/error-403',
-                    element: <ResponseErrorDemo status={403} title='403' />
+                    element: <ResponseErrorDemo status={403} />
                 },
                 {
                     path: '/error-404',
                     element: <LocaleConsumer>
                         {
                             (l: Locale<CustomType>)=>{
+                                // 翻译后的内容被抛出，所以翻译不起作用！
                                 return <ResponseErrorDemo status={403} title={l.custom.demo.errpage.p404} />;
                             }
                         }

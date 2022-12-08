@@ -61,6 +61,9 @@ export const zhCN = {
         unknown_error: '未知错误',
         back_home: '返回首页',
         back_prev_page: '返回上一页',
+        error_403: '当前用户没有权限访问在此页面，请联系管理进行处理！',
+        error_404: '你访问的页面不存在或是当前处于不可用状态，请与管理员进行确认！',
+        error_500: '服务器出错，可稍后再次尝试'
     },
 
     paging: {
