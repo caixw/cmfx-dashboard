@@ -54,23 +54,22 @@ function createError(l: Locale, title: ReactNode, desc: ReactNode, image?: numbe
     const backPrevPage = ()=>{ nav(-1); };
     const img = illustration(image);
 
-    let s: ReactNode = null;
-    if (stack) {
-        s = <pre style={{marginTop: '30px', whiteSpace: 'pre-wrap'}}>{stack}</pre>;
+    const main = <Empty title={title}
+        style={{maxWidth: '500px', margin: 'auto'}}
+        description={desc}
+        image={img ? img.light : undefined }
+        darkModeImage={img ? img.dark : undefined}
+    >
+        <Button type='primary' onClick={backHome}>{l.errors.back_home}</Button>&#160;&#160;
+        <Button type='primary' onClick={backPrevPage}>{l.errors.back_prev_page}</Button>
+    </Empty>;
+
+    if (!stack || import.meta.env.PROD) {
+        return main;
     }
 
     return <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
-        <Empty title={title}
-            layout='horizontal'
-            description={desc}
-            image={img ? img.light : undefined }
-            darkModeImage={img ? img.dark : undefined}
-        >
-            <div>
-                <Button type='primary' onClick={backHome}>{l.errors.back_home}</Button>&#160;&#160;
-                <Button type='primary' onClick={backPrevPage}>{l.errors.back_prev_page}</Button>
-            </div>
-        </Empty>
-        {s}
+        {main}
+        <pre style={{marginTop: '30px', whiteSpace: 'pre-wrap'}}>{stack}</pre>
     </div>;
 }
