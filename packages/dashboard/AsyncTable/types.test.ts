@@ -28,21 +28,21 @@ describe('encodeQuery', ()=>{
     });
 
     test('数组', ()=>{
-        expect(encodeQuery({'page-sizes': [5,50,100], page: 0})).toEqual('&page-sizes=5,50,100&page=0');
-        expect(encodeQuery({'page-sizes': [5,50,100], page: 0}, true)).toEqual('&page-sizes=[5,50,100]&page=0');
+        expect(encodeQuery({'page-sizes': [5, 50, 100], page: 0})).toEqual('&page-sizes=5,50,100&page=0');
+        expect(encodeQuery({'page-sizes': [5, 50, 100], page: 0}, true)).toEqual('&page-sizes=[5,50,100]&page=0');
     });
 });
 
-describe('parseQueryForclient', ()=>{
+describe('parseQueryForClient', ()=>{
     test("仅 query", ()=>{
-        expect(parseQueryForClient('k1=1&k2=k2', 1, 20)).toEqual({q:{k1:'1', k2:'k2'},page:1, size: 20});
+        expect(parseQueryForClient('k1=1&k2=k2', 1, 20)).toEqual({q:{k1:'1', k2:'k2'}, page:1, size: 20});
     });
 
-    test("query 包含数组格式 1", ()=>{
-        expect(parseQueryForClient('k1=1&k2=[k2,k3]', 1, 20)).toEqual({q:{k1:'1', k2:['k2','k3']},page:1, size: 20});
+    test('query 包含数组格式 1', ()=>{
+        expect(parseQueryForClient('k1=1&k2=[k2,k3]', 1, 20)).toEqual({q:{k1:'1', k2:['k2', 'k3']}, page:1, size: 20});
     });
 
-    test("query 包含 page", ()=>{
-        expect(parseQueryForClient('k1=1&k2=k2&page=101', 1, 20)).toEqual({q:{k1:'1', k2:'k2'},page:101, size: 20});
+    test('query 包含 page', ()=>{
+        expect(parseQueryForClient('k1=1&k2=k2&page=101', 1, 20)).toEqual({q:{k1:'1', k2:'k2'}, page:101, size: 20});
     });
 });

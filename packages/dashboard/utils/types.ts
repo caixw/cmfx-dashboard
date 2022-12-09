@@ -9,4 +9,4 @@ export type ObjectType = Record<string, any>;
 /**
  * 一般用于 key 的类型
  */
-export type KeyType = string | number
+export type IDType = string | number

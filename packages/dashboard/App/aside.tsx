@@ -8,7 +8,7 @@ import { ResponsiveMap } from '@douyinfe/semi-ui/lib/es/layout';
 import { OnSelectedData } from '@douyinfe/semi-ui/lib/es/navigation';
 
 import { useLocale } from '@dashboard/locales';
-import { KeyType } from '@dashboard/utils';
+import { IDType } from '@dashboard/utils';
 
 import { Context } from './context';
 import { buildMenus, findMenuByKey, AdditionalMenuItem, NavMenuItem } from './options';
@@ -20,13 +20,13 @@ export function Aside(props:{ctx: Context, setRoutes: RoutesSetter}): JSX.Elemen
     const loc = useLocation();
     const locale = useLocale();
     const [selectedKeys, setSelectedKeys] = useState<Array<string>>([]);
-    const [openedKeys, setOpenedKeys] = useState<Array<KeyType>>([]);
+    const [openedKeys, setOpenedKeys] = useState<Array<IDType>>([]);
     const [collapsed, setCollapsed] = useState(false);
     const [bodyHeight, setBodyHeight] = useState('100vh');
 
     const menus = buildMenus([], props.ctx.options.menus, locale);
 
-    const opened = (e: {itemKey?: KeyType, openKeys?: Array<KeyType>, domEvent?: MouseEvent, isOpen?: boolean}) => {
+    const opened = (e: {itemKey?: IDType, openKeys?: Array<IDType>, domEvent?: MouseEvent, isOpen?: boolean}) => {
         if (!e.itemKey) {
             return;
         }
