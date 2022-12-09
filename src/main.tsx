@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {
     IconAlertCircle, IconAscend, IconButtonStroked,
+    IconEdit,
     IconGridSquare, IconHome, IconUserGroup
 } from '@douyinfe/semi-icons';
 
@@ -19,6 +20,7 @@ import { ButtonsDemo } from './demo/Buttons';
 import { PagingDemo, TableDemo } from './demo/AsyncTable';
 import { ResponseErrorDemo, ErrorDemo, StringErrorDemo } from './demo/Errors';
 import { AsyncFormDemo } from './demo/AsyncForm';
+import { WysiwygDemo } from './demo/Editor';
 import Logo from '@/assets/react.svg';
 // import BG from '@/assets/login-bg.svg';
 import { mock } from './mock';
@@ -125,6 +127,12 @@ const options: Options = {
                     </LocaleConsumer>
                 },
 
+                // editor
+                {
+                    path: 'editor-wysiwyg',
+                    element: <WysiwygDemo />
+                },
+
                 // admins
 
                 ...GroupsRoute('/groups'),
@@ -148,6 +156,18 @@ const options: Options = {
             itemKey: '/async-form',
             textKey: 'async-form',
             icon: <IconGridSquare />
+        },
+
+        {
+            itemKey: '/editor-demo',
+            textKey: '编辑器',
+            icon: <IconEdit />,
+            items: [
+                {
+                    itemKey: 'editor-wysiwyg',
+                    textKey: 'WYSIWYG'
+                }
+            ]
         },
 
         {

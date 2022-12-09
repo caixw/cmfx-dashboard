@@ -23,3 +23,22 @@ body {
         display: none !important;
     }
 }
+
+/* 以下为了让 quill 支持 dark 模式 */
+
+.ql-picker {
+    color: var(--semi-color-text-0) !important;
+}
+
+.ql-fill {
+    fill: var(--semi-color-text-0) !important;
+}
+
+.ql-stroke {
+    stroke: var(--semi-color-text-0) !important;
+}
+
+.ql-picker-options {
+    background-color: var(--semi-color-bg-2) !important;
+    border-color: var(--semi-color-bg-2) !important;
+}

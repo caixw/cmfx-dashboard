@@ -10,6 +10,7 @@ export * from './AsyncForm';
 export * from './AsyncSelect';
 export * from './AsyncTable';
 export * from './ConfirmButton';
+export * from './Editor';
 export * from './Login';
 export * from './Logout';
 export * from './locales';
