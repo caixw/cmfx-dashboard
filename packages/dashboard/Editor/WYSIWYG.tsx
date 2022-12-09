@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
-import React, { CSSProperties } from 'react';
+import { withField } from '@douyinfe/semi-ui';
+import React, { CSSProperties, ReactNode } from 'react';
 import ReactQuill, { ReactQuillProps } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -11,7 +12,26 @@ type Props = Pick<ReactQuillProps, 'onChange' | 'value' | 'placeholder'> & {
      * 如果是数值类型，则默认其单位为 px。
      */
     height?: string | number
+
+    /**
+     * 内联的标题，如果不为空将出现在 toolbar 最左侧。
+     */
+    insetLabel?: ReactNode
+
+    /**
+     * 唯一 ID，必填，当一个页面有多个编辑器时，采用此值进行区分。
+     */
+    id: string
 };
+
+/**
+ * 内嵌于 Form 的编辑器
+ */
+export const FormWYSIWYG = withField(WYSIWYG, {
+    valueKey: 'value',
+    onKeyChangeFnName: 'onChange',
+    valuePath: 'target.value',
+});
 
 /**
  * 所见即所得的在线编辑器
@@ -19,14 +39,14 @@ type Props = Pick<ReactQuillProps, 'onChange' | 'value' | 'placeholder'> & {
  * 如果要设置高度，可直接通过 style 属性进行设置。
  */
 export function WYSIWYG(props: Props): JSX.Element {
-    const id = 'toolbar-container';
+    const toolbarID = props.id + '-toolbar';
     const modules = {
-        toolbar: { container: '#'+id }
+        toolbar: { container: '#'+toolbarID }
     };
 
-    const {height, ...p} = props;
-    return <div>
-        {createToolbar(id)}
+    const {height, insetLabel, ...p} = props;
+    return <div id={props.id}>
+        {createToolbar(toolbarID, insetLabel)}
         <ReactQuill {...p} modules={modules} style={getStyle(height)} />
     </div>;
 }
@@ -40,10 +60,10 @@ export function getStyle(height?: number | string): CSSProperties | undefined {
     }
 }
 
-function createToolbar(id: string): JSX.Element {
+function createToolbar(id: string, label?: ReactNode): JSX.Element {
     return <div id={id}>
         <span className="ql-formats label">
-            <span>TODO</span>
+            <span>{label}</span>
         </span>
         <span className="ql-formats">
             <select className="ql-font"></select>

@@ -1,3 +1,3 @@
 // SPDX-License-Identifier: MIT
 
-export { WYSIWYG } from './WYSIWYG';
+export { WYSIWYG, FormWYSIWYG } from './WYSIWYG';
