@@ -58,7 +58,9 @@ function now(): number {
 }
 
 /**
- * 指定该组件不需要经过登录验证即可访问
+ * 指定不需要验证的情况下才可访问的页面
+ *
+ * NOTE: 若已登录则会跳转至配置项中指定的首页
  */
 export function UnauthRoute(props: {children: JSX.Element}): JSX.Element {
     if (!getToken()) { // 未登录
@@ -71,6 +73,8 @@ export function UnauthRoute(props: {children: JSX.Element}): JSX.Element {
 
 /**
  * 指定需要登录验证才能访问的页面
+ *
+ * NOTE: 若未登录则会跳转至配置项中指定的登录页
  */
 export function AuthRoute(props: {children: JSX.Element}): JSX.Element {
     if (getToken()) { // 已登录
