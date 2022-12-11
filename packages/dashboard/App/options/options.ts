@@ -13,11 +13,11 @@ export interface Options {
     logo: string // 应用图标，显示在左侧菜单栏顶部。
     titleSeparator?: string // 标题与子标题之间的分隔符，默认为 |
     pageSizes?: Array<number>
-    loginBG?: string // 登录页的背景
 
     // 登录页和登录后的默认页地址
     loginPath: string
     homePath: string
+    loginBG?: string // 登录页的背景
 
     routes: Array<RouteObject> // 各类路由的定义
     menus: Array<MenuItem> // 菜单栏的定义

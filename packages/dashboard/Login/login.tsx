@@ -5,7 +5,7 @@ import {Button, Typography, Avatar, Card, Form } from '@douyinfe/semi-ui';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IconSetting, IconExit } from '@douyinfe/semi-icons';
 
-import { Locale, LocaleConsumer } from '@dashboard/locales';
+import { useLocale } from '@dashboard/locales';
 import { AsyncForm } from '@dashboard/AsyncForm';
 import { AppSetting } from '@dashboard/AppSetting';
 import { AppContext, Context } from '@dashboard/App';
@@ -32,22 +32,19 @@ export function Login(props: {footer?: React.ReactNode}): JSX.Element {
 
     return <div style={style}>
         <div style={{display: 'flex', justifyContent: 'space-around'}}>
-            <LocaleConsumer>
-                {
-                    (locale:  Locale) => { return <SubmitForm locale={locale} ctx={ctx} footer={props.footer} />; }
-                }
-            </LocaleConsumer>
+            <SubmitForm ctx={ctx} footer={props.footer} />
         </div>
     </div>;
 }
 
-function SubmitForm(props: {locale: Locale, ctx: Context, footer?: React.ReactNode}) {
+function SubmitForm(props: {ctx: Context, footer?: React.ReactNode}) {
     const [visible, setVisible] = useState(false);
     const nav = useNavigate();
     const loc = useLocation();
+    const locale = useLocale();
 
     useEffect(()=>{
-        props.ctx.title = props.locale.common.login;
+        props.ctx.title = locale.common.login;
     });
 
     const submit = async (value: Account) => {
@@ -75,8 +72,8 @@ function SubmitForm(props: {locale: Locale, ctx: Context, footer?: React.ReactNo
         }
     >
         <AsyncForm labelPosition='inset' initValues={{}} onSubmit={submit}>
-            <Form.Input size='large' field='username' label={props.locale.common.username} />
-            <Form.Input size='large' field='password' label={props.locale.common.password} mode='password' />
+            <Form.Input size='large' field='username' label={locale.common.username} />
+            <Form.Input size='large' field='password' label={locale.common.password} mode='password' />
             <Button
                 style={{marginTop: '20px'}}
                 block
@@ -85,7 +82,7 @@ function SubmitForm(props: {locale: Locale, ctx: Context, footer?: React.ReactNo
                 htmlType='submit'
                 icon={<IconExit />}
                 iconPosition='right'
-            >{props.locale.common.login}</Button>
+            >{locale.common.login}</Button>
         </AsyncForm>
         <AppSetting visible={visible} onCancel={()=>setVisible(false)} />
     </Card>;
