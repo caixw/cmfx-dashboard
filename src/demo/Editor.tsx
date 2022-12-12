@@ -17,6 +17,11 @@ export function WysiwygDemo(): JSX.Element {
         <br />
         <WYSIWYG value={v} onChange={(v)=>sv(v)} height={200} id='editor2' insetLabel='insetLabel' />
 
+        <br />
+        <Divider>readonly</Divider>
+        <br />
+        <WYSIWYG readOnly value={v} onChange={(v)=>sv(v)} height={200} id='editor2-2' insetLabel='insetLabel' />
+
 
         <br />
         <Divider>form+insetLabel</Divider>

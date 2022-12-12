@@ -5,7 +5,7 @@ import React, { CSSProperties, ReactNode } from 'react';
 import ReactQuill, { ReactQuillProps } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-type Props = Pick<ReactQuillProps, 'onChange' | 'value' | 'placeholder'> & {
+type Props = Pick<ReactQuillProps, 'onChange' | 'value' | 'placeholder' | 'readOnly'> & {
     /**
      * 编辑器的高度
      *
