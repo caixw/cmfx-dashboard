@@ -10,8 +10,8 @@ import {
 
 import {
     UnauthRoute, AuthRoute, Options, Locale,
-    App, Layout, Login, Logout, install, SecurityLog, LocaleConsumer,
-    AdminsRoute, GroupsRoute
+    App, Layout, Logout, install, SecurityLog, LocaleConsumer,
+    AdminsRoute, GroupsRoute,
 } from 'cmfx-dashboard';
 import 'cmfx-dashboard/style.css';
 
@@ -21,6 +21,7 @@ import { PagingDemo, TableDemo } from './demo/AsyncTable';
 import { ResponseErrorDemo, ErrorDemo, StringErrorDemo } from './demo/Errors';
 import { AsyncFormDemo } from './demo/AsyncForm';
 import { WysiwygDemo } from './demo/Editor';
+import { LoginDemo } from './demo/Login';
 import Logo from '@/assets/react.svg';
 // import BG from '@/assets/login-bg.svg';
 import { mock } from './mock';
@@ -63,7 +64,7 @@ const options: Options = {
     routes: [
         {
             path: 'login',
-            element: <UnauthRoute><Login footer={<div>&copy; by caixw</div>} /></UnauthRoute>
+            element: <UnauthRoute><LoginDemo /></UnauthRoute>
         },
         {
             path: '/',

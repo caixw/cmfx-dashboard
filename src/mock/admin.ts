@@ -75,7 +75,7 @@ export function adminMock() {
         return 204;
     }, {delay: 500});
 
-    fetchMock.put('express:/admin/groups/:id',(url, opt) => {
+    fetchMock.put('express:/admin/groups/:id', (url, opt) => {
         const id = getID(url);
         console.debug('put', url, id);
         const index = groups.findIndex((v)=>{return v.id === id;});
@@ -124,7 +124,7 @@ export function adminMock() {
         return 204;
     }, {delay: 500});
 
-    fetchMock.patch('express:/admin/admins/:id',(url, opt) => {
+    fetchMock.patch('express:/admin/admins/:id', (url, opt) => {
         const id = getID(url);
         console.debug('patch', url, opt.body);
         const index = admins.findIndex((v)=>{return v.id === id;});

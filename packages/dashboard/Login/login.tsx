@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-import React, { CSSProperties, useContext, useEffect, useState } from 'react';
+import React, { ReactNode, useContext, useEffect, useState } from 'react';
 import {Button, Typography, Avatar, Card, Form } from '@douyinfe/semi-ui';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IconSetting, IconExit } from '@douyinfe/semi-icons';
@@ -8,7 +8,7 @@ import { IconSetting, IconExit } from '@douyinfe/semi-icons';
 import { useLocale } from '@dashboard/locales';
 import { AsyncForm } from '@dashboard/AsyncForm';
 import { AppSetting } from '@dashboard/AppSetting';
-import { AppContext, Context } from '@dashboard/App';
+import { AppContext } from '@dashboard/App';
 import { Token, writeToken } from '@dashboard/App/context/token';
 
 interface Account {
@@ -16,56 +16,56 @@ interface Account {
     password?: string
 }
 
+interface Props {
+    children?: ReactNode
+
+    /**
+     * 登录框父容器的 CSS 类名
+     *
+     * 默认采用 `login__container`，该类定义于 style.css
+     */
+    className?: string
+}
+
 /**
  * 登录页面组件
  */
-export function Login(props: {footer?: React.ReactNode}): JSX.Element {
-    const ctx = useContext(AppContext);
-    const style: CSSProperties = {
-        height: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-        backgroundSize: 'cover',
-        backgroundImage: `url('${ctx.options.loginBG}')`
-    };
-
-    return <div style={style}>
-        <div style={{display: 'flex', justifyContent: 'space-around'}}>
-            <SubmitForm ctx={ctx} footer={props.footer} />
-        </div>
+export function Login({children = undefined, className = 'login__container'}: Props): JSX.Element {
+    return <div className={className }>
+        {createSubmitForm(children)}
     </div>;
 }
 
-function SubmitForm(props: {ctx: Context, footer?: React.ReactNode}) {
+function createSubmitForm(footer?: React.ReactNode) {
+    const ctx = useContext(AppContext);
     const [visible, setVisible] = useState(false);
     const nav = useNavigate();
     const loc = useLocation();
     const locale = useLocale();
 
     useEffect(()=>{
-        props.ctx.title = locale.common.login;
+        ctx.title = locale.common.login;
     });
 
     const submit = async (value: Account) => {
-        const r = await props.ctx.post('/login', value);
+        const r = await ctx.post('/login', value);
         if (!r.ok) {
             return r.problem;
         }
 
         writeToken(r.body as Token);
-        nav(nextPage(props.ctx.options.homePath, loc.search));
+        nav(nextPage(ctx.options.homePath, loc.search));
     };
 
     return <Card
-        footer={props.footer}
-        footerLine={props.footer ? true : false}
+        footer={footer}
+        footerLine={footer ? true : false}
         style={{padding: '8px 20px', width: '500px'}}
         header={
             <span style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                 <span style={{display: 'flex', alignItems: 'center'}}>
-                    <Avatar src={props.ctx.options.logo} />
-                    <Typography.Title heading={2} style={{marginLeft: '20px', display: 'inline'}}>{props.ctx.options.name}</Typography.Title>
+                    <Avatar src={ctx.options.logo} />
+                    <Typography.Title heading={2} style={{marginLeft: '20px', display: 'inline'}}>{ctx.options.name}</Typography.Title>
                 </span>
                 <IconSetting style={{cursor: 'pointer'}} onClick={()=>setVisible(true)} />
             </span>

@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MIT
 
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { Empty, Button } from '@douyinfe/semi-ui';
+import { EmptyProps } from '@douyinfe/semi-ui/lib/es/empty';
 import { isRouteErrorResponse, useRouteError, useNavigate } from 'react-router-dom';
 
-import { AppContext } from '@dashboard/App';
+import { AppContext, registerBreakpoint } from '@dashboard/App';
 import { Locale, useLocale } from '@dashboard/locales';
 import { illustration, ResponseError } from '@dashboard/utils';
 
@@ -48,13 +49,22 @@ export function ErrorBoundary(): JSX.Element {
  */
 function createError(l: Locale, title: ReactNode, desc: ReactNode, image?: number, stack?: ReactNode): JSX.Element {
     const ctx = React.useContext(AppContext);
+    const [layout, setLayout] = useState<EmptyProps['layout']>('horizontal');
     const nav = useNavigate();
+
+    useEffect(()=>{
+        return registerBreakpoint((screen, match)=>{
+            setLayout(match ? 'horizontal' : 'vertical');
+        });
+    }, []);
 
     const backHome = ()=>{ nav(ctx.options.homePath); };
     const backPrevPage = ()=>{ nav(-1); };
     const img = illustration(image);
 
+
     const main = <Empty title={title}
+        layout={layout}
         style={{maxWidth: '500px', margin: 'auto'}}
         description={desc}
         image={img ? img.light : undefined }
