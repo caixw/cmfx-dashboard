@@ -3,24 +3,24 @@
 import React from 'react';
 
 import { WYSIWYG, FormWYSIWYG } from 'cmfx-dashboard';
-import { Button, Divider, Form } from '@douyinfe/semi-ui';
+import { Button, Checkbox, Divider, Form } from '@douyinfe/semi-ui';
 
 export function WysiwygDemo(): JSX.Element {
+    const [loading, setLoading] = React.useState(false);
+    const [readonly, setReadonly] = React.useState(false);
     const [v, sv] = React.useState('<strong>abc</strong>abc');
+
     return <>
-        <WYSIWYG value={v} onChange={(v)=>sv(v)} height={200} id='editor1' />
+        <WYSIWYG value={v} onChange={(v)=>sv(v)} height={200} id='editor1' readOnly={readonly} loading={loading} />
         <br />
+        <Checkbox value={loading} onChange={(e)=>setLoading(e.target.checked ?? false)}>loading</Checkbox>
+        <Checkbox value={readonly} onChange={(e)=>setReadonly(e.target.checked ?? false)}>readonly</Checkbox>
         <Button onClick={()=>console.log(v)}>输出内容到 console</Button>
 
         <br />
         <Divider>insetLabel</Divider>
         <br />
         <WYSIWYG value={v} onChange={(v)=>sv(v)} height={200} id='editor2' insetLabel='insetLabel' />
-
-        <br />
-        <Divider>readonly</Divider>
-        <br />
-        <WYSIWYG readOnly value={v} onChange={(v)=>sv(v)} height={200} id='editor2-2' insetLabel='insetLabel' />
 
 
         <br />

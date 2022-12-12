@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-import { withField } from '@douyinfe/semi-ui';
+import { withField, Spin } from '@douyinfe/semi-ui';
 import React, { CSSProperties, ReactNode } from 'react';
 import ReactQuill, { ReactQuillProps } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -19,9 +19,11 @@ type Props = Pick<ReactQuillProps, 'onChange' | 'value' | 'placeholder' | 'readO
     insetLabel?: ReactNode
 
     /**
-     * 唯一 ID，必填，当一个页面有多个编辑器时，采用此值进行区分。
+     * 唯一 ID，必填，当一个页面有多个编辑器时，采用此值进行工具栏的区分。
      */
     id: string
+
+    loading?: boolean
 };
 
 /**
@@ -45,10 +47,10 @@ export function WYSIWYG(props: Props): JSX.Element {
     };
 
     const {height, insetLabel, ...p} = props;
-    return <div id={props.id}>
+    return <Spin spinning={props.loading ?? false} size='large'>
         {createToolbar(toolbarID, insetLabel)}
         <ReactQuill {...p} modules={modules} style={getStyle(height)} />
-    </div>;
+    </Spin>;
 }
 
 export function getStyle(height?: number | string): CSSProperties | undefined {
