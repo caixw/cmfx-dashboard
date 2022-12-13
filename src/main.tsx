@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client';
 import {
     IconAlertCircle, IconAscend, IconButtonStroked,
     IconEdit,
-    IconGridSquare, IconHome, IconUserGroup
+    IconGridSquare, IconHome, IconTabsStroked, IconUserGroup
 } from '@douyinfe/semi-icons';
 
 import {
@@ -21,6 +21,7 @@ import { PagingDemo, TableDemo } from './demo/AsyncTable';
 import { ResponseErrorDemo, ErrorDemo, StringErrorDemo } from './demo/Errors';
 import { AsyncFormDemo } from './demo/AsyncForm';
 import { WysiwygDemo } from './demo/Editor';
+import { TabsDemo } from './demo/Tabs';
 import { LoginDemo } from './demo/Login';
 import Logo from '@/assets/react.svg';
 // import BG from '@/assets/login-bg.svg';
@@ -91,6 +92,11 @@ const options: Options = {
                     element: <SecurityLog url='/security-log' />
                 },
 
+                {
+                    path: '/tabs',
+                    element: <TabsDemo />
+                },
+
                 // 分页
 
                 {
@@ -157,6 +163,12 @@ const options: Options = {
             itemKey: '/async-form',
             textKey: 'async-form',
             icon: <IconGridSquare />
+        },
+
+        {
+            itemKey: '/tabs',
+            textKey: 'tabs',
+            icon: <IconTabsStroked />
         },
 
         {
