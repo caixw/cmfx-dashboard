@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client';
 import {
     IconAlertCircle, IconAscend, IconButtonStroked,
     IconEdit,
-    IconGridSquare, IconHome, IconTabsStroked, IconUserGroup
+    IconGridSquare, IconHome, IconSetting, IconTabsStroked, IconUserGroup
 } from '@douyinfe/semi-icons';
 
 import {
@@ -23,6 +23,7 @@ import { AsyncFormDemo } from './demo/AsyncForm';
 import { WysiwygDemo } from './demo/Editor';
 import { TabsDemo } from './demo/Tabs';
 import { LoginDemo } from './demo/Login';
+import { SettingDemo } from './demo/Setting';
 import Logo from '@/assets/react.svg';
 // import BG from '@/assets/login-bg.svg';
 import { mock } from './mock';
@@ -140,6 +141,12 @@ const options: Options = {
                     element: <WysiwygDemo />
                 },
 
+                // setting
+                {
+                    path: 'settings',
+                    element: <SettingDemo />
+                },
+
                 // admins
 
                 ...GroupsRoute('/groups'),
@@ -179,6 +186,18 @@ const options: Options = {
                 {
                     itemKey: 'editor-wysiwyg',
                     textKey: 'WYSIWYG'
+                }
+            ]
+        },
+
+        {
+            itemKey: '/setting-demo',
+            textKey: 'setting',
+            icon: <IconSetting />,
+            items: [
+                {
+                    itemKey: 'settings',
+                    textKey: '多组设置'
                 }
             ]
         },

@@ -34,7 +34,9 @@ export function ResponsiveTabs(props: Props): JSX.Element {
         return <Tabs tabPosition={position} {...props}>{props.children}</Tabs>;
     }
 
-    const tabBarStyle = Object.assign(props.tabBarStyle ?? {}, {
+    const { tabBarStyle, contentStyle, style, ...p } = props;
+
+    const ts = Object.assign({...tabBarStyle}, {
         top: '0',
         position: 'sticky',
         backgroundColor: 'var(--semi-color-bg-2)',
@@ -43,19 +45,19 @@ export function ResponsiveTabs(props: Props): JSX.Element {
         borderTop: 'none'
     });
 
-    const contentStyle = props.contentStyle ?? {};
+    const cs = {...contentStyle};
     if (position === 'left') {
-        contentStyle.borderLeft = '1px solid var(--semi-color-border)';
+        cs.borderLeft = '1px solid var(--semi-color-border)';
     } else {
-        contentStyle.borderTop = '1px solid var(--semi-color-border)';
+        cs.borderTop = '1px solid var(--semi-color-border)';
     }
 
-    const style = Object.assign(props.style ?? {}, { alignItems: 'flex-start' });
+    const s = Object.assign({...style}, { alignItems: 'flex-start' });
 
     return <Tabs tabPosition={position}
-        tabBarStyle={tabBarStyle}
-        contentStyle={contentStyle}
-        style={style}
-        {...props}
+        tabBarStyle={ts}
+        contentStyle={cs}
+        style={s}
+        {...p}
     >{props.children}</Tabs>;
 }

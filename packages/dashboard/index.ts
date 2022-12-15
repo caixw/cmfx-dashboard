@@ -16,5 +16,6 @@ export * from './Logout';
 export * from './locales';
 export * from './ResponsiveTabs';
 export * from './SecurityLog';
+export * from './Setting';
 export * from './TODO';
 export * from './utils';
