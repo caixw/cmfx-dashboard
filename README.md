@@ -2,9 +2,9 @@
 
 适用于 cmfx 的后台管理界面。
 
-## style.css
+## dev
 
-全局的样式表，提供了 `.no-print` 用于指定不打印的内容。
+`npm run dev`
 
 ## build
 

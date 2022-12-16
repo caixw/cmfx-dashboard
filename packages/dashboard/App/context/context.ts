@@ -21,7 +21,6 @@ export class Context {
 
     constructor(o: Required<ContextOptions>, ls: LocaleCodeSetter) {
         this.#options = o;
-
         this.#setLocaleCode = ls;
     }
 
@@ -74,7 +73,6 @@ export const AppContext = React.createContext(new Context(
         logo: '',
         titleSeparator: '|',
         pageSizes: [],
-        loginBG: '',
 
         loginPath: '',
         homePath: '',
