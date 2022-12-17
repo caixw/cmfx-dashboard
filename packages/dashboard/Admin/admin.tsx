@@ -20,7 +20,7 @@ import { Edit } from './edit';
  * 返回一组与管理员操作相关的路由设定
  * @param path 该系列路由的根路径
  */
-export function AdminsRoute(path: string): Array<RouteObject> {
+export function AdminRoutes(path: string): Array<RouteObject> {
     return [
         {
             path: path,

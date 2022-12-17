@@ -33,7 +33,6 @@ export const zhTW = {
         password: '密碼',
         print: '打印',
         refresh: '刷新',
-        required: '不能為空',
         save: '保存',
         reset: '重置',
         search: '搜索',
@@ -58,6 +57,8 @@ export const zhTW = {
     },
 
     errors: {
+        required: '不能為空',
+        invalid_format: '格式不正確',
         unknown_error: '未知錯誤',
         back_home: '返回首頁',
         back_prev_page: '返回上一頁',

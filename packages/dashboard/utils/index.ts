@@ -5,3 +5,4 @@ export type { ObjectType } from './types';
 export { mapToSelectOptions, objectsToSelectOptions } from './select';
 export { ResponseError } from './errors';
 export { illustration } from './illustrations';
+export { rules } from './rules';

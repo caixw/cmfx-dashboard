@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Form, Spin } from '@douyinfe/semi-ui';
 import { BaseFormProps, FormApi } from "@douyinfe/semi-ui/lib/es/form";
 
-import { Problem } from '@dashboard/App/context/api';
+import { Problem } from '@dashboard/App';
 import { ObjectType } from '@dashboard/utils';
 
 type Props<T extends ObjectType> = Omit<BaseFormProps, 'onSubmit'> & {
@@ -20,8 +20,12 @@ type Props<T extends ObjectType> = Omit<BaseFormProps, 'onSubmit'> & {
      * 用户提交表单所执行的操作
      *
      * @returns 有错误返回错误没有错误不返回内容。
+     * 如果有返回错误，那么可能会依次将错误信息填入到每个输入元素中，
+     * 用户需要为每个输入元素指定 rules 属性，否则即使修改了内容，
+     * 也不会让错误内容消失。如果不需要验证规则，可以采用 utils/rules.ok
+     * 它将始终返回 true。
      */
-    onSubmit: (v: T)=>Promise<Problem|undefined>
+    onSubmit: (v: T)=>Promise<Problem | undefined>
 }
 
 /**
@@ -51,9 +55,9 @@ export function AsyncForm<T extends ObjectType>(props: Props<T>): JSX.Element {
 
     const submit = (v: T)=> {
         setLoading(true);
-        props.onSubmit(v).then((p?:Problem)=>{
+        props.onSubmit(v).then((p?: Problem)=>{
             p?.params?.forEach((f)=>{
-                api.current?.setError(f.name, f.message);
+                api.current?.setError(f.name, f.message.join(','));
             });
         }).catch((reason)=>{
             console.error(reason);

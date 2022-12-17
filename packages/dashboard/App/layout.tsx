@@ -7,7 +7,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { Route } from '@douyinfe/semi-foundation/lib/es/breadcrumb/itemFoundation';
 
 import { AppSetting } from '@dashboard/AppSetting';
-import { Locale, LocaleConsumer } from '@dashboard/locales';
+import { useLocale } from '@dashboard/locales';
 
 import { AppContext } from './context';
 import { buildUserMenus, UserDropdownMenuItem } from './options';
@@ -25,6 +25,7 @@ export function Layout(): JSX.Element {
     const [info, setInfo] = useState<Partial<Admin>>({});
     const nav = useNavigate();
     const ctx = useContext(AppContext);
+    const locale = useLocale();
 
     const clickUserMenuItem = (data: UserDropdownMenuItem) => {
         if ('name' in data) {
@@ -52,18 +53,11 @@ export function Layout(): JSX.Element {
                                 <Button theme="borderless" style={{borderRadius: '100%'}}
                                     icon={<IconSetting size='large' />} onClick={()=>setVisible(true)}
                                 />
-                                <LocaleConsumer>
-                                    {
-                                        (l: Locale) => {
-                                            const menus = buildUserMenus([], clickUserMenuItem, ctx.options.userMenus, l);
-                                            return <Dropdown menu={menus}>
-                                                <Button theme="borderless" style={{borderRadius: '16px'}}
-                                                    icon={<IconUserCircle size='large' />}
-                                                >{info.name}</Button>
-                                            </Dropdown>;
-                                        }
-                                    }
-                                </LocaleConsumer>
+                                <Dropdown menu={buildUserMenus([], clickUserMenuItem, ctx.options.userMenus, locale)}>
+                                    <Button theme="borderless" style={{borderRadius: '16px'}}
+                                        icon={<IconUserCircle size='large' />}
+                                    >{info.name}</Button>
+                                </Dropdown>
                             </>
                         </Nav.Footer>
                     </Nav>
@@ -85,7 +79,7 @@ export function Layout(): JSX.Element {
     </>;
 }
 
-export function Fullscreen(): JSX.Element {
+function Fullscreen(): JSX.Element {
     const [fullscreen, setFullscreen] = useState(document.fullscreenElement ? true : false);
 
     const change = ()=>{

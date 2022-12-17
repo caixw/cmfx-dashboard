@@ -67,21 +67,5 @@ export class Context {
     }
 }
 
-export const AppContext = React.createContext(new Context(
-    {
-        name: '',
-        logo: '',
-        titleSeparator: '|',
-        pageSizes: [],
-
-        loginPath: '',
-        homePath: '',
-
-        menus: [],
-        userMenus: [],
-
-        urlPrefix: ''
-    },
-    () => {return;}
-));
+export const AppContext = React.createContext<Context>({} as Context);
 AppContext.displayName = 'AppContext';

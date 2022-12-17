@@ -1,4 +1,4 @@
 // SPDX-License-Identifier: MIT
 
-export { AdminsRoute } from './admin';
-export { GroupsRoute } from './group';
+export { AdminRoutes } from './admin';
+export { GroupRoutes } from './group';

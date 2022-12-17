@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
 
 import React, { ReactNode, useContext, useEffect, useState } from 'react';
-import {Button, Typography, Avatar, Card, Form } from '@douyinfe/semi-ui';
+import { Button, Typography, Avatar, Card, Form } from '@douyinfe/semi-ui';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IconSetting, IconExit } from '@douyinfe/semi-icons';
 
 import { useLocale } from '@dashboard/locales';
+import { rules } from '@dashboard/utils';
 import { AsyncForm } from '@dashboard/AsyncForm';
 import { AppSetting } from '@dashboard/AppSetting';
 import { AppContext } from '@dashboard/App';
@@ -45,7 +46,7 @@ function createSubmitForm(footer?: React.ReactNode) {
 
     useEffect(()=>{
         ctx.title = locale.common.login;
-    });
+    }, []);
 
     const submit = async (value: Account) => {
         const r = await ctx.post('/login', value);
@@ -72,8 +73,8 @@ function createSubmitForm(footer?: React.ReactNode) {
         }
     >
         <AsyncForm labelPosition='inset' initValues={{}} onSubmit={submit}>
-            <Form.Input size='large' field='username' label={locale.common.username} />
-            <Form.Input size='large' field='password' label={locale.common.password} mode='password' />
+            <Form.Input size='large' field='username' label={locale.common.username} rules={[rules.required(locale)]} />
+            <Form.Input size='large' field='password' label={locale.common.password} mode='password' rules={[rules.required(locale)]} />
             <Button
                 style={{marginTop: '20px'}}
                 block

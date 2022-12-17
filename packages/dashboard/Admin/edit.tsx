@@ -8,7 +8,7 @@ import { AppContext, Return } from '@dashboard/App';
 import { useLocale } from '@dashboard/locales';
 import { AsyncForm } from '@dashboard/AsyncForm';
 import { AsyncFormSelect } from '@dashboard/AsyncSelect';
-import { mapToSelectOptions } from '@dashboard/utils';
+import { mapToSelectOptions, rules } from '@dashboard/utils';
 
 import { Admin, getSexes, getStates, loadGroupsSelectOptions } from './types';
 
@@ -54,12 +54,12 @@ export function Edit() {
 
     return <div>
         <AsyncForm style={{maxWidth: '550px', margin: 'auto'}} onSubmit={submit} onInit={init}>
-            <Form.Input readonly={id>0} label={locale.common.username} field='username' />
-            <Form.Input label={locale.common.nickname} field='nickname' />
-            <Form.Input label={locale.common.name} field='name' />
-            <Form.Select label={locale.common.state} field='state' optionList={mapToSelectOptions(states)} />
-            <Form.Select label={locale.common.sex} field='sex' optionList={mapToSelectOptions(sexes)} />
-            <AsyncFormSelect label={locale.admin.group} field='group' loadOptions={()=>loadGroupsSelectOptions(ctx)} />
+            <Form.Input readonly={id>0} label={locale.common.username} field='username' rules={[rules.required(locale)]} />
+            <Form.Input label={locale.common.nickname} field='nickname' rules={[rules.required(locale)]} />
+            <Form.Input label={locale.common.name} field='name' rules={[rules.required(locale)]} />
+            <Form.Select label={locale.common.state} field='state' optionList={mapToSelectOptions(states)} rules={[rules.required(locale)]} />
+            <Form.Select label={locale.common.sex} field='sex' optionList={mapToSelectOptions(sexes)} rules={[rules.required(locale)]} />
+            <AsyncFormSelect label={locale.admin.group} field='group' loadOptions={()=>loadGroupsSelectOptions(ctx)} rules={[rules.required(locale)]} />
 
             <Divider style={{margin: '10px 0'}} />
             <div className="cmfx-actions">

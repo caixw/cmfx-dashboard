@@ -33,7 +33,6 @@ export const zhCN = {
         password: '密码',
         print: '打印',
         refresh: '刷新',
-        required: '不能为空',
         save: '保存',
         reset: '重置',
         search: '搜索',
@@ -58,6 +57,8 @@ export const zhCN = {
     },
 
     errors: {
+        required: '不能为空',
+        invalid_format: '格式不正确',
         unknown_error: '未知错误',
         back_home: '返回首页',
         back_prev_page: '返回上一页',

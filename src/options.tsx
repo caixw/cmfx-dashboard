@@ -10,7 +10,7 @@ import {
 import {
     UnauthRoute, AuthRoute, Options, Locale,
     Layout, Logout, SecurityLog, LocaleConsumer,
-    AdminsRoute, GroupsRoute,
+    AdminRoutes, GroupRoutes,
 } from 'cmfx-dashboard';
 
 import { Home } from './demo/Home';
@@ -126,8 +126,8 @@ export const options: Options = {
 
                 // admins
 
-                ...GroupsRoute('/groups'),
-                ...AdminsRoute('/admins'),
+                ...GroupRoutes('/groups'),
+                ...AdminRoutes('/admins'),
             ]
         },
     ],

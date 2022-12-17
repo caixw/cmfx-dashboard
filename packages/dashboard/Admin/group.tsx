@@ -9,6 +9,7 @@ import { AsyncTable, ColumnProps, AsyncTableRef, DeleteAction } from '@dashboard
 import { AppContext, Return } from '@dashboard/App';
 import { useLocale } from '@dashboard/locales';
 import { Actions } from '@dashboard/Actions';
+import { rules } from '@dashboard/utils';
 
 import { Group } from './types';
 import { GroupAccess } from './access';
@@ -18,7 +19,7 @@ import { GroupAccess } from './access';
  * 返回与权限操作相关的路由设定
  * @param path 该系列路由的根路径
  */
-export function GroupsRoute(path: string): Array<RouteObject> {
+export function GroupRoutes(path: string): Array<RouteObject> {
     return [
         {
             path: path,
@@ -39,7 +40,7 @@ function Groups(): JSX.Element {
     const ctx = useContext(AppContext);
     const [g, setG] = useState<Group>({ id:0, name: '', description: '' });
     const [modalVisible, setModalVisible] = useState(false);
-    const form = useRef(null);
+    const form = useRef<Form>(null);
     const table = useRef<AsyncTableRef>(null);
     const nav = useNavigate();
 
@@ -102,11 +103,11 @@ function Groups(): JSX.Element {
         <Modal title={g.id ? loc.common.edit : loc.common.new}
             visible={modalVisible}
             onCancel={()=>setModalVisible(false)}
-            onOk={()=>save()}
+            onOk={()=>form.current?.formApi.submitForm()}
         >
-            <Form initValues={g} ref={form} allowEmpty>
-                <Form.Input label={loc.common.name} field='name' />
-                <Form.TextArea label={loc.common.description} field='description' />
+            <Form initValues={g} ref={form} allowEmpty onSubmit={save}>
+                <Form.Input label={loc.common.name} field='name' rules={[rules.required(loc)]} />
+                <Form.TextArea label={loc.common.description} field='description' rules={[rules.required(loc)]} />
             </Form>
         </Modal>
     </>;

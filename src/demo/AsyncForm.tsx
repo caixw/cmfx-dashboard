@@ -3,7 +3,7 @@
 import React, { useContext } from "react";
 import { Button, Divider, Form } from "@douyinfe/semi-ui";
 
-import { AppContext, AsyncForm, AsyncFormSelect, objectsToSelectOptions } from "cmfx-dashboard";
+import { rules, AppContext, Problem, AsyncForm, AsyncFormSelect, objectsToSelectOptions } from "cmfx-dashboard";
 import { DataType } from "@/mock/async";
 
 
@@ -23,9 +23,12 @@ export function AsyncFormDemo() {
         onInit={async()=>{
             return (await ctx.get('/async-data')).body as DataType;
         }}
-        onSubmit={async()=>{return await ctx.post('/async-invalid-data', null);}}
+        onSubmit={async():Promise<Problem|undefined>=>{
+            const r = await ctx.post('/async-invalid-data', null);
+            return r.ok ? undefined : r.problem;
+        }}
     >
-        <Form.InputNumber field="num" label='数值' />
+        <Form.InputNumber field="num" label='数值' rules={[rules.ok]} />
         <Form.Input field="str" label="字符" />
         <Form.Checkbox field="bool" label="Bool" />
 
@@ -35,6 +38,6 @@ export function AsyncFormDemo() {
         <br />
         <Button htmlType="reset">Reset</Button>
         &#160;&#160;&#160;
-        <Button htmlType="submit">OK(触发 loading)</Button>
+        <Button htmlType="submit">Submit</Button>
     </AsyncForm>;
 }

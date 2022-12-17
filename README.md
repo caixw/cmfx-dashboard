@@ -4,7 +4,8 @@
 
 ## dev
 
-`npm run dev`
+`npm run dev` 测试
+`npm run dev:mock` 带 mock 数据的测试，部分接口无法处理。
 
 ## build
 
