@@ -63,7 +63,7 @@ export function FormPaneContent(props: FormPaneContentProps) {
 
     return <AsyncForm onInit={init} onSubmit={submit} layout="vertical">
         {props.children}
-        <div className="cmfx-actions" style={{marginTop: '20px'}}>
+        <div className="cmfx-actions" style={{margin: '10px 0 15px 0'}}>
             <Button htmlType='reset' type="secondary">{l.common.reset}</Button>
             <Button htmlType='submit' type="primary">{l.common.save}</Button>
         </div>

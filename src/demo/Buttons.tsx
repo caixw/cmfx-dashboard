@@ -56,5 +56,21 @@ export function ButtonsDemo() {
             <Button>b1</Button>
             <Button>b2</Button>
         </Actions>
+
+        <br /><br />
+        <Divider>css cmfx-actions</Divider>
+        <br />
+        <div className="cmfx-actions">
+            <Button>b1</Button>
+            <Button>b2</Button>
+            <Button>b3</Button>
+        </div>
+        <br />
+        <div className="cmfx-actions">
+            <Button>b1</Button>
+            <Button>b2</Button>
+            <Button>b3</Button>
+            <Button>b4</Button>
+        </div>
     </div>;
 }
