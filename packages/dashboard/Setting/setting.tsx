@@ -30,6 +30,8 @@ export const Pane: React.FC<{
 type PaneType = ReturnType<typeof Pane>;
 
 interface Props {
+    style?: React.CSSProperties
+
     /**
      * 是否固定 tabBar 在屏幕上方
      */
@@ -43,7 +45,10 @@ interface Props {
  */
 export function Setting(props: Props): JSX.Element {
     const panes = buildPanes(props.children);
-    return <ResponsiveTabs sticky={props.sticky}tabBarStyle={{minWidth: '150px'}}>{panes}</ResponsiveTabs>;
+    return <ResponsiveTabs style={props.style}
+        sticky={props.sticky}
+        tabBarStyle={{minWidth: '150px'}}
+    >{panes}</ResponsiveTabs>;
 }
 
 function buildPanes(children: Props['children']): Array<JSX.Element> {

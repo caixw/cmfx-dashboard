@@ -41,12 +41,12 @@ function Admins(): JSX.Element {
     const locale = useLocale();
     const sexes = getSexes(locale);
     const states = getStates(locale);
-    const paging = useRef<AsyncTableRef>(null);
+    const table = useRef<AsyncTableRef>(null);
     const nav = useNavigate();
 
     const renderActions = (key: number, record: Admin) => {
         return <Actions>
-            <DeleteAction locale={locale} url={`/admins/${record.id}`} reload={()=>paging.current?.load()} />
+            <DeleteAction locale={locale} url={`/admins/${record.id}`} reload={()=>table.current?.load()} />
             <Button onClick={()=>nav(`/admins/${record.id}`)}>{locale.common.edit}</Button>
         </Actions>;
     };
@@ -98,7 +98,7 @@ function Admins(): JSX.Element {
     </>;
 
     return <AsyncTable paging
-        ref={paging}
+        ref={table}
         url='/admins'
         toolbar={toolbar}
         queries={queries}

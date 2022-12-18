@@ -19,9 +19,8 @@ import { PagingDemo, TableDemo } from './demo/AsyncTable';
 import { ResponseErrorDemo, ErrorDemo, StringErrorDemo } from './demo/Errors';
 import { AsyncFormDemo } from './demo/AsyncForm';
 import { WysiwygDemo } from './demo/Editor';
-import { TabsDemo } from './demo/Tabs';
+import { TabsDemo, SettingDemo } from './demo/Tabs';
 import { LoginDemo } from './demo/Login';
-import { SettingDemo } from './demo/Setting';
 import Logo from '@/assets/react.svg';
 
 interface CustomType {
@@ -70,10 +69,17 @@ export const options: Options = {
                     element: <SecurityLog url='/security-log' />
                 },
 
+                // tabs
+
                 {
                     path: '/tabs',
                     element: <TabsDemo />
                 },
+                {
+                    path: 'settings',
+                    element: <SettingDemo />
+                },
+
 
                 // 分页
 
@@ -118,12 +124,6 @@ export const options: Options = {
                     element: <WysiwygDemo />
                 },
 
-                // setting
-                {
-                    path: 'settings',
-                    element: <SettingDemo />
-                },
-
                 // admins
 
                 ...GroupRoutes('/groups'),
@@ -150,12 +150,6 @@ export const options: Options = {
         },
 
         {
-            itemKey: '/tabs',
-            textKey: 'tabs',
-            icon: <IconTabsStroked />
-        },
-
-        {
             itemKey: '/editor-demo',
             textKey: '编辑器',
             icon: <IconEdit />,
@@ -168,13 +162,18 @@ export const options: Options = {
         },
 
         {
-            itemKey: '/setting-demo',
-            textKey: 'setting',
-            icon: <IconSetting />,
+            itemKey: '/tabs-demo',
+            textKey: 'tabs',
+            icon: <IconTabsStroked />,
             items: [
                 {
+                    icon: <IconSetting />,
                     itemKey: 'settings',
-                    textKey: '多组设置'
+                    textKey: '设置'
+                },
+                {
+                    itemKey: '/tabs',
+                    textKey: 'tabs',
                 }
             ]
         },
