@@ -27,5 +27,5 @@ jobs:
       - name: publish
         working-directory: 'packages/dashboard'
         run: npm publish
-        with:
-          token: ${{ secrets.NPM_PUBLISH }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH }}
