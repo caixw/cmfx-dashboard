@@ -258,5 +258,5 @@ export const options: Options = {
         },
     ],
 
-    urlPrefix: 'http://localhost/admin'
+    urlPrefix: import.meta.env.VITE_API_SERVER
 };

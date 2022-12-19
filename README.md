@@ -5,7 +5,11 @@
 ## dev
 
 `npm run dev` 测试
-`npm run dev:mock` 带 mock 数据的测试，部分接口无法处理。
+
+有两个环境变量可以使用：
+
+- VITE_MOCK 是否采用 mock 数据；
+- VITE_API_SERVER api 的基地址，比如 `http://localhost:8080/admin`
 
 ## build
 

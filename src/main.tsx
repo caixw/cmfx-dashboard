@@ -27,7 +27,7 @@ install('zh-TW', {
 });
 
 if (import.meta.env.VITE_MOCK) {
-    console.debug('启用 mock 数据用于测试，如果需要完整的测试数据，请运行 https://github.com/issue9/cmfx 程序');
+    console.debug(`启用 mock 数据。`);
     mock();
 }
 

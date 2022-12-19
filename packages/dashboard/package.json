@@ -40,22 +40,22 @@
         "coverage": "vitest run --coverage"
     },
     "dependencies": {
-        "@douyinfe/semi-illustrations": "^2.25.0",
+        "@douyinfe/semi-illustrations": "^2.25.2",
         "@semi-bot/semi-theme-a11y": "^1.0.0",
         "lodash-es": "^4.17.21",
         "react-quill": "^2.0.0",
         "react-to-print": "^2.14.10"
     },
     "devDependencies": {
-        "@douyinfe/semi-icons": "^2.25.0",
-        "@douyinfe/semi-ui": "^2.25.0",
+        "@douyinfe/semi-icons": "^2.25.2",
+        "@douyinfe/semi-ui": "^2.25.2",
         "@testing-library/react": "^13.4.0",
         "@types/lodash-es": "^4.17.6",
         "@types/node": "^18.11.17",
         "@types/react": "^18.0.26",
         "@types/react-dom": "^18.0.9",
         "@vitejs/plugin-react": "^3.0.0",
-        "@vitest/coverage-c8": "^0.25.8",
+        "@vitest/coverage-c8": "^0.26.0",
         "jsdom": "^20.0.2",
         "path": "^0.12.7",
         "pre-commit": "^1.2.2",
@@ -66,6 +66,6 @@
         "vite": "^4.0.2",
         "vite-plugin-dts": "^1.7.1",
         "vite-plugin-static-copy": "^0.13.0",
-        "vitest": "^0.25.8"
+        "vitest": "^0.26.0"
     }
 }
