@@ -1,6 +1,6 @@
 {
     "name": "cmfx-dashboard",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "type": "module",
     "description": "适用于 cmfx 的后台管理框架",
     "types": "./lib/index.d.ts",
@@ -32,7 +32,7 @@
         "url": "https://github.com/caixw"
     },
     "files": [
-        "lib/**/*"
+        "lib/*"
     ],
     "scripts": {
         "build": "tsc && vite build",
