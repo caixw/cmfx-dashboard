@@ -10,6 +10,10 @@
         ".": {
             "require": "./lib/index.cjs.js",
             "import": "./lib/index.es.js"
+        },
+        "./style.css": {
+            "require": "./lib/style.css",
+            "import": "./lib/style.css"
         }
     },
     "license": "MIT",
